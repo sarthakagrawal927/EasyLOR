@@ -10,9 +10,93 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  firstName  String
-  lastName String
+// model User {
+//   id    Int     @id @default(autoincrement())
+//   email String  @unique
+//   firstName  String
+//   lastName String
+// }
+
+enum Status {
+  PENDING
+  GRANTED
+  REJECTED
+}
+
+// TODO: Verify / fill details into this model
+model File {
+  fileID                  String          @id
+  LORApplication          LORApplication? @relation(fields: [lORApplicationStudentID, lORApplicationFacultyID], references: [studentID, facultyID])
+  lORApplicationStudentID String?
+  lORApplicationFacultyID String?
+  Faculty                 Faculty?        @relation(fields: [facultyId], references: [id])
+  facultyId               Int?
+}
+
+model LORApplication {
+  needBy             DateTime
+  statementOfPurpose String
+  course             String
+  university         String
+  draft              File[]
+  studentID          String
+  facultyID          String
+  status             Status   @default(PENDING)
+
+  @@id([studentID, facultyID])
+  Student      Student? @relation(fields: [studentRegNo], references: [regNo])
+  studentRegNo String?
+  Faculty      Faculty? @relation(fields: [facultyId], references: [id])
+  facultyId    Int?
+}
+
+model Reminder {
+  message   String
+  facultyID String
+  StudentID String
+  status    Boolean
+
+  @@id([facultyID, StudentID])
+  Student      Student? @relation(fields: [studentRegNo], references: [regNo])
+  studentRegNo String?
+}
+
+model TestScore {
+  exam  String
+  score String
+
+  @@id([exam, score])
+  Student      Student? @relation(fields: [studentRegNo], references: [regNo])
+  studentRegNo String?
+}
+
+model Student {
+  regNo                String           @id
+  email                String           @unique
+  password             String
+  firstName            String
+  lastName             String?
+  department           String
+  institution          String
+  contact              String           @unique
+  profilePhoto         String           @unique
+  appliedUniversities  String[]
+  acceptedUniversities String[]
+  testScores           TestScore[]
+  lorApplications      LORApplication[]
+  reminder             Reminder[]
+}
+
+model Faculty {
+  id                Int              @id @default(autoincrement())
+  email             String           @unique
+  password          String
+  firstName         String
+  lastName          String?
+  department        String
+  institution       String
+  contact           String           @unique
+  profilePhoto      String           @unique
+  lorApplications   LORApplication[]
+  lorDraftTemplates File[]
 }
