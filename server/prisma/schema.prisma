@@ -65,7 +65,7 @@ model Student {
   acceptedUniversities String[]
   testScores           TestScore[]
   lorApplications      LORApplication[]
-  reminder             Reminder[]
+  reminders            Reminder[]
 }
 
 model Faculty {
