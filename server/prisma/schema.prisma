@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -10,13 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// model User {
-//   id    Int     @id @default(autoincrement())
-//   email String  @unique
-//   firstName  String
-//   lastName String
-// }
-
 enum Status {
   PENDING
   GRANTED
@@ -24,41 +14,45 @@ enum Status {
 }
 
 model LORApplication {
-  needBy             DateTime
+  id                 Int      @id @default(autoincrement())
+  dueDate            DateTime
   statementOfPurpose String
   course             String
   university         String
-  draftURLs          String[]
+  draftURL           String
   studentID          String
   facultyID          Int
   status             Status   @default(PENDING)
 
-  @@id([studentID, facultyID])
   student Student @relation(fields: [studentID], references: [regNo])
   faculty Faculty @relation(fields: [facultyID], references: [id])
+  @@unique([studentID, facultyID])
 }
 
 model Reminder {
+  id        Int     @id @default(autoincrement())
   message   String
   facultyID String
   studentID String
   status    Boolean
 
-  @@id([facultyID, studentID])
   student Student @relation(fields: [studentID], references: [regNo])
+  @@unique([facultyID, studentID])
 }
 
 model TestScore {
+  id    Int    @id @default(autoincrement())
   exam  String
   score String
 
-  @@id([exam, score])
-  student Student @relation(fields: [studentID], references: [regNo])
+  student   Student @relation(fields: [studentID], references: [regNo])
   studentID String
+  @@unique([exam, score])
 }
 
 model Student {
-  regNo                String           @id
+  id                   Int              @id @default(autoincrement())
+  regNo                String           @unique
   email                String           @unique
   password             String
   firstName            String
