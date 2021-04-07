@@ -23,42 +23,29 @@ enum Status {
   REJECTED
 }
 
-// TODO: Verify / fill details into this model
-model File {
-  fileID                  String          @id
-  LORApplication          LORApplication? @relation(fields: [lORApplicationStudentID, lORApplicationFacultyID], references: [studentID, facultyID])
-  lORApplicationStudentID String?
-  lORApplicationFacultyID String?
-  Faculty                 Faculty?        @relation(fields: [facultyId], references: [id])
-  facultyId               Int?
-}
-
 model LORApplication {
   needBy             DateTime
   statementOfPurpose String
   course             String
   university         String
-  draft              File[]
+  draftURLs          String[]
   studentID          String
-  facultyID          String
+  facultyID          Int
   status             Status   @default(PENDING)
 
   @@id([studentID, facultyID])
-  Student      Student? @relation(fields: [studentRegNo], references: [regNo])
-  studentRegNo String?
-  Faculty      Faculty? @relation(fields: [facultyId], references: [id])
-  facultyId    Int?
+  student Student @relation(fields: [studentID], references: [regNo])
+  faculty Faculty @relation(fields: [facultyID], references: [id])
 }
 
 model Reminder {
   message   String
   facultyID String
-  StudentID String
+  studentID String
   status    Boolean
 
-  @@id([facultyID, StudentID])
-  Student      Student? @relation(fields: [studentRegNo], references: [regNo])
-  studentRegNo String?
+  @@id([facultyID, studentID])
+  student Student @relation(fields: [studentID], references: [regNo])
 }
 
 model TestScore {
@@ -66,8 +53,8 @@ model TestScore {
   score String
 
   @@id([exam, score])
-  Student      Student? @relation(fields: [studentRegNo], references: [regNo])
-  studentRegNo String?
+  student Student @relation(fields: [studentID], references: [regNo])
+  studentID String
 }
 
 model Student {
@@ -98,5 +85,5 @@ model Faculty {
   contact           String           @unique
   profilePhoto      String           @unique
   lorApplications   LORApplication[]
-  lorDraftTemplates File[]
+  lorDraftTemplates String[]
 }
