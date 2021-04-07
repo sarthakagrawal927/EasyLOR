@@ -37,7 +37,7 @@ model Reminder {
   status    Boolean
 
   student Student @relation(fields: [studentID], references: [id])
-  @@unique([facultyID, studentID])
+  @@unique([studentID, facultyID])
 }
 
 model TestScore {
