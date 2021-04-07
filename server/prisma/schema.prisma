@@ -20,11 +20,11 @@ model LORApplication {
   course             String
   university         String
   draftURL           String
-  studentID          String
+  studentID          Int
   facultyID          Int
   status             Status   @default(PENDING)
 
-  student Student @relation(fields: [studentID], references: [regNo])
+  student Student @relation(fields: [studentID], references: [id])
   faculty Faculty @relation(fields: [facultyID], references: [id])
   @@unique([studentID, facultyID])
 }
@@ -32,11 +32,11 @@ model LORApplication {
 model Reminder {
   id        Int     @id @default(autoincrement())
   message   String
-  facultyID String
-  studentID String
+  facultyID Int
+  studentID Int
   status    Boolean
 
-  student Student @relation(fields: [studentID], references: [regNo])
+  student Student @relation(fields: [studentID], references: [id])
   @@unique([facultyID, studentID])
 }
 
@@ -45,8 +45,8 @@ model TestScore {
   exam  String
   score String
 
-  student   Student @relation(fields: [studentID], references: [regNo])
-  studentID String
+  student   Student @relation(fields: [studentID], references: [id])
+  studentID Int
   @@unique([exam, score])
 }
 
