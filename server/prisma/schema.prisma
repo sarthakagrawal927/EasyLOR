@@ -34,7 +34,7 @@ model Reminder {
   message   String
   facultyID Int
   studentID Int
-  status    Boolean
+  viewed    Boolean
 
   student Student @relation(fields: [studentID], references: [id])
   @@unique([studentID, facultyID])
