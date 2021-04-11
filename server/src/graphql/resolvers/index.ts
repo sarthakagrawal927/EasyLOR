@@ -1,8 +1,7 @@
-import userResolvers from "./userResolvers";
-
+import departmentResolvers from "./department";
 const resolvers = {
     Query: {
-        ...userResolvers.Query,
+        ...departmentResolvers.Query,
     },
 };
 

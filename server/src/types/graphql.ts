@@ -22,6 +22,12 @@ export enum CacheControlScope {
 }
 
 
+export type Department = {
+  __typename?: 'Department';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+};
+
 export type Faculty = {
   __typename?: 'Faculty';
   id: Scalars['Int'];
@@ -52,7 +58,7 @@ export type LorApplication = {
 
 export type Query = {
   __typename?: 'Query';
-  allUsers?: Maybe<Array<Maybe<User>>>;
+  getDepartments?: Maybe<Array<Maybe<Department>>>;
 };
 
 export type Reminder = {
@@ -96,15 +102,6 @@ export type TestScore = {
   score: Scalars['String'];
 };
 
-
-export type User = {
-  __typename?: 'User';
-  id: Scalars['ID'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
 
 
 
@@ -186,9 +183,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   CacheControlScope: CacheControlScope;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
-  Faculty: ResolverTypeWrapper<Faculty>;
+  Department: ResolverTypeWrapper<Department>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Faculty: ResolverTypeWrapper<Faculty>;
   LORApplication: ResolverTypeWrapper<LorApplication>;
   Query: ResolverTypeWrapper<{}>;
   Reminder: ResolverTypeWrapper<Reminder>;
@@ -197,16 +195,15 @@ export type ResolversTypes = {
   Student: ResolverTypeWrapper<Student>;
   TestScore: ResolverTypeWrapper<TestScore>;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
-  User: ResolverTypeWrapper<User>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   DateTime: Scalars['DateTime'];
-  Faculty: Faculty;
+  Department: Department;
   Int: Scalars['Int'];
   String: Scalars['String'];
+  Faculty: Faculty;
   LORApplication: LorApplication;
   Query: {};
   Reminder: Reminder;
@@ -214,8 +211,6 @@ export type ResolversParentTypes = {
   Student: Student;
   TestScore: TestScore;
   Upload: Scalars['Upload'];
-  User: User;
-  ID: Scalars['ID'];
 };
 
 export type CacheControlDirectiveArgs = {   maxAge?: Maybe<Scalars['Int']>;
@@ -226,6 +221,12 @@ export type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Arg
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
 }
+
+export type DepartmentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Department'] = ResolversParentTypes['Department']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type FacultyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Faculty'] = ResolversParentTypes['Faculty']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -256,7 +257,7 @@ export type LorApplicationResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  allUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  getDepartments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Department']>>>, ParentType, ContextType>;
 };
 
 export type ReminderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Reminder'] = ResolversParentTypes['Reminder']> = {
@@ -298,17 +299,9 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
   name: 'Upload';
 }
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = any> = {
   DateTime?: GraphQLScalarType;
+  Department?: DepartmentResolvers<ContextType>;
   Faculty?: FacultyResolvers<ContextType>;
   LORApplication?: LorApplicationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
@@ -316,7 +309,6 @@ export type Resolvers<ContextType = any> = {
   Student?: StudentResolvers<ContextType>;
   TestScore?: TestScoreResolvers<ContextType>;
   Upload?: GraphQLScalarType;
-  User?: UserResolvers<ContextType>;
 };
 
 

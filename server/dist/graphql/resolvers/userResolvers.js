@@ -13,7 +13,7 @@ const userResolvers = {
     Query: {
         allUsers(_parent, _args, { prisma }) {
             return __awaiter(this, void 0, void 0, function* () {
-                return prisma.user.findMany();
+                return prisma.student.findMany();
             });
         },
     },

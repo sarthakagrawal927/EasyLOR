@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const userResolvers_1 = __importDefault(require("./userResolvers"));
+const department_1 = __importDefault(require("./department"));
 const resolvers = {
-    Query: Object.assign({}, userResolvers_1.default.Query),
+    Query: Object.assign({}, department_1.default.Query),
 };
 exports.default = resolvers;
 //# sourceMappingURL=index.js.map

@@ -50,6 +50,13 @@ model TestScore {
   @@unique([exam, score])
 }
 
+model Department {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Student Student[]
+  Faculty Faculty[]
+}
+
 model Student {
   id                   Int              @id @default(autoincrement())
   regNo                String           @unique
@@ -57,7 +64,7 @@ model Student {
   password             String
   firstName            String
   lastName             String?
-  department           String
+  department           Department       @relation(fields: [departmentID], references: [id])
   institution          String
   contact              String           @unique
   profilePhoto         String           @unique
@@ -66,6 +73,7 @@ model Student {
   testScores           TestScore[]
   lorApplications      LORApplication[]
   reminders            Reminder[]
+  departmentID         Int
 }
 
 model Faculty {
@@ -74,10 +82,11 @@ model Faculty {
   password          String
   firstName         String
   lastName          String?
-  department        String
+  department        Department       @relation(fields: [departmentID], references: [id])
   institution       String
   contact           String           @unique
   profilePhoto      String           @unique
   lorApplications   LORApplication[]
   lorDraftTemplates String[]
+  departmentID      Int
 }
