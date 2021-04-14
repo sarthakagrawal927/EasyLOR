@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Status = exports.CacheControlScope = void 0;
+exports.UserType = exports.Status = exports.CacheControlScope = void 0;
 var CacheControlScope;
 (function (CacheControlScope) {
     CacheControlScope["Public"] = "PUBLIC";
@@ -12,4 +12,9 @@ var Status;
     Status["Granted"] = "GRANTED";
     Status["Rejected"] = "REJECTED";
 })(Status = exports.Status || (exports.Status = {}));
+var UserType;
+(function (UserType) {
+    UserType["Student"] = "STUDENT";
+    UserType["Faculty"] = "FACULTY";
+})(UserType = exports.UserType || (exports.UserType = {}));
 //# sourceMappingURL=graphql.js.map

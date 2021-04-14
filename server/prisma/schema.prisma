@@ -24,8 +24,8 @@ model LORApplication {
   facultyID          Int
   status             Status   @default(PENDING)
 
-  student Student @relation(fields: [studentID], references: [id])
-  faculty Faculty @relation(fields: [facultyID], references: [id])
+  student Student @relation(fields: [studentID], references: [userID])
+  faculty Faculty @relation(fields: [facultyID], references: [userID])
   @@unique([studentID, facultyID])
 }
 
@@ -36,7 +36,7 @@ model Reminder {
   studentID Int
   viewed    Boolean
 
-  student Student @relation(fields: [studentID], references: [id])
+  student Student @relation(fields: [studentID], references: [userID])
   @@unique([studentID, facultyID])
 }
 
@@ -45,48 +45,47 @@ model TestScore {
   exam  String
   score String
 
-  student   Student @relation(fields: [studentID], references: [id])
+  student   Student @relation(fields: [studentID], references: [userID])
   studentID Int
   @@unique([exam, score])
 }
 
 model Department {
-  id      Int       @id @default(autoincrement())
-  name    String
-  Student Student[]
-  Faculty Faculty[]
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  email        String     @unique
+  password     String
+  firstName    String
+  lastName     String?
+  institution  String
+  contact      String     @unique
+  profilePhoto String     @unique
+  Student      Student[]
+  Faculty      Faculty[]
+  department   Department @relation(fields: [departmentID], references: [id])
+  departmentID Int
+  isFaculty    Boolean
 }
 
 model Student {
-  id                   Int              @id @default(autoincrement())
+  user                 User             @relation(fields: [userID], references: [id])
+  userID               Int              @id
   regNo                String           @unique
-  email                String           @unique
-  password             String
-  firstName            String
-  lastName             String?
-  department           Department       @relation(fields: [departmentID], references: [id])
-  institution          String
-  contact              String           @unique
-  profilePhoto         String           @unique
   appliedUniversities  String[]
   acceptedUniversities String[]
   testScores           TestScore[]
   lorApplications      LORApplication[]
   reminders            Reminder[]
-  departmentID         Int
 }
 
 model Faculty {
-  id                Int              @id @default(autoincrement())
-  email             String           @unique
-  password          String
-  firstName         String
-  lastName          String?
-  department        Department       @relation(fields: [departmentID], references: [id])
-  institution       String
-  contact           String           @unique
-  profilePhoto      String           @unique
+  user              User             @relation(fields: [userID], references: [id])
+  userID            Int              @id
   lorApplications   LORApplication[]
   lorDraftTemplates String[]
-  departmentID      Int
 }

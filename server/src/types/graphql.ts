@@ -3,6 +3,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -30,17 +31,9 @@ export type Department = {
 
 export type Faculty = {
   __typename?: 'Faculty';
-  id: Scalars['Int'];
-  email: Scalars['String'];
-  password: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName?: Maybe<Scalars['String']>;
-  department: Scalars['String'];
-  institution: Scalars['String'];
-  contact: Scalars['String'];
-  profilePhoto: Scalars['String'];
-  lorApplications?: Maybe<Array<Maybe<LorApplication>>>;
-  lorDraftTemplates?: Maybe<Array<Maybe<Scalars['String']>>>;
+  user: User;
+  lorApplications: Array<Maybe<LorApplication>>;
+  lorDraftTemplates: Array<Maybe<Scalars['String']>>;
 };
 
 export type LorApplication = {
@@ -56,9 +49,56 @@ export type LorApplication = {
   status: Status;
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  loginUser: User;
+  createUser: User;
+  createLORApplication: LorApplication;
+  createReminder: Reminder;
+};
+
+
+export type MutationLoginUserArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+
+export type MutationCreateUserArgs = {
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  department: Scalars['String'];
+  institution: Scalars['String'];
+  contact: Scalars['String'];
+  profilePhoto: Scalars['String'];
+  userType: UserType;
+};
+
+
+export type MutationCreateLorApplicationArgs = {
+  dueDate: Scalars['DateTime'];
+  statementOfPurpose: Scalars['String'];
+  course: Scalars['String'];
+  university: Scalars['String'];
+  draftURL?: Maybe<Scalars['String']>;
+  studentID: Scalars['Int'];
+  facultyID: Scalars['Int'];
+  status: Status;
+};
+
+
+export type MutationCreateReminderArgs = {
+  message: Scalars['String'];
+  facultyID: Scalars['Int'];
+  studentID: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
-  getDepartments?: Maybe<Array<Maybe<Department>>>;
+  getDepartments: Array<Maybe<Department>>;
+  getFaculties: Array<Maybe<Faculty>>;
+  getApplicationsByFacultyID: Array<Maybe<LorApplication>>;
 };
 
 export type Reminder = {
@@ -78,21 +118,13 @@ export enum Status {
 
 export type Student = {
   __typename?: 'Student';
-  id: Scalars['Int'];
+  user: User;
   regNo: Scalars['String'];
-  email: Scalars['String'];
-  password: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName?: Maybe<Scalars['String']>;
-  department: Scalars['String'];
-  institution: Scalars['String'];
-  contact: Scalars['String'];
-  profilePhoto: Scalars['String'];
-  appliedUniversities?: Maybe<Array<Maybe<Scalars['String']>>>;
+  appliedUniversities: Array<Maybe<Scalars['String']>>;
   acceptedUniversity?: Maybe<Scalars['String']>;
-  testScores?: Maybe<Array<Maybe<TestScore>>>;
-  lorApplications?: Maybe<Array<Maybe<LorApplication>>>;
-  reminders?: Maybe<Array<Maybe<Reminder>>>;
+  testScores: Array<Maybe<TestScore>>;
+  lorApplications: Array<Maybe<LorApplication>>;
+  reminders: Array<Maybe<Reminder>>;
 };
 
 export type TestScore = {
@@ -102,6 +134,24 @@ export type TestScore = {
   score: Scalars['String'];
 };
 
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['Int'];
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  department: Scalars['String'];
+  institution: Scalars['String'];
+  contact: Scalars['String'];
+  profilePhoto: Scalars['String'];
+  userType: UserType;
+};
+
+export enum UserType {
+  Student = 'STUDENT',
+  Faculty = 'FACULTY'
+}
 
 
 
@@ -188,6 +238,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Faculty: ResolverTypeWrapper<Faculty>;
   LORApplication: ResolverTypeWrapper<LorApplication>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Reminder: ResolverTypeWrapper<Reminder>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -195,6 +246,8 @@ export type ResolversTypes = {
   Student: ResolverTypeWrapper<Student>;
   TestScore: ResolverTypeWrapper<TestScore>;
   Upload: ResolverTypeWrapper<Scalars['Upload']>;
+  User: ResolverTypeWrapper<User>;
+  UserType: UserType;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -205,12 +258,14 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Faculty: Faculty;
   LORApplication: LorApplication;
+  Mutation: {};
   Query: {};
   Reminder: Reminder;
   Boolean: Scalars['Boolean'];
   Student: Student;
   TestScore: TestScore;
   Upload: Scalars['Upload'];
+  User: User;
 };
 
 export type CacheControlDirectiveArgs = {   maxAge?: Maybe<Scalars['Int']>;
@@ -229,17 +284,9 @@ export type DepartmentResolvers<ContextType = any, ParentType extends ResolversP
 };
 
 export type FacultyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Faculty'] = ResolversParentTypes['Faculty']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  department?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  institution?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  contact?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  profilePhoto?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lorApplications?: Resolver<Maybe<Array<Maybe<ResolversTypes['LORApplication']>>>, ParentType, ContextType>;
-  lorDraftTemplates?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  lorApplications?: Resolver<Array<Maybe<ResolversTypes['LORApplication']>>, ParentType, ContextType>;
+  lorDraftTemplates?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -256,8 +303,17 @@ export type LorApplicationResolvers<ContextType = any, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  loginUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationLoginUserArgs, 'email' | 'password'>>;
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email' | 'firstName' | 'department' | 'institution' | 'contact' | 'profilePhoto' | 'userType'>>;
+  createLORApplication?: Resolver<ResolversTypes['LORApplication'], ParentType, ContextType, RequireFields<MutationCreateLorApplicationArgs, 'dueDate' | 'statementOfPurpose' | 'course' | 'university' | 'studentID' | 'facultyID' | 'status'>>;
+  createReminder?: Resolver<ResolversTypes['Reminder'], ParentType, ContextType, RequireFields<MutationCreateReminderArgs, 'message' | 'facultyID' | 'studentID'>>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getDepartments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Department']>>>, ParentType, ContextType>;
+  getDepartments?: Resolver<Array<Maybe<ResolversTypes['Department']>>, ParentType, ContextType>;
+  getFaculties?: Resolver<Array<Maybe<ResolversTypes['Faculty']>>, ParentType, ContextType>;
+  getApplicationsByFacultyID?: Resolver<Array<Maybe<ResolversTypes['LORApplication']>>, ParentType, ContextType>;
 };
 
 export type ReminderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Reminder'] = ResolversParentTypes['Reminder']> = {
@@ -270,21 +326,13 @@ export type ReminderResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type StudentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Student'] = ResolversParentTypes['Student']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   regNo?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  department?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  institution?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  contact?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  profilePhoto?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  appliedUniversities?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  appliedUniversities?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   acceptedUniversity?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  testScores?: Resolver<Maybe<Array<Maybe<ResolversTypes['TestScore']>>>, ParentType, ContextType>;
-  lorApplications?: Resolver<Maybe<Array<Maybe<ResolversTypes['LORApplication']>>>, ParentType, ContextType>;
-  reminders?: Resolver<Maybe<Array<Maybe<ResolversTypes['Reminder']>>>, ParentType, ContextType>;
+  testScores?: Resolver<Array<Maybe<ResolversTypes['TestScore']>>, ParentType, ContextType>;
+  lorApplications?: Resolver<Array<Maybe<ResolversTypes['LORApplication']>>, ParentType, ContextType>;
+  reminders?: Resolver<Array<Maybe<ResolversTypes['Reminder']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -299,16 +347,31 @@ export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
   name: 'Upload';
 }
 
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  department?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  institution?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  contact?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  profilePhoto?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userType?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   DateTime?: GraphQLScalarType;
   Department?: DepartmentResolvers<ContextType>;
   Faculty?: FacultyResolvers<ContextType>;
   LORApplication?: LorApplicationResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Reminder?: ReminderResolvers<ContextType>;
   Student?: StudentResolvers<ContextType>;
   TestScore?: TestScoreResolvers<ContextType>;
   Upload?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
 };
 
 
