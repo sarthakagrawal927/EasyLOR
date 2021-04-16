@@ -20,7 +20,7 @@ const typeDefs = apollo_server_1.gql `
 		email: String!
 		firstName: String!
 		lastName: String
-		department: String!
+		department: Department!
 		institution: String!
 		contact: String!
 		profilePhoto: String!
@@ -78,6 +78,7 @@ const typeDefs = apollo_server_1.gql `
 		getDepartments: [Department]!
 		getFaculties: [Faculty]!
 		getApplicationsByFacultyID: [LORApplication]!
+		getStudentByUserID(id: Int!): Student
 	}
 
 	type Mutation {

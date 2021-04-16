@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE "Reminder" ADD FOREIGN KEY ("facultyID") REFERENCES "Faculty"("userID") ON DELETE CASCADE ON UPDATE CASCADE;

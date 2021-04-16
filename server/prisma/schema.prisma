@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -12,6 +12,11 @@ enum Status {
   PENDING
   GRANTED
   REJECTED
+}
+
+enum UserType {
+  STUDENT
+  FACULTY
 }
 
 model LORApplication {
@@ -38,6 +43,7 @@ model Reminder {
   viewed    Boolean
 
   student Student @relation(fields: [studentID], references: [userID])
+  faculty Faculty @relation(fields: [facultyID], references: [userID])
   @@unique([studentID, facultyID])
 }
 
@@ -70,7 +76,7 @@ model User {
   Faculty      Faculty[]
   department   Department @relation(fields: [departmentID], references: [id])
   departmentID Int
-  isFaculty    Boolean
+  userType     UserType
 }
 
 model Student {
@@ -89,4 +95,5 @@ model Faculty {
   userID            Int              @id
   lorApplications   LORApplication[]
   lorDraftTemplates String[]
+  reminders          Reminder[]
 }
