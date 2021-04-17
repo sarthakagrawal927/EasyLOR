@@ -49,7 +49,7 @@ const typeDefs = gql`
 		draftURL: String
 		studentID: Int!
 		facultyID: Int!
-		status: Status!
+		status: Status
 	}
 
 	type Student {
@@ -100,7 +100,6 @@ const typeDefs = gql`
 			draftURL: String
 			studentID: Int!
 			facultyID: Int!
-			status: Status!
 		): LORApplication!
 		createReminder(
 			message: String!

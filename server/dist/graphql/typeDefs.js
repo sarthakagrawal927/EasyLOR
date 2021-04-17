@@ -50,7 +50,7 @@ const typeDefs = apollo_server_1.gql `
 		draftURL: String
 		studentID: Int!
 		facultyID: Int!
-		status: Status!
+		status: Status
 	}
 
 	type Student {
@@ -101,7 +101,6 @@ const typeDefs = apollo_server_1.gql `
 			draftURL: String
 			studentID: Int!
 			facultyID: Int!
-			status: Status!
 		): LORApplication!
 		createReminder(
 			message: String!

@@ -25,7 +25,7 @@ model LORApplication {
   statementOfPurpose String
   course             String
   university         String
-  draftURL           String
+  draftURL           String?
   studentID          Int
   facultyID          Int
   status             Status   @default(PENDING)
@@ -76,7 +76,7 @@ model User {
   Faculty      Faculty[]
   department   Department @relation(fields: [departmentID], references: [id])
   departmentID Int
-  userType     UserType
+  userType     UserType   @default(STUDENT)
 }
 
 model Student {
@@ -95,5 +95,5 @@ model Faculty {
   userID            Int              @id
   lorApplications   LORApplication[]
   lorDraftTemplates String[]
-  reminders          Reminder[]
+  reminders         Reminder[]
 }
