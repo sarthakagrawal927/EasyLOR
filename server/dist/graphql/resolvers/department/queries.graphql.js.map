@@ -1,1 +1,0 @@
-{"version":3,"file":"queries.graphql.js","sourceRoot":"","sources":["../../../../src/graphql/resolvers/department/queries.graphql.ts"],"names":[],"mappings":";;;;;;;;;;;;AAEa,QAAA,OAAO,GAA8C;IACxD,cAAc,CAAC,CAAC,EAAE,EAAE,EAAE,EAAE,MAAM,EAAE;;YAClC,OAAO,MAAM,MAAM,CAAC,UAAU,CAAC,QAAQ,EAAE,CAAC;QAC9C,CAAC;KAAA;CACJ,CAAC"}

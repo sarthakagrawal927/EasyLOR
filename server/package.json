@@ -7,7 +7,8 @@
         "dev": "concurrently \"yarn watch\" \"nodemon dist/server.js\" \"yarn codegen --watch\"",
         "watch": "tsc -w",
         "start": "node dist/server.js",
-        "codegen": "graphql-codegen --config codegen.yml"
+        "codegen": "graphql-codegen --config codegen.yml",
+        "postinstall": "prisma generate"
     },
     "author": "Karan Hejmadi",
     "license": "MIT",
@@ -18,11 +19,11 @@
         "@graphql-codegen/typescript-resolvers": "^1.19.0",
         "@types/node": "^14.14.37",
         "concurrently": "^6.0.1",
-        "prisma": "^2.20.1",
+        "prisma": "^2.21.1",
         "typescript": "^4.2.3"
     },
     "dependencies": {
-        "@prisma/client": "^2.20.1",
+        "@prisma/client": "^2.21.1",
         "apollo-server": "^2.22.2",
         "dotenv": "^8.2.0",
         "graphql": "^15.5.0"
