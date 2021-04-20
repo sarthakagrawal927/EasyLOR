@@ -1,7 +1,8 @@
 import departmentResolvers from "./department";
 import lorAppResolvers from "./lorApplication";
 import studentResolvers from "./student";
-import userResolvers from "./user/index";
+import userResolvers from "./user";
+import reminderResolvers from './reminder/index';
 
 const resolvers = {
     Query: {
@@ -12,6 +13,7 @@ const resolvers = {
     Mutation: {
         ...lorAppResolvers.Mutation,
         ...userResolvers.Mutation,
+		...reminderResolvers.Mutation,
     },
 };
 
