@@ -66,6 +66,7 @@ const typeDefs = gql`
         user: User!
         lorApplications: [LORApplication]!
         lorDraftTemplates: [String]!
+        reminders: [Reminder]!
     }
 
     type Department {
@@ -78,6 +79,7 @@ const typeDefs = gql`
         getFaculties: [Faculty]!
         getApplicationsByFacultyID: [LORApplication]!
         getStudentByUserID(id: Int!): Student
+        getFacultyByUserID(id:Int!): Faculty
     }
 
     input CreateUserInput {
