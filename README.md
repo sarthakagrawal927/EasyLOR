@@ -21,10 +21,11 @@ If server is already running, save the codegen.yml file to regenerate types
 
 ## Debugging
 
-To check the port:
+To kill the port if EADDRINUSE error:
 
 ```bash
-lsof -i TCP:4000
+lsof -i TCP:PORT_NUMBER
+kill PID
 ```
 
 Checking the DB:
