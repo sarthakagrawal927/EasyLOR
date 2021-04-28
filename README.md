@@ -24,7 +24,6 @@ If server is already running, save the codegen.yml file to regenerate types
 To check the port:
 
 ```bash
-#!/bin/bash
 lsof -i TCP:4000
 ```
 
