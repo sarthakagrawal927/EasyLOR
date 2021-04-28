@@ -1,13 +1,23 @@
-# NotSoEasyLOR
+# EasyLOR
+
+
+Go to client:
+
+```bash
+yarn # to install dependencies
+yarn dev # start the server
+```
 
 Go to server:
 
 ```bash
-#!/bin/bash
-yarn install
-npx prisma generate
-yarn dev
+yarn # to install dependencies
+npx prisma generate # types for prisma models
+yarn dev # start the server
 ```
+
+## Generating types in server
+If server is already running, save the codegen.yml file to regenerate types
 
 ## Debugging
 
@@ -21,11 +31,10 @@ lsof -i TCP:4000
 Checking the DB:
 
 ```bash
-#!/bin/bash
 npx prisma studio
 ```
 
-Clearing DB:
+Regenerating DB:
 
 ```bash
 npx prisma migrate
