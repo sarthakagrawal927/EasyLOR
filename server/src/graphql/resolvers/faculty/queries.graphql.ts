@@ -15,7 +15,6 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
                 lorApplications:true,
             }
         });
-        // console.log(faculties)
         return (faculties ?? []);
     },
 
