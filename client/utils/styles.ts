@@ -7,6 +7,10 @@ export const colors = {
     lightGray: "#E4E4E4",
 };
 export const shadow = {
-    buttonShadow: "box-shadow: 0px 4px 8px rgba(69, 68, 68, 0.25);",
-    containerShadow: "box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);",
+    buttonShadow: "0px 4px 8px rgba(69, 68, 68, 0.25);",
+    containerShadow: "0px 8px 24px rgba(149, 157, 165, 0.2);",
+};
+
+export const font = {
+    body: '"Nunito", sans-serif !important',
 };

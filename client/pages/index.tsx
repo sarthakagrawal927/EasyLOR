@@ -1,3 +1,4 @@
-export default function Home() {
-    return <div>Home</div>;
+import Home from "./home";
+export default function Root() {
+    return <Home />;
 }
