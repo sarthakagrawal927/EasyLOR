@@ -62,7 +62,7 @@ type CreateUserInput = {
     institution: string;
     password: string;
     profilePhoto: string;
-    regNo: string;
+    regNo?: string | null;
     userType: string;
     lastName?: string | null;
 };
@@ -129,7 +129,7 @@ export const validateCreateUserInput = async ({
     if (userType === "STUDENT") {
         const existingUserWithSameRegNo = await prisma.student.findUnique({
             where: {
-                regNo: regNo,
+                regNo: regNo ?? undefined,
             },
         });
         if (existingUserWithSameRegNo) {

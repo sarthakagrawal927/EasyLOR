@@ -40,7 +40,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
                 ...newUser,
                 Student: {
                     create: {
-                        regNo: createUserInput.regNo,
+                        regNo: createUserInput.regNo ?? "",
                     },
                 },
             };

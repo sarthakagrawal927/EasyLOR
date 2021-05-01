@@ -92,7 +92,7 @@ const typeDefs = gql`
     contact: String!
     profilePhoto: String!
     userType: UserType!
-    regNo: String!
+    regNo: String
   }
 
   type UserReturn {

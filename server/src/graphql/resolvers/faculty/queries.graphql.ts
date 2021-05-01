@@ -1,24 +1,27 @@
 import { ApolloContext } from "../../../context";
 import { Faculty, QueryResolvers } from "@/types";
 export const queries: QueryResolvers<ApolloContext, Faculty> = {
-
-    async getFaculties(_,__, { prisma }) {
-        const faculties : Faculty[] | null = await prisma.faculty.findMany({
+    async getFaculties(_, __, { prisma }) {
+        const faculties: Faculty[] | null = await prisma.faculty.findMany({
             select: {
                 user: {
                     include: {
-                        department: true
-                    }
+                        department: true,
+                    },
                 },
                 lorDraftTemplates: true,
                 reminders: true,
-                lorApplications:true,
-            }
+                lorApplications: true,
+            },
         });
         return (faculties ?? []);
     },
 
-    async getFacultyByUserID(_parent: Faculty, args: { id: number }, { prisma }: ApolloContext) {
+    async getFacultyByUserID(
+        _parent: Faculty,
+        args: { id: number },
+        { prisma }: ApolloContext
+    ) {
         const faculty = await prisma.faculty.findUnique({
             where: {
                 userID: args.id,
@@ -26,13 +29,13 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
             include: {
                 user: {
                     include: {
-                        department: true
-                    }
+                        department: true,
+                    },
                 },
                 lorApplications: true,
                 reminders: true,
             },
         });
         return faculty;
-    }
+    },
 };
