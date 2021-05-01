@@ -2,15 +2,12 @@ import { ApolloContext } from "../../../context";
 import { Reminder, MutationResolvers } from "@/types";
 
 export const mutations: MutationResolvers<ApolloContext, Reminder> = {
-	async createReminder(_, args, { prisma }: ApolloContext) {
-		
-
+	async createReminder(_, { createReminderInput }, { prisma }: ApolloContext) {
 		const reminder: Reminder = await prisma.reminder.create({
 			data: {
-				message:args.message,
-				studentID: args.studentID,
-				facultyID: args.facultyID,
-			
+				message: createReminderInput.message,
+				studentID: createReminderInput.studentID,
+				facultyID: createReminderInput.facultyID,
 			},
 		});
 

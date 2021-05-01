@@ -1,45 +1,35 @@
 import { ApolloContext } from "../../../context";
-import { LorApplication, MutationResolvers, Status } from "@/types";
+import { LorApplication, MutationResolvers } from "@/types";
 
 export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
-	async createLORApplication(_, args, { prisma }: ApolloContext) {
-		const draftURL: string | undefined = args.draftURL ?? undefined;
-
+	async createLORApplication(_, { createLORApplicationInput }, { prisma }: ApolloContext) {
 		const lorApp: LorApplication = await prisma.lORApplication.create({
-			data: {
-				dueDate: args.dueDate,
-				statementOfPurpose: args.statementOfPurpose,
-				course: args.course,
-				university: args.university,
-				draftURL: draftURL,
-				studentID: args.studentID,
-				facultyID: args.facultyID,
+			data: {	
+				dueDate: createLORApplicationInput.dueDate,
+				statementOfPurpose: createLORApplicationInput.statementOfPurpose,
+				course: createLORApplicationInput.course,
+				university: createLORApplicationInput.university,
+				draftURL: createLORApplicationInput.draftURL ?? undefined,
+				studentID: createLORApplicationInput.studentID,
+				facultyID: createLORApplicationInput.facultyID,
 			},
 		});
 
 		return lorApp;
 	},
 
-	async updateLOR(_, args, { prisma }: ApolloContext) {
-		const dueDate: Date | undefined = args.dueDate ?? undefined;
-		const statementOfPurpose: string | undefined =
-			args.statementOfPurpose ?? undefined;
-		const course: string | undefined = args.course ?? undefined;
-		const university: string | undefined = args.university ?? undefined;
-		const draftURL: string | undefined = args.draftURL ?? undefined;
-		const status: Status | undefined = args.status ?? undefined;
-
+	async updateLOR(_, { updateLORInput }, { prisma }: ApolloContext) {
 		const lorApp: LorApplication = await prisma.lORApplication.update({
 			where: {
-				id: args.id,
+				id: updateLORInput.id,
 			},
 			data: {
-				dueDate: dueDate,
-				statementOfPurpose: statementOfPurpose,
-				course: course,
-				university: university,
-				draftURL: draftURL,
-				status: status,
+				dueDate: updateLORInput.dueDate ?? undefined,
+				statementOfPurpose: updateLORInput.statementOfPurpose ?? undefined,
+				course: updateLORInput.course ?? undefined,
+				university: updateLORInput.university ?? undefined,
+				draftURL: updateLORInput.draftURL ?? undefined,
+				status: updateLORInput.status ?? undefined
 			},
 		});
 

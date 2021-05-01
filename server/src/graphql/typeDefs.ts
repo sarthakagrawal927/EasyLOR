@@ -107,30 +107,39 @@ const typeDefs = gql`
     token: String!
   }
 
+  input CreateLORApplicationInput {
+    dueDate: DateTime!
+    statementOfPurpose: String!
+    course: String!
+    university: String!
+    draftURL: String
+    studentID: Int!
+    facultyID: Int!
+  }
+
+  input UpdateLORInput {
+    id: Int!
+    dueDate: DateTime
+    statementOfPurpose: String
+    course: String
+    university: String
+    draftURL: String
+    status: Status
+  }
+
+  input CreateReminderInput {
+    message: String!, 
+    facultyID: Int!, 
+    studentID: Int!
+  }
+
   type Mutation {
     loginUser(email: String!, password: String!): UserReturn!
     createUser(createUserInput: CreateUserInput!): UserReturn!
-    createLORApplication(
-      dueDate: DateTime!
-      statementOfPurpose: String!
-      course: String!
-      university: String!
-      draftURL: String
-      studentID: Int!
-      facultyID: Int!
-      status: Status!
-    ): LORApplication!
-    createReminder(message: String!, facultyID: Int!, studentID: Int!): Reminder!
+    createLORApplication(createLORApplicationInput: CreateLORApplicationInput!): LORApplication!
+    createReminder(createReminderInput: CreateReminderInput!): Reminder!
 
-    updateLOR(
-      id: Int!
-      dueDate: DateTime
-      statementOfPurpose: String
-      course: String
-      university: String
-      draftURL: String
-      status: Status
-    ): LORApplication!
+    updateLOR(updateLORInput: UpdateLORInput!): LORApplication!
   }
 `;
 export default typeDefs;
