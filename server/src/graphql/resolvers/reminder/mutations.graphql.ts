@@ -13,4 +13,18 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 
 		return reminder;
 	},
+
+	async updateReminder(_, { updateReminderInput }, { prisma } : ApolloContext) {
+		const reminder: Reminder = await prisma.reminder.update({
+			where: {
+				id: updateReminderInput.id
+			},
+			data: {
+				message: updateReminderInput.message ?? undefined,
+				viewed: updateReminderInput.viewed ?? undefined
+			}
+		})
+
+		return reminder;
+	}
 };

@@ -62,25 +62,25 @@ const typeDefs = gql`
     reminders: [Reminder]!
   }
 
-    type Faculty {
-        user: User!
-        lorApplications: [LORApplication]!
-        lorDraftTemplates: [String]!
-        reminders: [Reminder]!
-    }
+  type Faculty {
+    user: User!
+    lorApplications: [LORApplication]!
+    lorDraftTemplates: [String]!
+    reminders: [Reminder]!
+  }
 
   type Department {
     id: Int!
     name: String!
   }
 
-    type Query {
-        getDepartments: [Department]!
-        getFaculties: [Faculty]!
-        getApplicationsByFacultyID: [LORApplication]!
-        getStudentByUserID(id: Int!): Student
-        getFacultyByUserID(id:Int!): Faculty
-    }
+  type Query {
+    getDepartments: [Department]!
+    getFaculties: [Faculty]!
+    getApplicationsByFacultyID: [LORApplication]!
+    getStudentByUserID(id: Int!): Student
+    getFacultyByUserID(id:Int!): Faculty
+  }
 
   input CreateUserInput {
     email: String!
@@ -133,6 +133,12 @@ const typeDefs = gql`
     studentID: Int!
   }
 
+  input UpdateReminderInput {
+    id: Int!
+    message: String
+    viewed: Boolean
+  }
+
   type Mutation {
     loginUser(email: String!, password: String!): UserReturn!
     createUser(createUserInput: CreateUserInput!): UserReturn!
@@ -140,6 +146,7 @@ const typeDefs = gql`
     createReminder(createReminderInput: CreateReminderInput!): Reminder!
 
     updateLOR(updateLORInput: UpdateLORInput!): LORApplication!
+    updateReminder(updateReminderInput: UpdateReminderInput!): Reminder!
   }
 `;
 export default typeDefs;
