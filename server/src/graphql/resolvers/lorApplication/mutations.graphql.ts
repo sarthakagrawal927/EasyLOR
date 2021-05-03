@@ -1,10 +1,19 @@
 import { ApolloContext } from "../../../context";
 import { LorApplication, MutationResolvers } from "@/types";
+import { validateCreateLORApplicationInput, validateUpdateLORApplicationInput } from "./utils";
+import { UserInputError } from "apollo-server";
 
 export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 	async createLORApplication(_, { createLORApplicationInput }, { prisma }: ApolloContext) {
+		const { errors, isValid } = await validateCreateLORApplicationInput({
+			...createLORApplicationInput,
+		});
+		if (!isValid) {
+			throw new UserInputError("Errors", { errors });
+		}
+
 		const lorApp: LorApplication = await prisma.lORApplication.create({
-			data: {	
+			data: {
 				dueDate: createLORApplicationInput.dueDate,
 				statementOfPurpose: createLORApplicationInput.statementOfPurpose,
 				course: createLORApplicationInput.course,
@@ -19,6 +28,13 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 	},
 
 	async updateLOR(_, { updateLORInput }, { prisma }: ApolloContext) {
+		const { errors, isValid } = await validateUpdateLORApplicationInput({
+			...updateLORInput,
+		});
+		if (!isValid) {
+			throw new UserInputError("Errors", { errors });
+		}
+
 		const lorApp: LorApplication = await prisma.lORApplication.update({
 			where: {
 				id: updateLORInput.id,
@@ -29,7 +45,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 				course: updateLORInput.course ?? undefined,
 				university: updateLORInput.university ?? undefined,
 				draftURL: updateLORInput.draftURL ?? undefined,
-				status: updateLORInput.status ?? undefined
+				status: updateLORInput.status ?? undefined,
 			},
 		});
 
