@@ -1,8 +1,17 @@
 import { ApolloContext } from "../../../context";
 import { Reminder, MutationResolvers } from "@/types";
+import { validateCreateReminderInput, validateUpdateReminderInput } from "./utils";
+import { UserInputError } from "apollo-server";
 
 export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 	async createReminder(_, { createReminderInput }, { prisma }: ApolloContext) {
+		const { errors, isValid } = await validateCreateReminderInput({
+			...createReminderInput,
+		});
+		if (!isValid) {
+			throw new UserInputError("Errors", { errors });
+		}
+
 		const reminder: Reminder = await prisma.reminder.create({
 			data: {
 				message: createReminderInput.message,
@@ -14,17 +23,24 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 		return reminder;
 	},
 
-	async updateReminder(_, { updateReminderInput }, { prisma } : ApolloContext) {
+	async updateReminder(_, { updateReminderInput }, { prisma }: ApolloContext) {
+		const { errors, isValid } = await validateUpdateReminderInput({
+			...updateReminderInput,
+		});
+		if (!isValid) {
+			throw new UserInputError("Errors", { errors });
+		}
+
 		const reminder: Reminder = await prisma.reminder.update({
 			where: {
-				id: updateReminderInput.id
+				id: updateReminderInput.id,
 			},
 			data: {
 				message: updateReminderInput.message ?? undefined,
-				viewed: updateReminderInput.viewed ?? undefined
-			}
-		})
+				viewed: updateReminderInput.viewed ?? undefined,
+			},
+		});
 
 		return reminder;
-	}
+	},
 };
