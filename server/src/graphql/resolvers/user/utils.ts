@@ -1,163 +1,173 @@
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { CreateUserInput, LoginUserInput } from "@/types";
+import { ApolloContext, context } from "../../../context";
 
-const prisma = new PrismaClient();
+const { prisma }: ApolloContext = context;
 
 type LoginError = {
-    email: string | null;
-    password: string | null;
-};
-
-export const validateLoginInput = async (email: string, password: string) => {
-    const errors: LoginError = {
-        email: null,
-        password: null,
-    };
-    if (email.trim() === "") {
-        errors.email = "Email must not be empty";
-    } else {
-        const isEmail: RegExp = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
-        if (!email.match(isEmail)) {
-            errors.email = "Email must be valid email";
-        }
-    }
-    if (password === "") {
-        errors.password = "Password must not be empty";
-    } else {
-        const user = await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        });
-        if (!user) errors.email = "User not found";
-        else {
-            const match = await bcrypt.compare(password, user?.password!);
-            if (!match) errors.password = "Invalid password";
-        }
-    }
-    return {
-        errors,
-        isValid: Object.values(errors).every((value) => value === null),
-    };
+	email: string | null;
+	password: string | null;
 };
 
 type CreateUserError = {
-    contact: string | null;
-    departmentID: string | null;
-    email: string | null;
-    firstName: string | null;
-    institution: string | null;
-    password: string | null;
-    profilePhoto: string | null;
-    regNo: string | null;
-    userType: string | null;
+	contact: string | null;
+	departmentID: string | null;
+	email: string | null;
+	firstName: string | null;
+	institution: string | null;
+	password: string | null;
+	profilePhoto: string | null;
+	regNo: string | null;
+	userType: string | null;
 };
 
-type CreateUserInput = {
-    contact: string;
-    departmentID: number;
-    email: string;
-    firstName: string;
-    institution: string;
-    password: string;
-    profilePhoto: string;
-    regNo?: string | null;
-    userType: string;
-    lastName?: string | null;
+type PayloadData = {
+	id: number;
+	email: string;
+	userType: "STUDENT" | "FACULTY";
 };
 
 export const validateCreateUserInput = async ({
-    contact,
-    departmentID,
-    email,
-    firstName,
-    institution,
-    password,
-    profilePhoto,
-    regNo,
-    userType,
+	email,
+	password,
+	firstName,
+	departmentID,
+	institution,
+	contact,
+	profilePhoto,
+	regNo,
+	userType,
 }: CreateUserInput) => {
-    const errors: CreateUserError = {
-        contact: null,
-        departmentID: null,
-        email: null,
-        firstName: null,
-        institution: null,
-        password: null,
-        profilePhoto: null,
-        regNo: null,
-        userType: null,
-    };
-    const isPhoneNumber: RegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+	const errors: CreateUserError = {
+		email: null,
+		password: null,
+		firstName: null,
+		departmentID: null,
+		institution: null,
+		contact: null,
+		profilePhoto: null,
+		regNo: null,
+		userType: null,
+	};
 
-    if (email.trim() === "") {
-        errors.email = "Email must not be empty";
-    } else {
-        const isEmail: RegExp = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
-        if (!email.match(isEmail)) errors.email = "Email must be a valid email";
-    }
+	const isPhoneNumber: RegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+	const isEmail: RegExp = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
 
-    if (password === "") errors.password = "Password must not be empty";
-    else if (password.length < 5)
-        errors.password = "Password must be at least 5 characters";
+	if (email.trim() === "") {
+		errors.email = "Email must not be empty";
+	} else if (!email.match(isEmail)) errors.email = "Email must be a valid email";
 
-    if (!contact.trim().match(isPhoneNumber))
-        errors.contact = "Contact is not a valid phone number";
+	if (password.trim() === "") errors.password = "Password must not be empty";
+	else if (password.length < 5) errors.password = "Password must be at least 5 characters";
 
-    if (departmentID.toString().trim() === "")
-        errors.departmentID = "Department ID must not be empty";
+	if (firstName.trim() === "") errors.firstName = "First name should not be empty";
 
-    if (firstName === "") errors.firstName = "First name should not be empty";
+	if (departmentID.toString().trim() === "") errors.departmentID = "Department ID must not be empty";
 
-    if (institution === "") errors.institution = "Institution cannot be empty";
+	if (institution.trim() === "") errors.institution = "Institution cannot be empty";
 
-    if (profilePhoto === "")
-        errors.profilePhoto === "Profile photo cannot be empty";
+	if (!contact.trim().match(isPhoneNumber)) errors.contact = "Contact is not a valid phone number";
 
-    if (userType === "STUDENT" && regNo === "")
-        errors.regNo = "Registration number is required for students";
+	if (profilePhoto.trim() === "") errors.profilePhoto === "Profile photo cannot be empty";
 
-    const existingUserWithSameEmail = await prisma.user.findUnique({
-        where: {
-            email: email,
-        },
-    });
-    if (existingUserWithSameEmail) {
-        errors.email = "User with this email is already taken";
-    }
-    if (userType === "STUDENT") {
-        const existingUserWithSameRegNo = await prisma.student.findUnique({
-            where: {
-                regNo: regNo ?? undefined,
-            },
-        });
-        if (existingUserWithSameRegNo) {
-            errors.regNo =
-                "Student with this registration number is already registered";
-        }
-    }
-    return {
-        errors,
-        isValid: Object.values(errors).every((value) => value === null),
-    };
+	if (userType !== "STUDENT" && userType !== "FACULTY") {
+		errors.userType = "userType is not among accepted types";
+	}
+
+	if (userType === "STUDENT") {
+		if (regNo?.trim() === "" || regNo == null) {
+			errors.regNo = "Registration number is required for students";
+		} else {
+			const existingUserWithSameRegNo = await prisma.student.findUnique({
+				where: {
+					regNo: regNo ?? undefined,
+				},
+			});
+			if (existingUserWithSameRegNo) {
+				errors.regNo = "Student with this registration number is already registered";
+			}
+		}
+	}
+
+	const existingUserWithSameEmail = await prisma.user.findUnique({
+		where: {
+			email: email,
+		},
+	});
+	if (existingUserWithSameEmail) {
+		errors.email = "User with this email is already taken";
+	}
+
+	const existingUserWithSameContact = await prisma.user.findUnique({
+		where: {
+			contact: contact,
+		},
+	});
+	if (existingUserWithSameContact) {
+		errors.contact = "User with this contact is already taken";
+	}
+
+	const existingUserWithSameProfilePhoto = await prisma.user.findUnique({
+		where: {
+			profilePhoto: profilePhoto,
+		},
+	});
+	if (existingUserWithSameProfilePhoto) {
+		errors.profilePhoto = "User with this Profile Photo is already taken";
+	}
+
+	return {
+		errors: errors,
+		isValid: Object.values(errors).every(value => value === null),
+	};
 };
-type PayloadData = {
-    id: number;
-    email: string;
-    userType: "STUDENT" | "FACULTY";
+
+export const validateLoginInput = async ({ email, password }: LoginUserInput) => {
+	const errors: LoginError = {
+		email: null,
+		password: null,
+	};
+
+	const isEmail: RegExp = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+
+	if (email.trim() === "") {
+		errors.email = "Email must not be empty";
+	} else if (!email.match(isEmail)) {
+		errors.email = "Email must be valid email";
+	} else if (password.trim() === "") {
+		errors.password = "Password must not be empty";
+	} else {
+		const user = await prisma.user.findUnique({
+			where: {
+				email: email,
+			},
+		});
+
+		if (!user) {
+			errors.email = "User not found";
+		} else {
+			const match = await bcrypt.compare(password, user?.password!);
+			if (!match) errors.password = "Invalid password";
+		}
+	}
+
+	return {
+		errors: errors,
+		isValid: Object.values(errors).every(value => value === null),
+	};
 };
 
 export function generateToken(payload: PayloadData) {
-    return jwt.sign(
-        {
-            id: payload.id,
-            email: payload.email,
-            userType: payload.userType,
-        },
-        process.env.SECRET_KEY!,
-        {
-            expiresIn: "2h",
-        }
-    );
+	return jwt.sign(
+		{
+			id: payload.id,
+			email: payload.email,
+			userType: payload.userType,
+		},
+		process.env.SECRET_KEY!,
+		{
+			expiresIn: "2h",
+		}
+	);
 }
