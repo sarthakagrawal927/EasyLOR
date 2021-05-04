@@ -1,5 +1,5 @@
 import { ApolloContext, context } from "../../../context";
-import { CreateLorApplicationInput, UpdateLorInput } from "@/types";
+import { CreateLorApplicationInput, UpdateLorApplicationInput } from "@/types";
 
 const { prisma }: ApolloContext = context;
 
@@ -22,6 +22,7 @@ type UpdateLORApplicationError = {
 	university: string | null;
 	draftURL: string | null;
 	empty: string | null;
+	application: string | null;
 };
 
 type DeleteLORApplicationError = {
@@ -114,7 +115,7 @@ export const validateUpdateLORApplicationInput = async ({
 	university,
 	draftURL,
 	status,
-}: UpdateLorInput) => {
+}: UpdateLorApplicationInput) => {
 	const errors: UpdateLORApplicationError = {
 		id: null,
 		dueDate: null,
@@ -123,6 +124,7 @@ export const validateUpdateLORApplicationInput = async ({
 		university: null,
 		draftURL: null,
 		empty: null,
+		application: null,
 	};
 
 	if (id.toString().trim() === "") {
@@ -134,6 +136,7 @@ export const validateUpdateLORApplicationInput = async ({
 			},
 		});
 		if (!lorApplication) errors.id = "Application with this ID does not exist";
+		else if (lorApplication.status !== "PENDING") errors.application = "Application cannot be updated";
 	}
 
 	if (dueDate?.trim() === "") {

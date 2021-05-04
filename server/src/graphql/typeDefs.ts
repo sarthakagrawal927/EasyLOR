@@ -122,7 +122,7 @@ const typeDefs = gql`
 		facultyID: Int!
 	}
 
-	input UpdateLORInput {
+	input UpdateLORApplicationInput {
 		id: Int!
 		dueDate: DateTime
 		statementOfPurpose: String
@@ -150,7 +150,7 @@ const typeDefs = gql`
 		createLORApplication(createLORApplicationInput: CreateLORApplicationInput!): LORApplication!
 		createReminder(createReminderInput: CreateReminderInput!): Reminder!
 
-		updateLOR(updateLORInput: UpdateLORInput!): LORApplication!
+		UpdateLORApplication(updateLORApplicationInput: UpdateLORApplicationInput!): LORApplication!
 		updateReminder(updateReminderInput: UpdateReminderInput!): Reminder!
 
 		deleteLORApplication(id: Int!): LORApplication!

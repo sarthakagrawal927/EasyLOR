@@ -15,6 +15,7 @@ type UpdateReminderError = {
 	message: string | null;
 	viewed: string | null;
 	empty: string | null;
+	reminder: string | null;
 };
 
 type DeleteReminderError = {
@@ -77,6 +78,7 @@ export const validateUpdateReminderInput = async ({ id, message, viewed }: Updat
 		message: null,
 		viewed: null,
 		empty: null,
+		reminder: null,
 	};
 
 	if (id.toString().trim() === "") {
@@ -88,6 +90,7 @@ export const validateUpdateReminderInput = async ({ id, message, viewed }: Updat
 			},
 		});
 		if (!reminder) errors.id = "Reminder with this ID does not exist";
+		else if (reminder.viewed === true) errors.reminder = "Reminder cannot be updated";
 	}
 
 	if (message?.trim() === "") errors.message = "Message cannot be empty";

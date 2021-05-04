@@ -31,9 +31,9 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 		return lorApp;
 	},
 
-	async updateLOR(_, { updateLORInput }, { prisma }: ApolloContext) {
+	async UpdateLORApplication(_, { updateLORApplicationInput }, { prisma }: ApolloContext) {
 		const { errors, isValid } = await validateUpdateLORApplicationInput({
-			...updateLORInput,
+			...updateLORApplicationInput,
 		});
 		if (!isValid) {
 			throw new UserInputError("Errors", { errors });
@@ -41,15 +41,15 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 
 		const lorApp: LorApplication = await prisma.lORApplication.update({
 			where: {
-				id: updateLORInput.id,
+				id: updateLORApplicationInput.id,
 			},
 			data: {
-				dueDate: updateLORInput.dueDate ?? undefined,
-				statementOfPurpose: updateLORInput.statementOfPurpose ?? undefined,
-				course: updateLORInput.course ?? undefined,
-				university: updateLORInput.university ?? undefined,
-				draftURL: updateLORInput.draftURL ?? undefined,
-				status: updateLORInput.status ?? undefined,
+				dueDate: updateLORApplicationInput.dueDate ?? undefined,
+				statementOfPurpose: updateLORApplicationInput.statementOfPurpose ?? undefined,
+				course: updateLORApplicationInput.course ?? undefined,
+				university: updateLORApplicationInput.university ?? undefined,
+				draftURL: updateLORApplicationInput.draftURL ?? undefined,
+				status: updateLORApplicationInput.status ?? undefined,
 			},
 		});
 
