@@ -1,6 +1,6 @@
 import { ApolloContext } from "../../../context";
 import { Reminder, MutationResolvers } from "@/types";
-import { validateCreateReminderInput, validateUpdateReminderInput } from "./utils";
+import { validateCreateReminderInput, validateUpdateReminderInput, validateDeleteReminder } from "./utils";
 import { UserInputError } from "apollo-server";
 
 export const mutations: MutationResolvers<ApolloContext, Reminder> = {
@@ -38,6 +38,21 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 			data: {
 				message: updateReminderInput.message ?? undefined,
 				viewed: updateReminderInput.viewed ?? undefined,
+			},
+		});
+
+		return reminder;
+	},
+
+	async deleteReminder(_, args: { id: number }, { prisma }: ApolloContext) {
+		const { errors, isValid } = await validateDeleteReminder(args.id);
+		if (!isValid) {
+			throw new UserInputError("Errors", { errors });
+		}
+
+		const reminder: Reminder = await prisma.reminder.delete({
+			where: {
+				id: args.id,
 			},
 		});
 

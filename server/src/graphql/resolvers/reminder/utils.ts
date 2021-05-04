@@ -17,6 +17,10 @@ type UpdateReminderError = {
 	empty: string | null;
 };
 
+type DeleteReminderError = {
+	id: string | null;
+};
+
 export const validateCreateReminderInput = async ({ message, studentID, facultyID }: CreateReminderInput) => {
 	const errors: CreateReminderError = {
 		message: null,
@@ -93,6 +97,27 @@ export const validateUpdateReminderInput = async ({ id, message, viewed }: Updat
 	}
 
 	if (message == null && viewed == null) errors.empty = "Nothing to update";
+
+	return {
+		errors: errors,
+		isValid: Object.values(errors).every(value => value === null),
+	};
+};
+
+export const validateDeleteReminder = async (id: number) => {
+	const errors: DeleteReminderError = {
+		id: null,
+	};
+	if (id.toString().trim() === "") {
+		errors.id = "ID cannot be empty";
+	} else {
+		const reminder = await prisma.reminder.findUnique({
+			where: {
+				id: id,
+			},
+		});
+		if (!reminder) errors.id = "Reminder with this ID does not exist";
+	}
 
 	return {
 		errors: errors,

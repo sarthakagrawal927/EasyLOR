@@ -1,6 +1,10 @@
 import { ApolloContext } from "../../../context";
 import { LorApplication, MutationResolvers } from "@/types";
-import { validateCreateLORApplicationInput, validateUpdateLORApplicationInput } from "./utils";
+import {
+	validateCreateLORApplicationInput,
+	validateDeleteLORApplication,
+	validateUpdateLORApplicationInput,
+} from "./utils";
 import { UserInputError } from "apollo-server";
 
 export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
@@ -46,6 +50,21 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 				university: updateLORInput.university ?? undefined,
 				draftURL: updateLORInput.draftURL ?? undefined,
 				status: updateLORInput.status ?? undefined,
+			},
+		});
+
+		return lorApp;
+	},
+
+	async deleteLORApplication(_, args: { id: number }, { prisma }: ApolloContext) {
+		const { errors, isValid } = await validateDeleteLORApplication(args.id);
+		if (!isValid) {
+			throw new UserInputError("Errors", { errors });
+		}
+
+		const lorApp: LorApplication = await prisma.lORApplication.delete({
+			where: {
+				id: args.id,
 			},
 		});
 

@@ -152,6 +152,9 @@ const typeDefs = gql`
 
 		updateLOR(updateLORInput: UpdateLORInput!): LORApplication!
 		updateReminder(updateReminderInput: UpdateReminderInput!): Reminder!
+
+		deleteLORApplication(id: Int!): LORApplication!
+		deleteReminder(id: Int!): Reminder!
 	}
 `;
 export default typeDefs;

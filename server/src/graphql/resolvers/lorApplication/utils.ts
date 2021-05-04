@@ -24,6 +24,10 @@ type UpdateLORApplicationError = {
 	empty: string | null;
 };
 
+type DeleteLORApplicationError = {
+	id: string | null;
+};
+
 export const validateCreateLORApplicationInput = async ({
 	dueDate,
 	statementOfPurpose,
@@ -160,6 +164,27 @@ export const validateUpdateLORApplicationInput = async ({
 		status == null
 	)
 		errors.empty = "Nothing to update";
+
+	return {
+		errors: errors,
+		isValid: Object.values(errors).every(value => value === null),
+	};
+};
+
+export const validateDeleteLORApplication = async (id: number) => {
+	const errors: DeleteLORApplicationError = {
+		id: null,
+	};
+	if (id.toString().trim() === "") {
+		errors.id = "ID cannot be empty";
+	} else {
+		const lorApp = await prisma.lORApplication.findUnique({
+			where: {
+				id: id,
+			},
+		});
+		if (!lorApp) errors.id = "LOR Application with this ID does not exist";
+	}
 
 	return {
 		errors: errors,
