@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Center } from "@chakra-ui/react";
+import { Box, Center, Button } from "@chakra-ui/react";
 import { shadow, colors, font } from "../../utils/styles";
 export const LoginContainer = styled(Center)`
     width: 100vw;
@@ -50,4 +50,8 @@ export const LoginForm = styled.form`
             filter: brightness(0.9);
         }
     }
+`;
+
+export const LoginButton = styled(Button)`
+    height: 3em;
 `;

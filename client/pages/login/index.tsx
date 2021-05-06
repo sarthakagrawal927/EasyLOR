@@ -3,27 +3,57 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Button,
     Heading,
+    FormErrorMessage,
 } from "@chakra-ui/react";
-import { LoginForm, LoginContainer, LoginFormContainer } from "./login.styled";
+import {
+    LoginForm,
+    LoginContainer,
+    LoginFormContainer,
+    LoginButton,
+} from "./login.styled";
+import { useLogin } from "./hooks";
 const Login: FC = () => {
+    const {
+        handleSubmit,
+        emailRegister,
+        passwordRegister,
+        errors,
+    } = useLogin();
     return (
         <LoginContainer>
             <LoginFormContainer variant='shadow'>
                 <Heading>Login</Heading>
-                <LoginForm>
+                <LoginForm onSubmit={handleSubmit}>
                     <FormControl id='email'>
                         <FormLabel>Email ID</FormLabel>
-                        <Input type='email' />
+                        <Input
+                            name={emailRegister?.name}
+                            type='email'
+                            ref={emailRegister?.ref}
+                            onChange={emailRegister?.onChange}
+                        />
+                        {errors.email && (
+                            <FormErrorMessage>{errors.email}</FormErrorMessage>
+                        )}
                     </FormControl>
                     <FormControl id='password'>
                         <FormLabel>Password</FormLabel>
-                        <Input type='password' />
+                        <Input
+                            name={passwordRegister?.name}
+                            type='password'
+                            ref={passwordRegister?.ref}
+                            onChange={passwordRegister?.onChange}
+                        />
+                        {errors.password && (
+                            <FormErrorMessage>
+                                {errors.password}
+                            </FormErrorMessage>
+                        )}
                     </FormControl>
-                    <Button variant='solid' type='submit'>
+                    <LoginButton type='submit' variant='solid'>
                         Login
-                    </Button>
+                    </LoginButton>
                 </LoginForm>
             </LoginFormContainer>
         </LoginContainer>
