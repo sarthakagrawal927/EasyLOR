@@ -132,6 +132,17 @@ const typeDefs = gql`
 		status: Status
 	}
 
+	input TestScoreInput {
+		exam: String!
+		score: String!
+	}
+	input UpdateStudentInput {
+		regNo: String!
+		appliedUniversities: [String!]
+		acceptedUniversity: String
+		testScores: [TestScoreInput!]
+	}
+
 	input CreateReminderInput {
 		message: String!
 		facultyID: Int!
@@ -150,8 +161,9 @@ const typeDefs = gql`
 		createLORApplication(createLORApplicationInput: CreateLORApplicationInput!): LORApplication!
 		createReminder(createReminderInput: CreateReminderInput!): Reminder!
 
-		UpdateLORApplication(updateLORApplicationInput: UpdateLORApplicationInput!): LORApplication!
+		updateLORApplication(updateLORApplicationInput: UpdateLORApplicationInput!): LORApplication!
 		updateReminder(updateReminderInput: UpdateReminderInput!): Reminder!
+		updateStudent(updateStudentInput: UpdateStudentInput!): Student!
 
 		deleteLORApplication(id: Int!): LORApplication!
 		deleteReminder(id: Int!): Reminder!

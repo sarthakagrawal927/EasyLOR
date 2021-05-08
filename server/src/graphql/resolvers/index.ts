@@ -16,6 +16,7 @@ const resolvers = {
         ...lorAppResolvers.Mutation,
         ...userResolvers.Mutation,
 		...reminderResolvers.Mutation,
+        ...studentResolvers.Mutation,
     },
 };
 

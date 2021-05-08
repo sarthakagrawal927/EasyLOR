@@ -80,14 +80,14 @@ model User {
 }
 
 model Student {
-  user                 User             @relation(fields: [userID], references: [id])
-  userID               Int              @id
-  regNo                String           @unique
-  appliedUniversities  String[]
-  acceptedUniversities String[]
-  testScores           TestScore[]
-  lorApplications      LORApplication[]
-  reminders            Reminder[]
+  user                User             @relation(fields: [userID], references: [id])
+  userID              Int              @id
+  regNo               String           @unique
+  appliedUniversities String[]
+  acceptedUniversity  String?
+  testScores          TestScore[]
+  lorApplications     LORApplication[]
+  reminders           Reminder[]
 }
 
 model Faculty {

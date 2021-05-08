@@ -31,7 +31,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 		return lorApp;
 	},
 
-	async UpdateLORApplication(_, { updateLORApplicationInput }, { prisma }: ApolloContext) {
+	async updateLORApplication(_, { updateLORApplicationInput }, { prisma }: ApolloContext) {
 		const { errors, isValid } = await validateUpdateLORApplicationInput({
 			...updateLORApplicationInput,
 		});
