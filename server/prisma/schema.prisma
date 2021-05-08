@@ -20,15 +20,18 @@ enum UserType {
 }
 
 model LORApplication {
-  id                 Int      @id @default(autoincrement())
+  id                 String   @id @default(uuid())
   dueDate            DateTime
   statementOfPurpose String
   course             String
   university         String
   draftURL           String?
-  studentID          Int
-  facultyID          Int
+  studentID          String
+  facultyID          String
   status             Status   @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   student Student @relation(fields: [studentID], references: [userID])
   faculty Faculty @relation(fields: [facultyID], references: [userID])
@@ -36,11 +39,14 @@ model LORApplication {
 }
 
 model Reminder {
-  id        Int     @id @default(autoincrement())
+  id        String  @id @default(uuid())
   message   String
-  facultyID Int
-  studentID Int
+  facultyID String
+  studentID String
   viewed    Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   student Student @relation(fields: [studentID], references: [userID])
   faculty Faculty @relation(fields: [facultyID], references: [userID])
@@ -48,23 +54,30 @@ model Reminder {
 }
 
 model TestScore {
-  id    Int    @id @default(autoincrement())
+  id    String @id @default(uuid())
   exam  String
   score String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   student   Student @relation(fields: [studentID], references: [userID])
-  studentID Int
+  studentID String
   @@unique([exam, score])
 }
 
 model Department {
-  id   Int    @id @default(autoincrement())
-  name String
+  id   String @id @default(uuid())
+  name String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   User User[]
 }
 
 model User {
-  id           Int        @id @default(autoincrement())
+  id           String     @id @default(uuid())
   email        String     @unique
   password     String
   firstName    String
@@ -75,13 +88,16 @@ model User {
   Student      Student[]
   Faculty      Faculty[]
   department   Department @relation(fields: [departmentID], references: [id])
-  departmentID Int
+  departmentID String
   userType     UserType   @default(STUDENT)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Student {
   user                User             @relation(fields: [userID], references: [id])
-  userID              Int              @id
+  userID              String           @id
   regNo               String           @unique
   appliedUniversities String[]
   acceptedUniversity  String?
@@ -92,7 +108,7 @@ model Student {
 
 model Faculty {
   user              User             @relation(fields: [userID], references: [id])
-  userID            Int              @id
+  userID            String           @id
   lorApplications   LORApplication[]
   lorDraftTemplates String[]
   reminders         Reminder[]

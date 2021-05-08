@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { generateToken, validateCreateUserInput, validateLoginInput } from "./utils";
 import { ApolloContext } from "../../../context";
-import { MutationResolvers, UserReturn } from "@/types";
+import { MutationResolvers, User, UserReturn } from "@/types";
 import { UserInputError } from "apollo-server";
 
 export const mutations: MutationResolvers<ApolloContext> = {
@@ -54,13 +54,10 @@ export const mutations: MutationResolvers<ApolloContext> = {
 			};
 		}
 
-		const user = await prisma.user.create({
+		const user: User = await prisma.user.create({
 			data: newUser,
-		});
-
-		const userDepartment = await prisma.department.findUnique({
-			where: {
-				id: user.departmentID,
+			include: {
+				department: true,
 			},
 		});
 
@@ -72,7 +69,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
 
 		const userReturn: UserReturn = {
 			contact: user.contact,
-			department: userDepartment!,
+			department: user.department,
 			email: user.email,
 			firstName: user.firstName,
 			lastName: user.lastName,
@@ -93,15 +90,12 @@ export const mutations: MutationResolvers<ApolloContext> = {
 			throw new UserInputError("Errors", { errors });
 		}
 
-		const user = await prisma.user.findUnique({
+		const user: User | null = await prisma.user.findUnique({
 			where: {
 				email: loginUserInput.email,
 			},
-		});
-
-		const userDepartment = await prisma.department.findUnique({
-			where: {
-				id: user?.departmentID,
+			include: {
+				department: true,
 			},
 		});
 
@@ -115,7 +109,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
 			firstName: user?.firstName ?? "",
 			lastName: user?.lastName ?? "",
 			contact: user?.contact ?? "",
-			department: userDepartment!,
+			department: user?.department!,
 			email: user?.email ?? "",
 			institution: user?.institution ?? "",
 			profilePhoto: user?.profilePhoto ?? "",

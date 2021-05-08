@@ -23,7 +23,7 @@ type CreateUserError = {
 };
 
 type PayloadData = {
-	id: number;
+	id: string;
 	email: string;
 	userType: "STUDENT" | "FACULTY";
 };
@@ -63,7 +63,16 @@ export const validateCreateUserInput = async ({
 
 	if (firstName.trim() === "") errors.firstName = "First name should not be empty";
 
-	if (departmentID.toString().trim() === "") errors.departmentID = "Department ID must not be empty";
+	if (departmentID.trim() === "") {
+		errors.departmentID = "Department ID must not be empty";
+	} else {
+		const department = await prisma.department.findUnique({
+			where: {
+				id: departmentID,
+			},
+		});
+		if(!department) errors.departmentID = "Department with this ID does not exist"
+	}
 
 	if (institution.trim() === "") errors.institution = "Institution cannot be empty";
 

@@ -67,7 +67,7 @@ export const validateCreateLORApplicationInput = async ({
 
 	if (university.trim() === "") errors.university = "University cannot be empty";
 
-	if (studentID.toString().trim() === "") {
+	if (studentID.trim() === "") {
 		errors.studentID = "Student ID cannot be empty";
 	} else {
 		const student = await prisma.student.findUnique({
@@ -78,7 +78,7 @@ export const validateCreateLORApplicationInput = async ({
 		if (!student) errors.studentID = "Student with this ID does not exist";
 	}
 
-	if (facultyID.toString().trim() === "") {
+	if (facultyID.trim() === "") {
 		errors.facultyID = "faculty ID cannot be empty";
 	} else {
 		const faculty = await prisma.faculty.findUnique({
@@ -127,7 +127,7 @@ export const validateUpdateLORApplicationInput = async ({
 		application: null,
 	};
 
-	if (id.toString().trim() === "") {
+	if (id.trim() === "") {
 		errors.id = "ID cannot be empty";
 	} else {
 		const lorApplication = await prisma.lORApplication.findUnique({
@@ -174,11 +174,12 @@ export const validateUpdateLORApplicationInput = async ({
 	};
 };
 
-export const validateDeleteLORApplication = async (id: number) => {
+export const validateDeleteLORApplication = async (id: string) => {
 	const errors: DeleteLORApplicationError = {
 		id: null,
 	};
-	if (id.toString().trim() === "") {
+
+	if (id.trim() === "") {
 		errors.id = "ID cannot be empty";
 	} else {
 		const lorApp = await prisma.lORApplication.findUnique({

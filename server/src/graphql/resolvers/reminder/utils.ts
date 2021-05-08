@@ -32,7 +32,7 @@ export const validateCreateReminderInput = async ({ message, studentID, facultyI
 
 	if (message.trim() === "") errors.message = "Message cannot be empty";
 
-	if (studentID.toString().trim() === "") {
+	if (studentID.trim() === "") {
 		errors.studentID = "Student ID should not be empty";
 	} else {
 		const student = await prisma.student.findUnique({
@@ -43,7 +43,7 @@ export const validateCreateReminderInput = async ({ message, studentID, facultyI
 		if (!student) errors.studentID = "Student with this ID does not exist";
 	}
 
-	if (facultyID.toString().trim() === "") {
+	if (facultyID.trim() === "") {
 		errors.facultyID = "Faculty ID should not be empty";
 	} else {
 		const faculty = await prisma.faculty.findUnique({
@@ -81,7 +81,7 @@ export const validateUpdateReminderInput = async ({ id, message, viewed }: Updat
 		reminder: null,
 	};
 
-	if (id.toString().trim() === "") {
+	if (id.trim() === "") {
 		errors.id = "ID cannot be empty";
 	} else {
 		const reminder = await prisma.reminder.findUnique({
@@ -107,11 +107,11 @@ export const validateUpdateReminderInput = async ({ id, message, viewed }: Updat
 	};
 };
 
-export const validateDeleteReminder = async (id: number) => {
+export const validateDeleteReminder = async (id: string) => {
 	const errors: DeleteReminderError = {
 		id: null,
 	};
-	if (id.toString().trim() === "") {
+	if (id.trim() === "") {
 		errors.id = "ID cannot be empty";
 	} else {
 		const reminder = await prisma.reminder.findUnique({

@@ -15,7 +15,7 @@ const typeDefs = gql`
 	}
 
 	type User {
-		id: Int!
+		id: String!
 		email: String!
 		firstName: String!
 		lastName: String
@@ -27,28 +27,28 @@ const typeDefs = gql`
 	}
 
 	type Reminder {
-		id: Int!
+		id: String!
 		message: String!
-		facultyID: Int!
-		studentID: Int!
+		facultyID: String!
+		studentID: String!
 		viewed: Boolean!
 	}
 
 	type TestScore {
-		id: Int!
+		id: String!
 		exam: String!
 		score: String!
 	}
 
 	type LORApplication {
-		id: Int!
+		id: String!
 		dueDate: DateTime!
 		statementOfPurpose: String!
 		course: String!
 		university: String!
 		draftURL: String
-		studentID: Int!
-		facultyID: Int!
+		studentID: String!
+		facultyID: String!
 		status: Status!
 	}
 
@@ -70,7 +70,7 @@ const typeDefs = gql`
 	}
 
 	type Department {
-		id: Int!
+		id: String!
 		name: String!
 	}
 
@@ -78,8 +78,8 @@ const typeDefs = gql`
 		getDepartments: [Department]!
 		getFaculties: [Faculty]!
 		getApplicationsByFacultyID: [LORApplication]!
-		getStudentByUserID(id: Int!): Student
-		getFacultyByUserID(id: Int!): Faculty
+		getStudentByUserID(id: String!): Student
+		getFacultyByUserID(id: String!): Faculty
 	}
 
 	input CreateUserInput {
@@ -87,7 +87,7 @@ const typeDefs = gql`
 		password: String!
 		firstName: String!
 		lastName: String
-		departmentID: Int!
+		departmentID: String!
 		institution: String!
 		contact: String!
 		profilePhoto: String!
@@ -118,12 +118,12 @@ const typeDefs = gql`
 		course: String!
 		university: String!
 		draftURL: String
-		studentID: Int!
-		facultyID: Int!
+		studentID: String!
+		facultyID: String!
 	}
 
 	input UpdateLORApplicationInput {
-		id: Int!
+		id: String!
 		dueDate: DateTime
 		statementOfPurpose: String
 		course: String
@@ -136,8 +136,9 @@ const typeDefs = gql`
 		exam: String!
 		score: String!
 	}
+
 	input UpdateStudentInput {
-		regNo: String!
+		id: String!
 		appliedUniversities: [String!]
 		acceptedUniversity: String
 		testScores: [TestScoreInput!]
@@ -145,12 +146,12 @@ const typeDefs = gql`
 
 	input CreateReminderInput {
 		message: String!
-		facultyID: Int!
-		studentID: Int!
+		facultyID: String!
+		studentID: String!
 	}
 
 	input UpdateReminderInput {
-		id: Int!
+		id: String!
 		message: String
 		viewed: Boolean
 	}
@@ -165,8 +166,8 @@ const typeDefs = gql`
 		updateReminder(updateReminderInput: UpdateReminderInput!): Reminder!
 		updateStudent(updateStudentInput: UpdateStudentInput!): Student!
 
-		deleteLORApplication(id: Int!): LORApplication!
-		deleteReminder(id: Int!): Reminder!
+		deleteLORApplication(id: String!): LORApplication!
+		deleteReminder(id: String!): Reminder!
 	}
 `;
 export default typeDefs;

@@ -44,7 +44,7 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 		return reminder;
 	},
 
-	async deleteReminder(_, args: { id: number }, { prisma }: ApolloContext) {
+	async deleteReminder(_, args: { id: string }, { prisma }: ApolloContext) {
 		const { errors, isValid } = await validateDeleteReminder(args.id);
 		if (!isValid) {
 			throw new UserInputError("Errors", { errors });
