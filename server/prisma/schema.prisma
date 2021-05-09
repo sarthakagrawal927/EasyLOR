@@ -63,7 +63,7 @@ model TestScore {
 
   student   Student @relation(fields: [studentID], references: [userID])
   studentID String
-  @@unique([exam, score])
+  @@unique([exam, studentID])
 }
 
 model Department {

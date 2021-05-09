@@ -1,7 +1,7 @@
 import { ApolloContext } from "../../../context";
 import { Faculty, QueryResolvers } from "@/types";
 export const queries: QueryResolvers<ApolloContext, Faculty> = {
-	async getFaculties(_, {}, { prisma }) {
+	async getFaculties(_, {}, { prisma }: ApolloContext) {
 		const faculties: Faculty[] | null = await prisma.faculty.findMany({
 			select: {
 				user: {
