@@ -3,7 +3,7 @@ import { FormControl, FormLabel, Input, Heading, FormErrorMessage } from "@chakr
 import { LoginForm, LoginContainer, LoginFormContainer, LoginButton } from "./login.styled";
 import { useLogin } from "./hooks";
 const Login: FC = () => {
-	const { handleSubmit, emailRegister, passwordRegister, errors } = useLogin();
+	const { handleSubmit, emailRegister, passwordRegister, loading, errors } = useLogin();
 	return (
 		<LoginContainer>
 			<LoginFormContainer variant="shadow">
@@ -29,7 +29,7 @@ const Login: FC = () => {
 						/>
 						{errors.password && <FormErrorMessage>{errors.password}</FormErrorMessage>}
 					</FormControl>
-					<LoginButton type="submit" variant="solid">
+					<LoginButton isLoading={loading} loadingText={"Logging in..."} type="submit" variant="solid">
 						Login
 					</LoginButton>
 				</LoginForm>

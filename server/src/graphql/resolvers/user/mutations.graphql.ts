@@ -11,7 +11,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
 			...createUserInput,
 		});
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const password = await bcrypt.hash(createUserInput.password, 12);
@@ -87,7 +87,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
 			...loginUserInput,
 		});
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const user: User | null = await prisma.user.findUnique({
