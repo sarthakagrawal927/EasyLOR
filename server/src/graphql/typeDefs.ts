@@ -80,6 +80,7 @@ const typeDefs = gql`
 		getApplicationsByFacultyID: [LORApplication]!
 		getStudentByUserID(id: String!): Student
 		getFacultyByUserID(id: String!): Faculty
+		getPastApplicationsByFacultyID(id: String!): [Student]!
 	}
 
 	input CreateUserInput {
