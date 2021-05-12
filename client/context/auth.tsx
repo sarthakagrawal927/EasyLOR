@@ -1,47 +1,50 @@
-import React, { useReducer, createContext, useEffect } from "react";
+import React, { useReducer, createContext, Reducer } from "react";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { UserReturn } from "../entities/types.graphql";
 
-type AuthState = {
-	user: JwtPayload | null;
+type CurrentUser = {
+	id: string;
+	email: string;
+	userType: "STUDENT" | "FACULTY";
 };
+type PayloadData = CurrentUser & JwtPayload;
 
-const initialState: AuthState = {
-	user: null,
-};
-
-if (typeof window !== "undefined" && window.localStorage.getItem("jwtToken")) {
-	const decodedToken = jwtDecode<JwtPayload>(window.localStorage.getItem("jwtToken"));
-	if (decodedToken.exp * 1000 < Date.now()) {
-		window.localStorage.removeItem("jwtToken");
-	} else {
-		initialState.user = decodedToken;
+const getDecodedUser = (): CurrentUser | null => {
+	if (typeof window !== "undefined" && window.localStorage.getItem("jwtToken")) {
+		const decodedToken = jwtDecode<PayloadData>(window.localStorage.getItem("jwtToken"));
+		if (decodedToken.exp * 1000 < Date.now()) {
+			window.localStorage.removeItem("jwtToken");
+			return null;
+		}
+		console.log("decoded token: ", decodedToken);
+		return decodedToken;
 	}
-}
+};
 
 type AuthContextType = {
-	user: UserReturn;
-	login: (userData: UserReturn) => void;
-	logout: () => void;
+	user: CurrentUser | null;
+	login?: (userData: UserReturn) => void;
+	logout?: () => void;
+};
+
+type Action = {
+	type: "LOGIN" | "LOGOUT";
+};
+
+const initialState: AuthContextType = {
+	user: null,
 };
 
 const AuthContext = createContext<AuthContextType>({
 	user: null,
-	login: userData => {},
-	logout: () => {},
 });
 
-type Action = {
-	type: "LOGIN" | "LOGOUT";
-	payload?: UserReturn;
-};
-
-function authReducer(state: any, action: Action) {
+function authReducer(state: AuthContextType, action: Action) {
 	switch (action.type) {
 		case "LOGIN":
 			return {
 				...state,
-				user: action.payload,
+				user: getDecodedUser(),
 			};
 
 		case "LOGOUT":
@@ -55,12 +58,12 @@ function authReducer(state: any, action: Action) {
 }
 
 function AuthProvider(props) {
-	const [state, dispatch] = useReducer(authReducer, initialState);
+	const [state, dispatch] = useReducer<Reducer<AuthContextType, Action>>(authReducer, initialState);
 
 	function login(userData: UserReturn) {
 		if (typeof window !== "undefined") {
 			window.localStorage.setItem("jwtToken", userData.token);
-			dispatch({ type: "LOGIN", payload: userData });
+			dispatch({ type: "LOGIN" });
 		}
 	}
 

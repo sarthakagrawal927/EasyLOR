@@ -19,7 +19,7 @@ type LoginFormInputs = {
 };
 
 export const useLogin = (): UseLoginReturn => {
-	const { login } = useContext(AuthContext);
+	const { login, user } = useContext(AuthContext);
 	const router = useRouter();
 	const defaultLoginValues = {
 		email: "",
@@ -70,6 +70,7 @@ export const useLogin = (): UseLoginReturn => {
 					position: "top",
 					isClosable: true,
 				});
+				console.log("Logged In: ", user.id);
 			}
 		} catch (error) {
 			toast({
