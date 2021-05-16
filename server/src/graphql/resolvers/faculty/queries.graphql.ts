@@ -1,14 +1,13 @@
 import { ApolloContext } from "../../../context";
 import { Faculty, LorApplication, QueryResolvers, Student } from "@/types";
+import { userSelect } from "../user/userselect";
 
 export const queries: QueryResolvers<ApolloContext, Faculty> = {
 	async getFaculties(_, {}, { prisma }: ApolloContext) {
 		const faculties: Faculty[] | null = await prisma.faculty.findMany({
 			select: {
 				user: {
-					include: {
-						department: true,
-					},
+					select: userSelect,
 				},
 				lorDraftTemplates: true,
 				reminders: true,
@@ -26,9 +25,7 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 			},
 			include: {
 				user: {
-					include: {
-						department: true,
-					},
+					select: userSelect,
 				},
 				lorApplications: true,
 				reminders: true,
@@ -48,7 +45,7 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 		const allStudents: Student[] | null = await prisma.student.findMany({
 			include: {
 				user: {
-					include: { department: true },
+					select: userSelect,
 				},
 				lorApplications: true,
 				reminders: true,

@@ -2,6 +2,7 @@ import { ApolloContext } from "../../../context";
 import { Student, MutationResolvers } from "@/types";
 import { validateUpdateStudentInput } from "./utils";
 import { UserInputError } from "apollo-server";
+import { userSelect } from "../user/userselect";
 
 export const mutations: MutationResolvers<ApolloContext, Student> = {
 	async updateStudent(_, { updateStudentInput }, { prisma }: ApolloContext) {
@@ -29,9 +30,7 @@ export const mutations: MutationResolvers<ApolloContext, Student> = {
 				lorApplications: true,
 				reminders: true,
 				user: {
-					include: {
-						department: true,
-					},
+					select: userSelect,
 				},
 				testScores: true,
 			},

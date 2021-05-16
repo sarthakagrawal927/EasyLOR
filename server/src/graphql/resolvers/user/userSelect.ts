@@ -1,0 +1,15 @@
+export const userSelect = {
+	id: true,
+	email: true,
+	password: false,
+	firstName: true,
+	lastName: true,
+	institution: true,
+	contact: true,
+	profilePhoto: true,
+	departmentID: false,
+	department: true,
+	userType: true,
+	createdAt: true,
+	updatedAt: true,
+};
