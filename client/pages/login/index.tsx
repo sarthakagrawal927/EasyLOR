@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Link from "next/link";
 import { FormControl, FormLabel, Input, Heading, FormErrorMessage } from "@chakra-ui/react";
 import { LoginForm, LoginContainer, LoginFormContainer, LoginButton } from "./login.styled";
 import { useLogin } from "./hooks";
@@ -33,6 +34,7 @@ const Login: FC = () => {
 						Login
 					</LoginButton>
 				</LoginForm>
+				<Link href="/register">New student? Create your account</Link>
 			</LoginFormContainer>
 		</LoginContainer>
 	);

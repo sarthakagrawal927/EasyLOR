@@ -1,15 +1,16 @@
 mutation CreateUser($createUserInput: CreateUserInput!) {
-    createUser(createUserInput: $createUserInput) {
-        email
-        firstName
-        lastName
-        department {
-            name
-        }
-        institution
-        contact
-        profilePhoto
-        userType
-        token
-    }
+	createUser(createUserInput: $createUserInput) {
+		email
+		firstName
+		lastName
+		department {
+			id
+			name
+		}
+		institution
+		contact
+		profilePhoto
+		userType
+		token
+	}
 }

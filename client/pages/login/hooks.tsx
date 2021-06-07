@@ -59,14 +59,14 @@ export const useLogin = (): UseLoginReturn => {
 				throw new Error(error.message);
 			}
 
-			if (data) {
+			if (response) {
 				login(response.loginUser);
 				router.push("/dashboard");
 				toast({
-					title: "Login Successful",
+					title: "SUCCESS",
 					description: "Welcome to EasyLOR",
 					status: "success",
-					duration: 5000,
+					duration: 3000,
 					position: "top",
 					isClosable: true,
 				});
@@ -74,10 +74,10 @@ export const useLogin = (): UseLoginReturn => {
 			}
 		} catch (error) {
 			toast({
-				title: "Login Failed",
+				title: "FAILED",
 				description: error.message,
 				status: "error",
-				duration: 5000,
+				duration: 3000,
 				position: "top",
 				isClosable: true,
 			});

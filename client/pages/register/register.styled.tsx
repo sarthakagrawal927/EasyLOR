@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { Box, Center, Button } from "@chakra-ui/react";
 import { shadow, colors, font } from "../../utils/styles";
+import { Container } from "components/Dashboard/dashboard.styled";
 
-export const LoginContainer = styled(Center)`
+export const RegisterContainer = styled(Center)`
 	width: 100vw;
 	height: 100vh;
 	max-width: 100vw;
 `;
 
-export const LoginFormContainer = styled(Box)`
+export const RegisterFormContainer = styled(Box)`
 	width: 40%;
 	min-height: 600px;
 	min-width: 500px;
@@ -32,14 +33,11 @@ export const LoginFormContainer = styled(Box)`
 	box-shadow: ${shadow.containerShadow};
 `;
 
-export const LoginForm = styled.form`
+export const RegisterForm = styled.form`
 	width: 30vw;
 	display: flex;
 	flex-direction: column;
 	height: 45vh;
-	& div {
-		margin-top: 2em;
-	}
 	& label {
 		font-size: 1.2rem;
 	}
@@ -52,13 +50,35 @@ export const LoginForm = styled.form`
 		}
 	}
 	& button {
-		margin-top: 2.5em;
 		&:hover {
 			filter: brightness(0.9);
 		}
 	}
 `;
 
-export const LoginButton = styled(Button)`
+export const RegisterFieldContainer = styled(Container)`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: max-content;
+	margin-top: 3em;
+	& div {
+		width: 45%;
+	}
+`;
+export const RegisterFieldSubContainer = styled(Container)`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: max-content;
+	margin-top: 1em;
+	& div {
+		width: 45%;
+	}
+`;
+export const RegisterButton = styled(Button)`
 	height: 60px !important;
+	margin-top: 3em;
 `;
