@@ -2,7 +2,7 @@ import { ApolloContext } from "../../../context";
 import { Student, MutationResolvers } from "@/types";
 import { validateUpdateStudentInput } from "./utils";
 import { UserInputError } from "apollo-server";
-import { userSelect } from "../user/userselect";
+import { userSelect } from "../user/userSelect";
 
 export const mutations: MutationResolvers<ApolloContext, Student> = {
 	async updateStudent(_, { updateStudentInput }, { prisma }: ApolloContext) {

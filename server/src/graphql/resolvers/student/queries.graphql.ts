@@ -1,6 +1,6 @@
 import { ApolloContext } from "../../../context";
 import { QueryResolvers, Student } from "@/types";
-import { userSelect } from "../user/userselect";
+import { userSelect } from "../user/userSelect";
 
 export const queries: QueryResolvers<ApolloContext, Student> = {
 	async getStudentByUserID(_parent, args: { id: string }, { prisma }: ApolloContext) {

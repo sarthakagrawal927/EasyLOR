@@ -1,6 +1,6 @@
 import { ApolloContext } from "../../../context";
 import { Faculty, LorApplication, QueryResolvers, Student } from "@/types";
-import { userSelect } from "../user/userselect";
+import { userSelect } from "../user/userSelect";
 
 export const queries: QueryResolvers<ApolloContext, Faculty> = {
 	async getFaculties(_, {}, { prisma }: ApolloContext) {
