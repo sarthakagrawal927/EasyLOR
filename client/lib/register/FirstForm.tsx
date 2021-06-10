@@ -32,7 +32,7 @@ const FirstForm: FC<FirstFormProps> = ({
 			style={{ zIndex: 5, width: "30vw", position: "relative" }}
 			unmountOnExit={true}
 		>
-			<FormControl isInvalid={!!errors.profilePhoto}>
+			<FormControl isInvalid={!!errors.profilePhoto?.name}>
 				<FileUpload accept={"image/*"} multiple={false} register={profilePhotoRegister}>
 					<IconButton
 						aria-label="Profile Photo"

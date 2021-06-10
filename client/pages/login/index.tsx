@@ -1,8 +1,8 @@
 import { FC } from "react";
 import Link from "next/link";
 import { FormControl, FormLabel, Input, Heading, FormErrorMessage } from "@chakra-ui/react";
-import { LoginForm, LoginContainer, LoginFormContainer, LoginButton } from "./login.styled";
-import { useLogin } from "./hooks";
+import { LoginForm, LoginContainer, LoginFormContainer, LoginButton } from "../../lib/login/login.styled";
+import { useLogin } from "../../lib/login/hooks";
 const Login: FC = () => {
 	const { handleSubmit, emailRegister, passwordRegister, loading, errors } = useLogin();
 	return (

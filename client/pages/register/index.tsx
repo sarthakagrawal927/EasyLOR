@@ -1,10 +1,10 @@
 import { Heading } from "@chakra-ui/layout";
 import Link from "next/link";
 import React, { FC } from "react";
-import { RegisterContainer, RegisterForm, RegisterFormContainer } from "./register.styled";
-import FirstForm from "./FirstForm";
-import SecondForm from "./SecondForm";
-import { useRegister } from "./hooks";
+import { RegisterContainer, RegisterForm, RegisterFormContainer } from "../../lib/register/register.styled";
+import FirstForm from "../../lib/register/FirstForm";
+import SecondForm from "../../lib/register/SecondForm";
+import { useRegister } from "../../lib/register/hooks";
 
 const Register: FC = () => {
 	const {

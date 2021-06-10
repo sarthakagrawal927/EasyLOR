@@ -1,7 +1,7 @@
 import { Slide, FormControl, FormLabel, Input, Button, Flex, FormErrorMessage } from "@chakra-ui/react";
 import React, { FC } from "react";
-import { useRegister } from "./hooks";
-import { RegisterButton, RegisterFieldSubContainer } from "./register.styled";
+import { useRegister } from "../../lib/register/hooks";
+import { RegisterButton, RegisterFieldSubContainer } from "../../lib/register/register.styled";
 
 type SecondFormProps = {
 	emailRegister: ReturnType<typeof useRegister>["emailRegister"];
