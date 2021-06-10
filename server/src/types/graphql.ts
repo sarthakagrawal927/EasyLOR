@@ -12,14 +12,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any;
 };
-
-
-export type CacheControlScope =
-  | 'PUBLIC'
-  | 'PRIVATE';
 
 export type CreateLorApplicationInput = {
   dueDate: Scalars['DateTime'];
@@ -226,7 +219,6 @@ export type UpdateStudentInput = {
   testScores?: Maybe<Array<TestScoreInput>>;
 };
 
-
 export type User = {
   __typename?: 'User';
   id: Scalars['String'];
@@ -335,7 +327,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  CacheControlScope: CacheControlScope;
   CreateLORApplicationInput: CreateLorApplicationInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   CreateReminderInput: CreateReminderInput;
@@ -356,11 +347,9 @@ export type ResolversTypes = {
   UpdateLORApplicationInput: UpdateLorApplicationInput;
   UpdateReminderInput: UpdateReminderInput;
   UpdateStudentInput: UpdateStudentInput;
-  Upload: ResolverTypeWrapper<Scalars['Upload']>;
   User: ResolverTypeWrapper<User>;
   UserReturn: ResolverTypeWrapper<UserReturn>;
   UserType: UserType;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -384,16 +373,9 @@ export type ResolversParentTypes = {
   UpdateLORApplicationInput: UpdateLorApplicationInput;
   UpdateReminderInput: UpdateReminderInput;
   UpdateStudentInput: UpdateStudentInput;
-  Upload: Scalars['Upload'];
   User: User;
   UserReturn: UserReturn;
-  Int: Scalars['Int'];
 };
-
-export type CacheControlDirectiveArgs = {   maxAge?: Maybe<Scalars['Int']>;
-  scope?: Maybe<CacheControlScope>; };
-
-export type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Args = CacheControlDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
@@ -474,10 +456,6 @@ export type TestScoreResolvers<ContextType = any, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-  name: 'Upload';
-}
-
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -514,7 +492,6 @@ export type Resolvers<ContextType = any> = {
   Reminder?: ReminderResolvers<ContextType>;
   Student?: StudentResolvers<ContextType>;
   TestScore?: TestScoreResolvers<ContextType>;
-  Upload?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserReturn?: UserReturnResolvers<ContextType>;
 };
@@ -525,13 +502,3 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
-export type DirectiveResolvers<ContextType = any> = {
-  cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
-};
-
-
-/**
- * @deprecated
- * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
- */
-export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;
