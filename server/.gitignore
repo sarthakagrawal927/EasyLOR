@@ -4,5 +4,4 @@ node_modules
 .env
 /package-lock.json
 dist
-src/types
 pnpm-lock.yaml
