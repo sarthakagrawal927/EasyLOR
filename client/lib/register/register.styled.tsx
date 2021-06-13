@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Box, Center, Button } from "@chakra-ui/react";
 import { shadow, colors, font } from "../../utils/styles";
-import { Container } from "components/Dashboard/dashboard.styled";
+import { Container } from "lib/dashboard/dashboard.styled";
 
 export const RegisterContainer = styled(Center)`
 	width: 100vw;
@@ -62,7 +62,7 @@ export const RegisterFieldContainer = styled(Container)`
 	justify-content: space-between;
 	width: 100%;
 	height: max-content;
-	margin-top: 3em;
+	margin-top: 1em;
 	& div {
 		width: 45%;
 	}
@@ -71,9 +71,9 @@ export const RegisterFieldSubContainer = styled(Container)`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: 100%;
+	width: 80%;
 	height: max-content;
-	margin-top: 1em;
+	margin-top: 2em;
 	& div {
 		width: 45%;
 	}

@@ -7,6 +7,7 @@ import { RegisterFieldContainer } from "./register.styled";
 import { useRegister } from "./hooks";
 
 type FirstFormProps = {
+	emailRegister: ReturnType<typeof useRegister>["emailRegister"];
 	firstNameRegister: ReturnType<typeof useRegister>["firstNameRegister"];
 	lastNameRegister: ReturnType<typeof useRegister>["lastNameRegister"];
 	profilePhotoRegister: ReturnType<typeof useRegister>["profilePhotoRegister"];
@@ -19,6 +20,7 @@ type FirstFormProps = {
 const FirstForm: FC<FirstFormProps> = ({
 	firstNameRegister,
 	lastNameRegister,
+	emailRegister,
 	profilePhotoRegister,
 	isOpen,
 	getValues,
@@ -38,11 +40,16 @@ const FirstForm: FC<FirstFormProps> = ({
 						aria-label="Profile Photo"
 						icon={<AvatarPlaceholder boxSize={120} />}
 						isRound
-						boxSize={120}
+						boxSize={100}
 						style={{ margin: "0 auto" }}
 					/>
 				</FileUpload>
 				<FormErrorMessage>{errors.profilePhoto?.name?.message}</FormErrorMessage>
+			</FormControl>
+			<FormControl id="email" isInvalid={!!errors.email}>
+				<FormLabel>Email</FormLabel>
+				<Input name={emailRegister?.name} type="email" ref={emailRegister?.ref} onChange={emailRegister?.onChange} />
+				<FormErrorMessage>{errors.email?.message}</FormErrorMessage>
 			</FormControl>
 			<RegisterFieldContainer>
 				<FormControl id="firstName" isInvalid={!!errors.firstName}>

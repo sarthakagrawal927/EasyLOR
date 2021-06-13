@@ -4,7 +4,7 @@ import { useRegister } from "../../lib/register/hooks";
 import { RegisterButton, RegisterFieldSubContainer } from "../../lib/register/register.styled";
 
 type SecondFormProps = {
-	emailRegister: ReturnType<typeof useRegister>["emailRegister"];
+	contactRegister: ReturnType<typeof useRegister>["contactRegister"];
 	passwordRegister: ReturnType<typeof useRegister>["passwordRegister"];
 	confirmPasswordRegister: ReturnType<typeof useRegister>["confirmPasswordRegister"];
 	regNoRegister: ReturnType<typeof useRegister>["regNoRegister"];
@@ -17,7 +17,7 @@ type SecondFormProps = {
 };
 
 const SecondForm: FC<SecondFormProps> = ({
-	emailRegister,
+	contactRegister,
 	passwordRegister,
 	confirmPasswordRegister,
 	regNoRegister,
@@ -38,10 +38,15 @@ const SecondForm: FC<SecondFormProps> = ({
 			style={{ zIndex: zIdxValue, width: "30vw", position: "relative" }}
 		>
 			<RegisterFieldSubContainer>
-				<FormControl id="email" isInvalid={!!errors.email}>
-					<FormLabel>Email</FormLabel>
-					<Input name={emailRegister?.name} type="email" ref={emailRegister?.ref} onChange={emailRegister?.onChange} />
-					<FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+				<FormControl id="contact" isInvalid={!!errors.contact}>
+					<FormLabel>Contact</FormLabel>
+					<Input
+						name={contactRegister?.name}
+						type="tel"
+						ref={contactRegister?.ref}
+						onChange={contactRegister?.onChange}
+					/>
+					<FormErrorMessage>{errors.contact?.message}</FormErrorMessage>
 				</FormControl>
 				<FormControl id="regNo">
 					<FormLabel>Registration Number</FormLabel>

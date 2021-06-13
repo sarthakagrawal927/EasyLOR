@@ -32,11 +32,11 @@ type Action = {
 };
 
 const initialState: AuthContextType = {
-	user: null,
+	user: getDecodedUser() ?? null,
 };
 
 const AuthContext = createContext<AuthContextType>({
-	user: null,
+	user: getDecodedUser() ?? null,
 });
 
 function authReducer(state: AuthContextType, action: Action) {
@@ -73,8 +73,8 @@ function AuthProvider(props) {
 			window.localStorage.removeItem("jwtToken");
 		}
 	}
-
-	return <AuthContext.Provider value={{ user: state.user, login, logout }} {...props} />;
+	console.log("state: ", state);
+	return <AuthContext.Provider value={{ user: state?.user, login, logout }} {...props} />;
 }
 
 export { AuthContext, AuthProvider };

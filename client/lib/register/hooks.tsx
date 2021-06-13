@@ -13,6 +13,7 @@ type UseRegisterReturn = {
 	confirmPasswordRegister: UseFormRegisterReturn;
 	firstNameRegister: UseFormRegisterReturn;
 	lastNameRegister: UseFormRegisterReturn;
+	contactRegister: UseFormRegisterReturn;
 	institutionRegister: UseFormRegisterReturn;
 	regNoRegister: UseFormRegisterReturn;
 	watch: UseFormWatch<RegisterFormInputs>;
@@ -32,15 +33,12 @@ type RegisterFormInputs = {
 	confirmPassword: string;
 	firstName: string;
 	lastName: string;
+	contact: string;
 	institution: string;
 	regNo: string;
 	department: string;
 	profilePhoto: File;
 };
-
-function getFakeContact() {
-	return Math.floor(Math.random() * (9999999999 - 1000000000 + 1)) + 100000000;
-}
 
 export const useRegister = (): UseRegisterReturn => {
 	const { login, user } = useContext(AuthContext);
@@ -55,6 +53,7 @@ export const useRegister = (): UseRegisterReturn => {
 		firstName: "",
 		lastName: "",
 		institution: "",
+		contact: "",
 		regNo: "",
 		department: "",
 		profilePhoto: "",
@@ -72,10 +71,15 @@ export const useRegister = (): UseRegisterReturn => {
 		shouldUnregister: false,
 	});
 
+	console.log("fields: ", watch());
 	const emailRegister = register("email", {
 		required: true,
 		minLength: 5,
 		maxLength: 50,
+		pattern: {
+			value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+			message: "Enter a valid email address",
+		},
 	});
 	const passwordRegister = register("password", {
 		required: true,
@@ -94,6 +98,12 @@ export const useRegister = (): UseRegisterReturn => {
 	});
 	const lastNameRegister = register("lastName", {
 		maxLength: 50,
+	});
+
+	const contactRegister = register("contact", {
+		required: true,
+		minLength: 10,
+		pattern: { value: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$/g, message: "Enter a valid phone number" },
 	});
 
 	const institutionRegister = register("institution", {
@@ -125,7 +135,6 @@ export const useRegister = (): UseRegisterReturn => {
 			...data,
 			profilePhoto: uri,
 			departmentID: "1a281959-53f6-444a-9977-0d5b4e8be842",
-			contact: getFakeContact().toString(),
 			userType: UserType.Student,
 		};
 		console.log("SUBMIT DATA: ", userData);
@@ -168,6 +177,7 @@ export const useRegister = (): UseRegisterReturn => {
 
 	return {
 		emailRegister,
+		contactRegister,
 		passwordRegister,
 		confirmPasswordRegister,
 		firstNameRegister,

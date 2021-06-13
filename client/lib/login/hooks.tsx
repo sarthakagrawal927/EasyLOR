@@ -37,6 +37,10 @@ export const useLogin = (): UseLoginReturn => {
 		required: true,
 		minLength: 5,
 		maxLength: 50,
+		pattern: {
+			value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+			message: "Enter a valid email address",
+		},
 	});
 	const passwordRegister = register("password", {
 		required: true,

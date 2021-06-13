@@ -17,6 +17,7 @@ const Register: FC = () => {
 		passwordRegister,
 		confirmPasswordRegister,
 		departmentRegister,
+		contactRegister,
 		errors,
 		institutionRegister,
 		regNoRegister,
@@ -30,6 +31,7 @@ const Register: FC = () => {
 				<Heading>Register</Heading>
 				<RegisterForm onSubmit={handleSubmit}>
 					<FirstForm
+						emailRegister={emailRegister}
 						firstNameRegister={firstNameRegister}
 						lastNameRegister={lastNameRegister}
 						profilePhotoRegister={profilePhotoRegister}
@@ -39,7 +41,7 @@ const Register: FC = () => {
 						isOpen={isOpen}
 					/>
 					<SecondForm
-						emailRegister={emailRegister}
+						contactRegister={contactRegister}
 						passwordRegister={passwordRegister}
 						confirmPasswordRegister={confirmPasswordRegister}
 						regNoRegister={regNoRegister}

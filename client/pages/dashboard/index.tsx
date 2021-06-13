@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "context/auth";
-import FacultyDashboard from "../../components/Dashboard/FacultyDashboard";
-import StudentDashboard from "../../components/Dashboard/StudentDashboard";
+import FacultyDashboard from "../../lib/dashboard/faculty";
+import StudentDashboard from "../../lib/dashboard/student";
 
 const index = () => {
 	const { user } = useContext(AuthContext);
