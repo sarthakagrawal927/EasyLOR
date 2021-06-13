@@ -15,8 +15,8 @@ export const RegisterFormContainer = styled(Box)`
 	min-width: 500px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	height: 70%;
+	padding-top: 4em;
+	height: 80%;
 	background-color: white;
 	& h2 {
 		padding-inline: 2em;
@@ -49,6 +49,17 @@ export const RegisterForm = styled.form`
 			border: 2px solid ${colors.blue};
 		}
 	}
+	.chakra-select__wrapper {
+		width: 100%;
+	}
+	& select {
+		border: 2px solid ${colors.lightGray};
+		height: 3.5em;
+		border-radius: 5px;
+		&:focus {
+			border: 2px solid ${colors.blue};
+		}
+	}
 	& button {
 		&:hover {
 			filter: brightness(0.9);
@@ -71,9 +82,9 @@ export const RegisterFieldSubContainer = styled(Container)`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: 80%;
+	width: 100%;
 	height: max-content;
-	margin-top: 2em;
+	margin-top: 1em;
 	& div {
 		width: 45%;
 	}

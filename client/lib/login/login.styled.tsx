@@ -36,7 +36,7 @@ export const LoginForm = styled.form`
 	width: 30vw;
 	display: flex;
 	flex-direction: column;
-	height: 45vh;
+	height: 50vh;
 	& div {
 		margin-top: 2em;
 	}

@@ -24,6 +24,8 @@ const Register: FC = () => {
 		getValues,
 		onToggle,
 		loading,
+		departments,
+		departmentsError,
 	} = useRegister();
 	return (
 		<RegisterContainer>
@@ -41,6 +43,8 @@ const Register: FC = () => {
 						isOpen={isOpen}
 					/>
 					<SecondForm
+						departments={departments}
+						departmentsError={departmentsError}
 						contactRegister={contactRegister}
 						passwordRegister={passwordRegister}
 						confirmPasswordRegister={confirmPasswordRegister}
@@ -52,8 +56,8 @@ const Register: FC = () => {
 						loading={loading}
 						isOpen={isOpen}
 					/>
+					{!isOpen && <Link href="/login">Already have an account? Login</Link>}
 				</RegisterForm>
-				{!isOpen && <Link href="/login">Already have an account? Login</Link>}
 			</RegisterFormContainer>
 		</RegisterContainer>
 	);

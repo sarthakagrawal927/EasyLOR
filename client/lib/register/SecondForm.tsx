@@ -1,4 +1,4 @@
-import { Slide, FormControl, FormLabel, Input, Button, Flex, FormErrorMessage } from "@chakra-ui/react";
+import { Slide, FormControl, FormLabel, Input, Button, Flex, FormErrorMessage, Select } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { useRegister } from "../../lib/register/hooks";
 import { RegisterButton, RegisterFieldSubContainer } from "../../lib/register/register.styled";
@@ -10,6 +10,8 @@ type SecondFormProps = {
 	regNoRegister: ReturnType<typeof useRegister>["regNoRegister"];
 	institutionRegister: ReturnType<typeof useRegister>["institutionRegister"];
 	departmentRegister: ReturnType<typeof useRegister>["departmentRegister"];
+	departments: ReturnType<typeof useRegister>["departments"];
+	departmentsError: ReturnType<typeof useRegister>["departmentsError"];
 	loading: boolean;
 	errors: ReturnType<typeof useRegister>["errors"];
 	onToggle: ReturnType<typeof useRegister>["onToggle"];
@@ -21,6 +23,8 @@ const SecondForm: FC<SecondFormProps> = ({
 	passwordRegister,
 	confirmPasswordRegister,
 	regNoRegister,
+	departments,
+	departmentsError,
 	institutionRegister,
 	departmentRegister,
 	errors,
@@ -89,12 +93,19 @@ const SecondForm: FC<SecondFormProps> = ({
 				</FormControl>
 				<FormControl id="department" isInvalid={!!errors.department}>
 					<FormLabel>Department</FormLabel>
-					<Input
+					<Select
 						name={departmentRegister?.name}
 						type="text"
 						ref={departmentRegister?.ref}
 						onChange={departmentRegister?.onChange}
-					/>
+					>
+						{departmentsError && <FormErrorMessage>{departmentsError.message}</FormErrorMessage>}
+						{departments?.map(department => (
+							<option key={department.id} value={department.id}>
+								{department.name}
+							</option>
+						))}
+					</Select>
 					<FormErrorMessage>{errors.department?.message}</FormErrorMessage>
 				</FormControl>
 			</RegisterFieldSubContainer>

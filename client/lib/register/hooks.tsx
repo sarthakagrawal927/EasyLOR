@@ -1,11 +1,37 @@
 import { AuthContext } from "context/auth";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { DeepMap, FieldError, useForm, UseFormGetValues, UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
-import { CreateUserInput, useCreateUserMutation, UserType } from "entities/types.graphql";
+import {
+	CreateUserInput,
+	useCreateUserMutation,
+	UserType,
+	useGetDepartmentsQuery,
+	Department,
+} from "entities/types.graphql";
 import { uploadPhoto } from "api/serverless/index";
 import { validateFiles } from "components/FileUpload/FileUpload";
 import { createStandaloneToast, useDisclosure } from "@chakra-ui/react";
+import { ApolloError } from "@apollo/client";
+
+type UseDepartmentsReturn = {
+	departments: Department[];
+	departmentsError: ApolloError;
+};
+
+const useDepartments = (): UseDepartmentsReturn => {
+	const { data, error: departmentsError } = useGetDepartmentsQuery();
+
+	const [departments, setDepartments] = useState<Department[] | null>(null);
+
+	useEffect(() => {
+		setDepartments(data?.getDepartments);
+	}, [data?.getDepartments]);
+
+	console.log("departments data: ", data);
+
+	return { departments, departmentsError };
+};
 
 type UseRegisterReturn = {
 	emailRegister: UseFormRegisterReturn;
@@ -25,7 +51,7 @@ type UseRegisterReturn = {
 	isOpen: boolean;
 	onToggle: () => void;
 	handleSubmit: (e?: React.BaseSyntheticEvent<object, any, any>) => Promise<void>;
-};
+} & UseDepartmentsReturn;
 
 type RegisterFormInputs = {
 	email: string;
@@ -42,8 +68,8 @@ type RegisterFormInputs = {
 
 export const useRegister = (): UseRegisterReturn => {
 	const { login, user } = useContext(AuthContext);
-
 	const { isOpen, onToggle } = useDisclosure();
+	const { departments, departmentsError } = useDepartments();
 	const router = useRouter();
 
 	const defaultRegisterValues = {
@@ -125,16 +151,33 @@ export const useRegister = (): UseRegisterReturn => {
 
 	const toast = createStandaloneToast();
 
-	const [registerUserMutation, { loading, error }] = useCreateUserMutation();
+	const [registerUserMutation, { loading, error }] = useCreateUserMutation({
+		onError: error => {
+			toast({
+				title: "FAILED",
+				description: error.message,
+				status: "error",
+				duration: 3000,
+				position: "top",
+				isClosable: true,
+			});
+		},
+		onCompleted: data => {
+			login(data.createUser);
+			router.push("/dashboard");
+			console.log("Logged In: ", user.id);
+		},
+	});
 
 	const onSubmit = handleSubmit(async (data: RegisterFormInputs) => {
 		const uri = uploadPhoto(data.profilePhoto);
 		delete data.confirmPassword;
+		const departmentID = data.department;
 		delete data.department;
 		const userData: CreateUserInput = {
 			...data,
 			profilePhoto: uri,
-			departmentID: "1a281959-53f6-444a-9977-0d5b4e8be842",
+			departmentID,
 			userType: UserType.Student,
 		};
 		console.log("SUBMIT DATA: ", userData);
@@ -150,8 +193,6 @@ export const useRegister = (): UseRegisterReturn => {
 				throw new Error(error.message);
 			}
 			if (response) {
-				login(response.createUser);
-				router.push("/dashboard");
 				toast({
 					title: "SUCCESS",
 					description: "Welcome to EasyLOR",
@@ -160,22 +201,15 @@ export const useRegister = (): UseRegisterReturn => {
 					position: "top",
 					isClosable: true,
 				});
-				console.log("Logged In: ", user.id);
 			}
 		} catch (error) {
-			toast({
-				title: "FAILED",
-				description: error.message,
-				status: "error",
-				duration: 3000,
-				position: "top",
-				isClosable: true,
-			});
 			console.error(error);
 		}
 	});
 
 	return {
+		departments,
+		departmentsError,
 		emailRegister,
 		contactRegister,
 		passwordRegister,

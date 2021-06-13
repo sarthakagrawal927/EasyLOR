@@ -49,7 +49,23 @@ export const useLogin = (): UseLoginReturn => {
 	});
 	const toast = createStandaloneToast();
 
-	const [loginUserMutation, { loading, error }] = useLoginUserMutation();
+	const [loginUserMutation, { loading, error }] = useLoginUserMutation({
+		onError: error => {
+			toast({
+				title: "FAILED",
+				description: error.message,
+				status: "error",
+				duration: 3000,
+				position: "top",
+				isClosable: true,
+			});
+		},
+		onCompleted: data => {
+			login(data.loginUser);
+			router.push("/dashboard");
+			console.log("Logged In: ", user.id);
+		},
+	});
 
 	const onSubmit = handleSubmit(async (data: LoginFormInputs) => {
 		console.log("Logging In...: ", data);
@@ -62,10 +78,7 @@ export const useLogin = (): UseLoginReturn => {
 			if (error) {
 				throw new Error(error.message);
 			}
-
-			if (response) {
-				login(response.loginUser);
-				router.push("/dashboard");
+			if (response)
 				toast({
 					title: "SUCCESS",
 					description: "Welcome to EasyLOR",
@@ -74,17 +87,7 @@ export const useLogin = (): UseLoginReturn => {
 					position: "top",
 					isClosable: true,
 				});
-				console.log("Logged In: ", user.id);
-			}
 		} catch (error) {
-			toast({
-				title: "FAILED",
-				description: error.message,
-				status: "error",
-				duration: 3000,
-				position: "top",
-				isClosable: true,
-			});
 			console.error(error);
 		}
 	});
