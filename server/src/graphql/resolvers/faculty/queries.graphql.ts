@@ -6,12 +6,15 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 	async getFaculties(_, {}, { prisma }: ApolloContext) {
 		const faculties: Faculty[] | null = await prisma.faculty.findMany({
 			select: {
-				user: {
-					select: userSelect,
-				},
+				user: { select: userSelect },
 				lorDraftTemplates: true,
 				reminders: true,
-				lorApplications: true,
+				lorApplications: {
+					include: {
+						student: { include: { user: { select: userSelect } } },
+						faculty: { include: { user: { select: userSelect } } },
+					},
+				},
 			},
 		});
 
@@ -24,10 +27,13 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 				userID: args.id,
 			},
 			include: {
-				user: {
-					select: userSelect,
+				user: { select: userSelect },
+				lorApplications: {
+					include: {
+						student: { include: { user: { select: userSelect } } },
+						faculty: { include: { user: { select: userSelect } } },
+					},
 				},
-				lorApplications: true,
 				reminders: true,
 			},
 		});
@@ -40,14 +46,21 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 			where: {
 				facultyID: args.id,
 			},
+			include: {
+				student: { include: { user: { select: userSelect } } },
+				faculty: { include: { user: { select: userSelect } } },
+			},
 		});
 
 		const allStudents: Student[] | null = await prisma.student.findMany({
 			include: {
-				user: {
-					select: userSelect,
+				user: { select: userSelect },
+				lorApplications: {
+					include: {
+						student: { include: { user: { select: userSelect } } },
+						faculty: { include: { user: { select: userSelect } } },
+					},
 				},
-				lorApplications: true,
 				reminders: true,
 				testScores: true,
 			},
@@ -56,7 +69,7 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 		const students: Student[] | null = [];
 
 		for (const lorApp of lorApplications) {
-			const student: Student | undefined = allStudents.find(student => student.user.id === lorApp.studentID);
+			const student: Student | undefined = allStudents.find(student => student.user.id === lorApp.student.user.id);
 
 			if (student) students.push(student);
 		}

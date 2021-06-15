@@ -9,12 +9,15 @@ export const queries: QueryResolvers<ApolloContext, Student> = {
 				userID: args.id,
 			},
 			include: {
-				lorApplications: true,
+				lorApplications: {
+					include: {
+						student: { include: { user: { select: userSelect } } },
+						faculty: { include: { user: { select: userSelect } } },
+					},
+				},
 				reminders: true,
 				testScores: true,
-				user: {
-					select: userSelect,
-				},
+				user: { select: userSelect },
 			},
 		});
 

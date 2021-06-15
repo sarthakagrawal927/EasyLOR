@@ -5,6 +5,7 @@ import { UserInputError } from "apollo-server";
 import { mailer } from "../../../nodemailer/mailer";
 import { StudentSelect } from "../student/types";
 import { FacultySelect } from "../faculty/types";
+import { userSelect } from "../user/userSelect";
 
 export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 	async createReminder(_, { createReminderInput }, { prisma }: ApolloContext) {
@@ -22,18 +23,14 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 				facultyID: createReminderInput.facultyID,
 			},
 			include: {
-				student: {
-					include: { user: { include: { department: true } } },
-				},
-				faculty: {
-					include: { user: { include: { department: true } } },
-				},
+				student: { include: { user: { select: userSelect } } },
+				faculty: { include: { user: { select: userSelect } } },
 			},
 		});
 
 		if (reminder) {
 			const htmlContent = `
-			<h3>Reminder set by Faculty ${reminder.faculty?.user.firstName} ${reminder.faculty?.user.lastName} </h3>
+			<h3>Reminder set by Faculty: ${reminder.faculty?.user.firstName} ${reminder.faculty?.user.lastName} </h3>
 			<ul>
 				<li><b>Reminder: </b> ${reminder.message}</li>
 				<li><b>Faculty Email: </b> ${reminder.faculty?.user.email}</li>
@@ -68,6 +65,10 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 				message: updateReminderInput.message ?? undefined,
 				viewed: updateReminderInput.viewed ?? undefined,
 			},
+			include: {
+				student: { include: { user: { select: userSelect } } },
+				faculty: { include: { user: { select: userSelect } } },
+			},
 		});
 
 		return reminder;
@@ -82,6 +83,10 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 		const reminder: Reminder = await prisma.reminder.delete({
 			where: {
 				id: args.id,
+			},
+			include: {
+				student: { include: { user: { select: userSelect } } },
+				faculty: { include: { user: { select: userSelect } } },
 			},
 		});
 

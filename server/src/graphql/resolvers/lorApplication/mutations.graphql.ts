@@ -5,10 +5,9 @@ import {
 	validateDeleteLORApplication,
 	validateUpdateLORApplicationInput,
 } from "./utils";
-import { StudentSelect } from "../student/types";
-import { FacultySelect } from "../faculty/types";
 import { UserInputError } from "apollo-server";
 import { mailer } from "../../../nodemailer/mailer";
+import { userSelect } from "../user/userSelect";
 
 export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 	async createLORApplication(_, { createLORApplicationInput }, { prisma }: ApolloContext) {
@@ -19,10 +18,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 			throw new UserInputError("Errors", { errors });
 		}
 
-		const lorApp: LorApplication & {
-			student: StudentSelect;
-			faculty: FacultySelect;
-		} = await prisma.lORApplication.create({
+		const lorApp: LorApplication = await prisma.lORApplication.create({
 			data: {
 				dueDate: createLORApplicationInput.dueDate,
 				statementOfPurpose: createLORApplicationInput.statementOfPurpose,
@@ -34,10 +30,10 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 			},
 			include: {
 				student: {
-					include: { user: { include: { department: true } } },
+					include: { user: { select: userSelect } },
 				},
 				faculty: {
-					include: { user: { include: { department: true } } },
+					include: { user: { select: userSelect } },
 				},
 			},
 		});
@@ -74,10 +70,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 			throw new UserInputError("Errors", { errors });
 		}
 
-		const lorApp: LorApplication & {
-			student: StudentSelect;
-			faculty: FacultySelect;
-		} = await prisma.lORApplication.update({
+		const lorApp: LorApplication = await prisma.lORApplication.update({
 			where: {
 				id: updateLORApplicationInput.id,
 			},
@@ -88,14 +81,11 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 				university: updateLORApplicationInput.university ?? undefined,
 				draftURL: updateLORApplicationInput.draftURL ?? undefined,
 				status: updateLORApplicationInput.status ?? undefined,
+				rejectionReason: updateLORApplicationInput.rejectionReason ?? undefined,
 			},
 			include: {
-				student: {
-					include: { user: { include: { department: true } } },
-				},
-				faculty: {
-					include: { user: { include: { department: true } } },
-				},
+				student: { include: { user: { select: userSelect } } },
+				faculty: { include: { user: { select: userSelect } } },
 			},
 		});
 
@@ -107,7 +97,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 
 			if (lorApp.status.toUpperCase() === "REJECTED") {
 				htmlContent += `
-					<li><b>Reason:</b> Reason to be added later -> under dev</li>
+					<li><b>Reason:</b> ${lorApp.rejectionReason}</li>
 				`;
 			}
 
@@ -138,6 +128,10 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 		const lorApp: LorApplication = await prisma.lORApplication.delete({
 			where: {
 				id: args.id,
+			},
+			include: {
+				student: { include: { user: { select: userSelect } } },
+				faculty: { include: { user: { select: userSelect } } },
 			},
 		});
 

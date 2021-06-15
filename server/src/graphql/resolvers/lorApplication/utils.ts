@@ -21,6 +21,7 @@ type UpdateLORApplicationError = {
 	course: string | null;
 	university: string | null;
 	draftURL: string | null;
+	rejectionReason: string | null;
 	empty: string | null;
 	application: string | null;
 };
@@ -115,6 +116,7 @@ export const validateUpdateLORApplicationInput = async ({
 	university,
 	draftURL,
 	status,
+	rejectionReason,
 }: UpdateLorApplicationInput) => {
 	const errors: UpdateLORApplicationError = {
 		id: null,
@@ -123,6 +125,7 @@ export const validateUpdateLORApplicationInput = async ({
 		course: null,
 		university: null,
 		draftURL: null,
+		rejectionReason: null,
 		empty: null,
 		application: null,
 	};
@@ -157,6 +160,12 @@ export const validateUpdateLORApplicationInput = async ({
 	if (course?.trim() === "") errors.course = "Course cannot be empty";
 
 	if (university?.trim() === "") errors.university = "University cannot be empty";
+
+	if (status === "REJECTED" && rejectionReason?.trim() == null) errors.rejectionReason = "Rejection Reason needed";
+	else if (status !== "REJECTED" && rejectionReason?.trim() != null)
+		errors.rejectionReason = "invalid entry of rejection reason";
+
+	console.log(rejectionReason?.trim());
 
 	if (
 		dueDate == null &&

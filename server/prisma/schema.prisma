@@ -29,6 +29,7 @@ model LORApplication {
   studentID          String
   facultyID          String
   status             Status   @default(PENDING)
+  rejectionReason    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,8 +86,8 @@ model User {
   institution  String
   contact      String     @unique
   profilePhoto String     @unique
-  Student      Student[]
-  Faculty      Faculty[]
+  student      Student?
+  faculty      Faculty?
   department   Department @relation(fields: [departmentID], references: [id])
   departmentID String
   userType     UserType   @default(STUDENT)

@@ -35,7 +35,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
 		if (newUser.userType === "STUDENT") {
 			newUser = {
 				...newUser,
-				Student: {
+				student: {
 					create: {
 						regNo: createUserInput.regNo ?? "",
 					},
@@ -46,7 +46,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
 		if (newUser.userType === "FACULTY") {
 			newUser = {
 				...newUser,
-				Faculty: {
+				faculty: {
 					create: {
 						lorDraftTemplates: [],
 					},

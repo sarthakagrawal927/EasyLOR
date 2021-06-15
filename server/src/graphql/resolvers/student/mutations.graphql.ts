@@ -27,11 +27,14 @@ export const mutations: MutationResolvers<ApolloContext, Student> = {
 				},
 			},
 			include: {
-				lorApplications: true,
-				reminders: true,
-				user: {
-					select: userSelect,
+				lorApplications: {
+					include: {
+						student: { include: { user: { select: userSelect } } },
+						faculty: { include: { user: { select: userSelect } } },
+					},
 				},
+				reminders: true,
+				user: { select: userSelect },
 				testScores: true,
 			},
 		});

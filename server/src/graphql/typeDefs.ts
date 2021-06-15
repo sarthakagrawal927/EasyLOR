@@ -47,9 +47,10 @@ const typeDefs = gql`
 		course: String!
 		university: String!
 		draftURL: String
-		studentID: String!
-		facultyID: String!
+		student: Student!
+		faculty: Faculty!
 		status: Status!
+		rejectionReason: String
 	}
 
 	type Student {
@@ -57,16 +58,16 @@ const typeDefs = gql`
 		regNo: String!
 		appliedUniversities: [String]!
 		acceptedUniversity: String
-		testScores: [TestScore]!
-		lorApplications: [LORApplication]!
-		reminders: [Reminder]!
+		testScores: [TestScore]
+		lorApplications: [LORApplication]
+		reminders: [Reminder]
 	}
 
 	type Faculty {
 		user: User!
-		lorApplications: [LORApplication]!
-		lorDraftTemplates: [String]!
-		reminders: [Reminder]!
+		lorApplications: [LORApplication]
+		lorDraftTemplates: [String]
+		reminders: [Reminder]
 	}
 
 	type Department {
@@ -131,6 +132,7 @@ const typeDefs = gql`
 		university: String
 		draftURL: String
 		status: Status
+		rejectionReason: String
 	}
 
 	input TestScoreInput {
