@@ -1,7 +1,7 @@
-import { ApolloContext, context } from "../../../context";
 import { CreateLorApplicationInput, UpdateLorApplicationInput } from "@/types";
+import { PrismaClient } from "@prisma/client";
 
-const { prisma }: ApolloContext = context;
+const prisma = new PrismaClient();
 
 type CreateLORApplicationError = {
 	dueDate: string | null;

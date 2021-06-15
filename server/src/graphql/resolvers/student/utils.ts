@@ -1,7 +1,7 @@
 import { TestScore, UpdateStudentInput } from "@/types";
-import { ApolloContext, context } from "../../../context";
+import { PrismaClient } from "@prisma/client";
 
-const { prisma }: ApolloContext = context;
+const prisma = new PrismaClient();
 
 type UpdateStudentError = {
 	id: string | null;

@@ -1186,6 +1186,13 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
+"@types/type-is@^1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@types/type-is/-/type-is-1.6.3.tgz#45285b3be846a4afc9d488910a8e4b7bc2e8a169"
+  integrity sha512-PNs5wHaNcBgCQG5nAeeZ7OvosrEsI9O4W2jAOO9BCCg4ux9ZZvH2+0iSCOIDBiKuQsiNS8CBlmfX9f5YBQ22cA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/websocket@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@types/websocket/-/websocket-1.0.2.tgz#d2855c6a312b7da73ed16ba6781815bf30c6187a"

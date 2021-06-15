@@ -78,7 +78,6 @@ const typeDefs = gql`
 	type Query {
 		getDepartments: [Department]!
 		getFaculties: [Faculty]!
-		getApplicationsByFacultyID: [LORApplication]!
 		getStudentByUserID(id: String!): Student
 		getFacultyByUserID(id: String!): Faculty
 		getPastApplicationsByFacultyID(id: String!): [Student]!

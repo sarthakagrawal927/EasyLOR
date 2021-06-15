@@ -6,9 +6,11 @@ import { mailer } from "../../../nodemailer/mailer";
 import { StudentSelect } from "../student/types";
 import { FacultySelect } from "../faculty/types";
 import { userSelect } from "../user/userSelect";
+import checkAuth from "../../../checkAuth";
 
 export const mutations: MutationResolvers<ApolloContext, Reminder> = {
-	async createReminder(_, { createReminderInput }, { prisma }: ApolloContext) {
+	async createReminder(_, { createReminderInput }, { prisma, req }: ApolloContext) {
+		checkAuth(req);
 		const { errors, isValid } = await validateCreateReminderInput({
 			...createReminderInput,
 		});
@@ -49,7 +51,8 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 		return reminder;
 	},
 
-	async updateReminder(_, { updateReminderInput }, { prisma }: ApolloContext) {
+	async updateReminder(_, { updateReminderInput }, { prisma, req }: ApolloContext) {
+		checkAuth(req);
 		const { errors, isValid } = await validateUpdateReminderInput({
 			...updateReminderInput,
 		});
@@ -74,7 +77,8 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 		return reminder;
 	},
 
-	async deleteReminder(_, args: { id: string }, { prisma }: ApolloContext) {
+	async deleteReminder(_, args: { id: string }, { prisma, req }: ApolloContext) {
+		checkAuth(req);
 		const { errors, isValid } = await validateDeleteReminder(args.id);
 		if (!isValid) {
 			throw new UserInputError("Errors", { errors });

@@ -1,9 +1,10 @@
 import { ApolloContext } from "../../../context";
 import { Faculty, LorApplication, QueryResolvers, Student } from "@/types";
 import { userSelect } from "../user/userSelect";
-
+import checkAuth from "../../../checkAuth";
 export const queries: QueryResolvers<ApolloContext, Faculty> = {
-	async getFaculties(_, {}, { prisma }: ApolloContext) {
+	async getFaculties(_, {}, { prisma, req }) {
+		checkAuth(req);
 		const faculties: Faculty[] | null = await prisma.faculty.findMany({
 			select: {
 				user: { select: userSelect },
@@ -21,7 +22,11 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 		return faculties;
 	},
 
-	async getFacultyByUserID(_, args: { id: string }, { prisma }: ApolloContext) {
+	async getFacultyByUserID(_, args: { id: string }, { prisma, req }: ApolloContext) {
+		const user = checkAuth(req);
+		if (process.env.NODE_ENV === "production" && args.id !== user.id) {
+			throw new Error("INVALID_ACTION: Cannot fetch a different user");
+		}
 		const faculty: Faculty | null = await prisma.faculty.findUnique({
 			where: {
 				userID: args.id,

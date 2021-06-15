@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { CreateUserInput, LoginUserInput } from "@/types";
-import { ApolloContext, context } from "../../../context";
+import { PrismaClient } from "@prisma/client";
 
-const { prisma }: ApolloContext = context;
+const prisma = new PrismaClient();
 
 type LoginError = {
 	email: string | null;
@@ -22,7 +22,7 @@ type CreateUserError = {
 	userType: string | null;
 };
 
-type PayloadData = {
+export type PayloadData = {
 	id: string;
 	email: string;
 	userType: "STUDENT" | "FACULTY";
@@ -71,7 +71,7 @@ export const validateCreateUserInput = async ({
 				id: departmentID,
 			},
 		});
-		if(!department) errors.departmentID = "Department with this ID does not exist"
+		if (!department) errors.departmentID = "Department with this ID does not exist";
 	}
 
 	if (institution.trim() === "") errors.institution = "Institution cannot be empty";

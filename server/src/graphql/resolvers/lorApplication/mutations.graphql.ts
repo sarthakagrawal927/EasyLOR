@@ -8,9 +8,14 @@ import {
 import { UserInputError } from "apollo-server";
 import { mailer } from "../../../nodemailer/mailer";
 import { userSelect } from "../user/userSelect";
+import checkAuth from "../../../checkAuth";
 
 export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
-	async createLORApplication(_, { createLORApplicationInput }, { prisma }: ApolloContext) {
+	async createLORApplication(_, { createLORApplicationInput }, { prisma, req }: ApolloContext) {
+		const user = checkAuth(req);
+		if (process.env.NODE_ENV === "production" && createLORApplicationInput.studentID !== user.id) {
+			throw new Error("INVALID_ACTION: LOR Application can only be created by authorized user");
+		}
 		const { errors, isValid } = await validateCreateLORApplicationInput({
 			...createLORApplicationInput,
 		});
@@ -62,7 +67,8 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 		return lorApp;
 	},
 
-	async updateLORApplication(_, { updateLORApplicationInput }, { prisma }: ApolloContext) {
+	async updateLORApplication(_, { updateLORApplicationInput }, { prisma, req }: ApolloContext) {
+		checkAuth(req);
 		const { errors, isValid } = await validateUpdateLORApplicationInput({
 			...updateLORApplicationInput,
 		});
@@ -119,7 +125,8 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 		return lorApp;
 	},
 
-	async deleteLORApplication(_, args: { id: string }, { prisma }: ApolloContext) {
+	async deleteLORApplication(_, args: { id: string }, { prisma, req }: ApolloContext) {
+		checkAuth(req);
 		const { errors, isValid } = await validateDeleteLORApplication(args.id);
 		if (!isValid) {
 			throw new UserInputError("Errors", { errors });
