@@ -1,0 +1,37 @@
+query GetPastApplicationsByFacultyID($id: String!) {
+	getPastApplicationsByFacultyID(id: $id) {
+		user {
+			id
+			email
+			firstName
+			lastName
+			department {
+				id
+				name
+			}
+			institution
+			contact
+			profilePhoto
+			userType
+		}
+		regNo
+		appliedUniversities
+		acceptedUniversity
+		testScores {
+			id
+			exam
+			score
+		}
+		lorApplications {
+			id
+			statementOfPurpose
+		}
+		reminders {
+			id
+			message
+			facultyID
+			studentID
+			viewed
+		}
+	}
+}

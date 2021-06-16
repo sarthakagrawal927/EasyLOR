@@ -50,6 +50,7 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 		const lorApplications: LorApplication[] | null = await prisma.lORApplication.findMany({
 			where: {
 				facultyID: args.id,
+				status: "GRANTED",
 			},
 			include: {
 				student: { include: { user: { select: userSelect } } },
