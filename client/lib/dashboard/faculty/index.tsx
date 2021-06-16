@@ -2,14 +2,17 @@ import React from "react";
 import { Heading, Thead, Tbody, Tr, Th, Td, chakra } from "@chakra-ui/react";
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import { useTable, useSortBy } from "react-table";
-import { data, columns } from "./hooks";
+import { data, columns, useFacultyDashboard } from "./hooks";
 import { DashboardContainer, Container, DashboardTable } from "../dashboard.styled";
 
 const FacultyDashboard = () => {
 	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data }, useSortBy);
+	const { faculty, loading } = useFacultyDashboard();
 
 	return (
 		<DashboardContainer>
+			{loading && <p>Loading...</p>}
+			{faculty && <p>{JSON.stringify(faculty.lorApplications)}</p>}
 			<Container>
 				<Heading> Application </Heading>{" "}
 				<DashboardTable {...getTableProps()} variant="unstyled">

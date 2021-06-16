@@ -1,0 +1,50 @@
+query GetStudentByUserID($id: String!) {
+	getStudentByUserID(id: $id) {
+		user {
+			contact
+			department {
+				id
+				name
+			}
+			email
+			firstName
+			id
+			institution
+			lastName
+			profilePhoto
+			userType
+		}
+		acceptedUniversity
+		appliedUniversities
+		lorApplications {
+			course
+			draftURL
+			dueDate
+			faculty {
+				user {
+					email
+					firstName
+					id
+					department {
+						id
+						name
+					}
+					lastName
+					profilePhoto
+				}
+			}
+		}
+		regNo
+		reminders {
+			facultyID
+			message
+			id
+			viewed
+		}
+		testScores {
+			exam
+			id
+			score
+		}
+	}
+}

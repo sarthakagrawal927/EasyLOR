@@ -1,4 +1,24 @@
+import { Student, StudentContext } from "context/student";
 import Link from "next/link";
+import { useContext, useEffect } from "react";
+
+type UseStudentDashboardReturn = {
+	student: Student;
+	loading: boolean;
+};
+export const useStudentDashboard = (): UseStudentDashboardReturn => {
+	const { student, loading, fetchStudent } = useContext(StudentContext);
+
+	useEffect(() => {
+		fetchStudent();
+	}, []);
+
+	return {
+		student,
+		loading,
+	};
+};
+
 export const data = [
 	{
 		applicationID: "id324324",

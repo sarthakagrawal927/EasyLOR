@@ -5,9 +5,7 @@ import StudentDashboard from "../../lib/dashboard/student";
 
 const index = () => {
 	const { user } = useContext(AuthContext);
-	useEffect(() => {
-		console.log("Current User: ", user);
-	}, [user]);
+
 	return <>{user?.userType === "FACULTY" ? <FacultyDashboard /> : <StudentDashboard />}</>;
 };
 

@@ -1,3 +1,23 @@
+import { useContext, useEffect } from "react";
+import { FacultyContext, Faculty } from "context/faculty";
+
+type UseFacultyDashboardReturn = {
+	faculty: Faculty;
+	loading: boolean;
+};
+export const useFacultyDashboard = (): UseFacultyDashboardReturn => {
+	const { faculty, loading, fetchFaculty } = useContext(FacultyContext);
+
+	useEffect(() => {
+		fetchFaculty();
+	}, []);
+
+	return {
+		faculty,
+		loading,
+	};
+};
+
 export const data = [
 	{
 		applicationID: "inches",

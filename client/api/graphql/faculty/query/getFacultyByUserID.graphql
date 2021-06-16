@@ -1,0 +1,44 @@
+query GetFacultyByUserID($id: String!) {
+	getFacultyByUserID(id: $id) {
+		lorDraftTemplates
+		user {
+			contact
+			department {
+				id
+				name
+			}
+			email
+			firstName
+			id
+			institution
+			lastName
+			profilePhoto
+			userType
+		}
+		lorApplications {
+			course
+			draftURL
+			dueDate
+			id
+			statementOfPurpose
+			status
+			university
+			student {
+				acceptedUniversity
+				appliedUniversities
+				regNo
+				user {
+					id
+					firstName
+					lastName
+					email
+					profilePhoto
+					department {
+						id
+						name
+					}
+				}
+			}
+		}
+	}
+}
