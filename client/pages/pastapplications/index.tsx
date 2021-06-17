@@ -9,6 +9,7 @@ import {
 	TestScoreContainer,
 } from "../../lib/pastapplications/applications.styled";
 import { usePastApplications } from "../../lib/pastapplications/hooks";
+import withAuth from "components/withAuth";
 
 const PastApplications: FC = () => {
 	const { data, loading } = usePastApplications();
@@ -77,4 +78,4 @@ const PastApplications: FC = () => {
 	);
 };
 
-export default PastApplications;
+export default withAuth(PastApplications);

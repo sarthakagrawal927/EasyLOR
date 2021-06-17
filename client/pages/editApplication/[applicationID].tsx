@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import withAuth from "components/withAuth";
 const Post = () => {
 	const router = useRouter();
 	const { applicationID } = router.query;
@@ -7,4 +7,4 @@ const Post = () => {
 	return <p>Application: {applicationID}</p>;
 };
 
-export default Post;
+export default withAuth(Post);
