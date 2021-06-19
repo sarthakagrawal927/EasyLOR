@@ -10,7 +10,10 @@ const elementPadding = "15px";
 
 export const ApplicationContainer = styled(Center)`
 	width: 100vw;
-	height: 100vh;
+	max-width: 100%;
+	height: 100%;
+
+	padding-top: 10vh;
 
 	display: flex;
 	flex-direction: column;
@@ -65,7 +68,7 @@ export const ImageNameContainer = styled(Box)`
 `;
 
 export const ProfileContainer = styled(Box)`
-	height: ${pastAppHeight};
+	min-height: ${pastAppHeight};
 	width: 35%;
 
 	display: flex;
@@ -120,7 +123,7 @@ export const AcceptedUniversity = styled(Box)`
 `;
 
 export const TestScoreContainer = styled(Box)`
-	height: ${pastAppHeight};
+	min-height: ${pastAppHeight};
 	width: 20%;
 	position: relative;
 
@@ -152,7 +155,7 @@ export const TestScoreContainer = styled(Box)`
 
 		display: flex;
 		flex-direction: column;
-		justify-content: start;
+		justify-content: flex-start;
 
 		font-weight: 600;
 		text-align: center;

@@ -1,11 +1,12 @@
-import { AuthContext } from "../../context/auth";
-import { Student, useGetPastApplicationsByFacultyIdQuery } from "../../entities/types.graphql";
-import { useContext } from "react";
+import { User, Student, useGetPastApplicationsByFacultyIdQuery } from "../../entities/types.graphql";
+import { useContext, useEffect } from "react";
 import { createStandaloneToast } from "@chakra-ui/react";
+import { FacultyContext } from "context/faculty";
 
 type StudentWithoutLORApplication = Omit<Student, "lorApplications">;
 
 type PastApplicationsReturn = {
+	user: User;
 	data: StudentWithoutLORApplication[] | null;
 	loading: boolean;
 };
@@ -13,10 +14,11 @@ type PastApplicationsReturn = {
 export const usePastApplications = (): PastApplicationsReturn => {
 	const toast = createStandaloneToast();
 
-	const { user } = useContext(AuthContext);
+	const { faculty } = useContext(FacultyContext);
+
 	const { data, loading, error } = useGetPastApplicationsByFacultyIdQuery({
 		variables: {
-			id: user?.id,
+			id: faculty?.user.id,
 		},
 		onError: error => {
 			toast({
@@ -31,6 +33,7 @@ export const usePastApplications = (): PastApplicationsReturn => {
 	});
 
 	return {
+		user: faculty?.user,
 		data: data?.getPastApplicationsByFacultyID,
 		loading,
 	};

@@ -4,8 +4,7 @@ import { colors, font } from "../../utils/styles";
 
 export const DashboardContainer = styled(Center)`
 	width: 100vw;
-	height: 100vh;
-	max-width: 100vw;
+	max-width: 100%;
 `;
 
 export const Container = styled(Box)`
