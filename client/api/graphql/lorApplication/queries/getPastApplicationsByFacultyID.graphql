@@ -21,6 +21,7 @@ query GetPastApplicationsByFacultyID($id: String!) {
 			id
 			exam
 			score
+			proofOfResult
 		}
 		lorApplications {
 			id

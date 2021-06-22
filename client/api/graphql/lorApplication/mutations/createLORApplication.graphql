@@ -1,0 +1,21 @@
+# Write your query or mutation here
+
+mutation CreateLorApplication($createLORApplicationInput: CreateLORApplicationInput!) {
+	createLORApplication(createLORApplicationInput: $createLORApplicationInput) {
+		course
+		dueDate
+		statementOfPurpose
+		university
+		draftURL
+		student {
+			user {
+				id
+			}
+		}
+		faculty {
+			user {
+				id
+			}
+		}
+	}
+}

@@ -1,0 +1,13 @@
+query GetFaculties {
+	getFaculties {
+		user {
+			id
+			profilePhoto
+			firstName
+			lastName
+			department {
+				name
+			}
+		}
+	}
+}

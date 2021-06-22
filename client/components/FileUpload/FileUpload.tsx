@@ -7,6 +7,7 @@ type FileUploadProps = {
 	accept?: string;
 	multiple?: boolean;
 	children?: ReactNode;
+	fromNewApplication?: boolean;
 };
 export const validateFiles: Validate<File | FileList> = (value: FileList, maxSize: number = 5) => {
 	if (value.length < 1) {
@@ -21,7 +22,7 @@ export const validateFiles: Validate<File | FileList> = (value: FileList, maxSiz
 	return true;
 };
 
-const FileUpload: FC<FileUploadProps> = ({ register, accept, multiple, children }) => {
+const FileUpload: FC<FileUploadProps> = ({ register, accept, multiple, children, fromNewApplication }) => {
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const { name, onChange, ref, ...rest } = register;
 
@@ -31,7 +32,10 @@ const FileUpload: FC<FileUploadProps> = ({ register, accept, multiple, children 
 	};
 
 	return (
-		<InputGroup onClick={handleClick}>
+		<InputGroup
+			onClick={handleClick}
+			style={{ display: fromNewApplication === undefined ? "" : "inline-block", width: "inherit" }}
+		>
 			<input
 				name={name}
 				type="file"

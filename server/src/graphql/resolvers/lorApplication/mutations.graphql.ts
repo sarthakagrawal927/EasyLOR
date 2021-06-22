@@ -43,26 +43,26 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 			},
 		});
 
-		if (lorApp) {
-			const htmlContent = `
-			<h3>Application submitted by ${lorApp.student?.user.firstName} ${lorApp.student?.user.lastName}</h3>
-			<ul>
-				<li><b>Statement of Purpose:</b> ${lorApp.statementOfPurpose}</li>
-				<li><b>University:</b> ${lorApp.university}</li>
-				<li><b>Course:</b> ${lorApp.course}</li>
-				<li><b>Due Date:</b> ${lorApp.dueDate}</li>
-				<li><b>Student contact:</b> ${lorApp.student?.user.email}</li>
-			</ul>
-			`;
+		// if (lorApp) {
+		// 	const htmlContent = `
+		// 	<h3>Application submitted by ${lorApp.student?.user.firstName} ${lorApp.student?.user.lastName}</h3>
+		// 	<ul>
+		// 		<li><b>Statement of Purpose:</b> ${lorApp.statementOfPurpose}</li>
+		// 		<li><b>University:</b> ${lorApp.university}</li>
+		// 		<li><b>Course:</b> ${lorApp.course}</li>
+		// 		<li><b>Due Date:</b> ${lorApp.dueDate}</li>
+		// 		<li><b>Student contact:</b> ${lorApp.student?.user.email}</li>
+		// 	</ul>
+		// 	`;
 
-			const mailOptions = {
-				to: lorApp.faculty?.user.email,
-				subject: `New LOR Application: ${lorApp.student?.regNo}`,
-				html: htmlContent,
-			};
+		// 	const mailOptions = {
+		// 		to: lorApp.faculty?.user.email,
+		// 		subject: `New LOR Application: ${lorApp.student?.regNo}`,
+		// 		html: htmlContent,
+		// 	};
 
-			await mailer(mailOptions);
-		}
+		// 	await mailer(mailOptions);
+		// }
 
 		return lorApp;
 	},

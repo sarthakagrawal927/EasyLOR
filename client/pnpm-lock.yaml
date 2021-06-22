@@ -13,10 +13,13 @@ specifiers:
   '@types/react': ^17.0.3
   '@types/react-table': ^7.7.0
   '@types/styled-components': ^5.1.9
+  babel-plugin-styled-components: ^1.12.0
   framer-motion: ^4
   graphql: ^15.5.0
+  jwt-decode: ^3.1.2
   next: 10.1.3
   react: 17.0.2
+  react-datepicker: ^4.1.1
   react-dom: 17.0.2
   react-hook-form: ^7.2.3
   react-table: ^7.7.0
@@ -31,10 +34,13 @@ dependencies:
   '@emotion/styled': 11.3.0_98bf89e7b892f3abde8a7bea823c65cd
   '@types/react-table': 7.7.0
   '@types/styled-components': 5.1.9
+  babel-plugin-styled-components: 1.12.0_styled-components@5.2.3
   framer-motion: 4.1.11_react-dom@17.0.2+react@17.0.2
   graphql: 15.5.0
+  jwt-decode: 3.1.2
   next: 10.1.3_507781d099a67956587e23f5ac79078b
   react: 17.0.2
+  react-datepicker: 4.1.1_react-dom@17.0.2+react@17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-hook-form: 7.3.6_react@17.0.2
   react-table: 7.7.0_react@17.0.2
@@ -135,6 +141,14 @@ packages:
     resolution: {integrity: sha512-7YXfX5wQ5aYM/BOlbSccHDbuXXFPxeoUmfWtz8le2yTkTZc+BxsiEnENFoi2SlmA8ewDkG2LgIMIVzzn2h8kfw==}
     dependencies:
       '@babel/types': 7.14.0
+    dev: true
+
+  /@babel/helper-annotate-as-pure/7.14.5:
+    resolution: {integrity: sha512-EivH9EgBIb+G8ij1B2jAwSH36WnGvkQSEC6CkX/6v6ZFlw5fVOHvsgGF4uiEHO2GzMvunZb6tDLQEQSdrdocrA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/types': 7.14.5
+    dev: false
 
   /@babel/helper-compilation-targets/7.13.16_@babel+core@7.14.0:
     resolution: {integrity: sha512-3gmkYIrpqsLlieFwjkGgLaSHmhnvlAYzZLlYVjlW+QwI+1zE17kGxuJGmIqDQdYp56XdmGeD+Bswx0UTyG18xA==}
@@ -186,6 +200,13 @@ packages:
     resolution: {integrity: sha512-4cVvR2/1B693IuOvSI20xqqa/+bl7lqAMR59R4iu39R9aOX8/JoYY1sFaNvUMyMBGnHdwvJgUrzNLoUZxXypxA==}
     dependencies:
       '@babel/types': 7.14.0
+
+  /@babel/helper-module-imports/7.14.5:
+    resolution: {integrity: sha512-SwrNHu5QWS84XlHwGYPDtCxcA0hrSlL2yhWYLgeOc0w7ccOl2qv4s/nARI0aYZW+bSwAL5CukeXA47B/1NKcnQ==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/types': 7.14.5
+    dev: false
 
   /@babel/helper-module-transforms/7.14.0:
     resolution: {integrity: sha512-L40t9bxIuGOfpIGA3HNkJhU9qYrf4y5A5LUSw7rGMSn+pcG8dfJ0g6Zval6YJGd2nEjI7oP00fRdnhLKndx6bw==}
@@ -241,6 +262,11 @@ packages:
 
   /@babel/helper-validator-identifier/7.14.0:
     resolution: {integrity: sha512-V3ts7zMSu5lfiwWDVWzRDGIN+lnCEUdaXgtVHJgLb1rGaA6jMrtB9EmE7L18foXJIE8Un/A/h6NJfGQp/e1J4A==}
+
+  /@babel/helper-validator-identifier/7.14.5:
+    resolution: {integrity: sha512-5lsetuxCLilmVGyiLEfoHBRX8UCFD+1m2x3Rj97WrW3V7H3u4RWRXA4evMjImCsin2J2YT0QaVDGf+z8ondbAg==}
+    engines: {node: '>=6.9.0'}
+    dev: false
 
   /@babel/helper-validator-option/7.12.17:
     resolution: {integrity: sha512-TopkMDmLzq8ngChwRlyjR6raKD6gMSae4JdYDB8bByKreQgG0RBTuKe9LRxW3wFtUnjxOPRKBDwEH6Mg5KeDfw==}
@@ -623,6 +649,14 @@ packages:
     dependencies:
       '@babel/helper-validator-identifier': 7.14.0
       to-fast-properties: 2.0.0
+
+  /@babel/types/7.14.5:
+    resolution: {integrity: sha512-M/NzBpEL95I5Hh4dwhin5JlE7EzO5PHMAuzjxss3tiOBD46KfQvVedN/3jEPZvdRvtsK2222XfdHogNIttFgcg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/helper-validator-identifier': 7.14.5
+      to-fast-properties: 2.0.0
+    dev: false
 
   /@babel/types/7.8.3:
     resolution: {integrity: sha512-jBD+G8+LWpMBBWvVcdr4QysjUE4mU/syrhN17o1u3gx0/WzJB1kwiVZAXRtWbsIPOwW8pF/YJV5+nmetPzepXg==}
@@ -2089,6 +2123,10 @@ packages:
     resolution: {integrity: sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==}
     dev: false
 
+  /@popperjs/core/2.9.2:
+    resolution: {integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==}
+    dev: false
+
   /@reach/alert/0.13.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-LDz83AXCrClyq/MWe+0vaZfHp1Ytqn+kgL5VxG7rirUvmluWaj/snxzfNPWn0Ma4K2YENmXXRC/iHt5X95SqIg==}
     peerDependencies:
@@ -2460,8 +2498,8 @@ packages:
     peerDependencies:
       styled-components: '>= 2'
     dependencies:
-      '@babel/helper-annotate-as-pure': 7.12.13
-      '@babel/helper-module-imports': 7.13.12
+      '@babel/helper-annotate-as-pure': 7.14.5
+      '@babel/helper-module-imports': 7.14.5
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       styled-components: 5.2.3_react-dom@17.0.2+react@17.0.2
@@ -2824,6 +2862,10 @@ packages:
     resolution: {integrity: sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==}
     dev: false
 
+  /classnames/2.3.1:
+    resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==}
+    dev: false
+
   /cli-cursor/2.1.0:
     resolution: {integrity: sha1-s12sN2R5+sw+lHR9QdDQ9SOP/LU=}
     engines: {node: '>=4'}
@@ -3092,6 +3134,11 @@ packages:
   /date-fns/1.30.1:
     resolution: {integrity: sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==}
     dev: true
+
+  /date-fns/2.22.1:
+    resolution: {integrity: sha512-yUFPQjrxEmIsMqlHhAhmxkuH769baF21Kk+nZwZGyrMoyLA+LugaQtC0+Tqf9CBUUULWwUJt6Q5ySI3LJDDCGg==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /debounce/1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -4211,6 +4258,10 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
+  /jwt-decode/3.1.2:
+    resolution: {integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==}
+    dev: false
+
   /keyv/3.1.0:
     resolution: {integrity: sha512-9ykJ/46SN/9KPM/sichzQ7OvXyGDYKGTaDlKMGCAlg2UK8KRy4jb0d8sFc+0Tt0YYnThq8X2RZgCg74RPxgcVA==}
     dependencies:
@@ -5066,6 +5117,22 @@ packages:
       react: 17.0.2
     dev: false
 
+  /react-datepicker/4.1.1_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-vtZIA7MbUrffRw1CHiyOGtmTO/tTdZGr5BYaiRucHMTb6rCqA8TkaQhzX6tTwMwP8vV38Khv4UWohrJbiX1rMw==}
+    peerDependencies:
+      react: ^16.9.0 || ^17
+      react-dom: ^16.9.0 || ^17
+    dependencies:
+      '@popperjs/core': 2.9.2
+      classnames: 2.3.1
+      date-fns: 2.22.1
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-onclickoutside: 6.11.2_react-dom@17.0.2+react@17.0.2
+      react-popper: 2.2.5_a16f30364266ce234ee1188a6d27cb60
+    dev: false
+
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
     peerDependencies:
@@ -5107,6 +5174,28 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: false
+
+  /react-onclickoutside/6.11.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-640486eSwU/t5iD6yeTlefma8dI3bxPXD93hM9JGKyYITAd0P1JFkkcDeyHZRqNpY/fv1YW0Fad9BXr44OY8wQ==}
+    peerDependencies:
+      react: ^15.5.x || ^16.x || ^17.x
+      react-dom: ^15.5.x || ^16.x || ^17.x
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
+  /react-popper/2.2.5_a16f30364266ce234ee1188a6d27cb60:
+    resolution: {integrity: sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw==}
+    peerDependencies:
+      '@popperjs/core': ^2.0.0
+      react: ^16.8.0 || ^17
+    dependencies:
+      '@popperjs/core': 2.9.2
+      react: 17.0.2
+      react-fast-compare: 3.2.0
+      warning: 4.0.3
     dev: false
 
   /react-refresh/0.8.3:

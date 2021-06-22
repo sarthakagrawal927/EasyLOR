@@ -38,7 +38,7 @@ const NavBar: FC<NavBarProps> = ({ user, pastapp }) => {
 							</PastContainer>
 						</>
 					) : user?.userType === "STUDENT" ? (
-						<Link href="/newapplication">
+						<Link href="/newApplication">
 							<ApplicationButton type="submit" variant="solid">
 								NEW APPLICATION
 							</ApplicationButton>

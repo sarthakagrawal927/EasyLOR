@@ -49,7 +49,7 @@ export const validateCreateLORApplicationInput = async ({
 		lorApplication: null,
 	};
 
-	if (dueDate.trim() !== "") {
+	if (dueDate && dueDate?.trim() !== "") {
 		try {
 			const date = new Date(dueDate).toISOString();
 			if (date !== dueDate) {
