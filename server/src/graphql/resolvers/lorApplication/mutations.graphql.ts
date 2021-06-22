@@ -25,7 +25,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 
 		const lorApp: LorApplication = await prisma.lORApplication.create({
 			data: {
-				dueDate: createLORApplicationInput.dueDate,
+				dueDate: createLORApplicationInput.dueDate ?? undefined,
 				statementOfPurpose: createLORApplicationInput.statementOfPurpose,
 				course: createLORApplicationInput.course,
 				university: createLORApplicationInput.university,

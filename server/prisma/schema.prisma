@@ -20,15 +20,15 @@ enum UserType {
 }
 
 model LORApplication {
-  id                 String   @id @default(uuid())
-  dueDate            DateTime
+  id                 String    @id @default(uuid())
+  dueDate            DateTime?
   statementOfPurpose String
   course             String
   university         String
   draftURL           String?
   studentID          String
   facultyID          String
-  status             Status   @default(PENDING)
+  status             Status    @default(PENDING)
   rejectionReason    String?
 
   createdAt DateTime @default(now())
@@ -55,9 +55,10 @@ model Reminder {
 }
 
 model TestScore {
-  id    String @id @default(uuid())
-  exam  String
-  score String
+  id            String @id @default(uuid())
+  exam          String
+  score         String
+  proofOfResult String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -102,6 +103,7 @@ model Student {
   regNo               String           @unique
   appliedUniversities String[]
   acceptedUniversity  String?
+  proofOfAcceptance   String?
   testScores          TestScore[]
   lorApplications     LORApplication[]
   reminders           Reminder[]

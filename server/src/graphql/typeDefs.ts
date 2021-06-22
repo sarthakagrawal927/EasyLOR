@@ -38,11 +38,12 @@ const typeDefs = gql`
 		id: String!
 		exam: String!
 		score: String!
+		proofOfResult: String!
 	}
 
 	type LORApplication {
 		id: String!
-		dueDate: DateTime!
+		dueDate: DateTime
 		statementOfPurpose: String!
 		course: String!
 		university: String!
@@ -58,6 +59,7 @@ const typeDefs = gql`
 		regNo: String!
 		appliedUniversities: [String]!
 		acceptedUniversity: String
+		proofOfAcceptance: String
 		testScores: [TestScore]
 		lorApplications: [LORApplication]
 		reminders: [Reminder]
@@ -114,7 +116,7 @@ const typeDefs = gql`
 	}
 
 	input CreateLORApplicationInput {
-		dueDate: DateTime!
+		dueDate: DateTime
 		statementOfPurpose: String!
 		course: String!
 		university: String!
@@ -137,12 +139,14 @@ const typeDefs = gql`
 	input TestScoreInput {
 		exam: String!
 		score: String!
+		proofOfResult: String!
 	}
 
 	input UpdateStudentInput {
 		id: String!
 		appliedUniversities: [String!]
 		acceptedUniversity: String
+		proofOfAcceptance: String
 		testScores: [TestScoreInput!]
 	}
 

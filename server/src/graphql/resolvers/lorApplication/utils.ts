@@ -49,9 +49,7 @@ export const validateCreateLORApplicationInput = async ({
 		lorApplication: null,
 	};
 
-	if (dueDate.trim() === "") {
-		errors.dueDate = "Due date cannot be empty";
-	} else {
+	if (dueDate.trim() !== "") {
 		try {
 			const date = new Date(dueDate).toISOString();
 			if (date !== dueDate) {

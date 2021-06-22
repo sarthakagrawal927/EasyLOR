@@ -24,6 +24,7 @@ export const mutations: MutationResolvers<ApolloContext, Student> = {
 			},
 			data: {
 				acceptedUniversity: updateStudentInput.acceptedUniversity ?? undefined,
+				proofOfAcceptance: updateStudentInput.proofOfAcceptance ?? undefined,
 				appliedUniversities: updateStudentInput.appliedUniversities ?? undefined,
 				testScores: {
 					createMany: {

@@ -15,6 +15,7 @@ export const validateUpdateStudentInput = async ({
 	id,
 	appliedUniversities,
 	acceptedUniversity,
+	proofOfAcceptance,
 	testScores,
 }: UpdateStudentInput) => {
 	const errors: UpdateStudentError = {
@@ -47,14 +48,17 @@ export const validateUpdateStudentInput = async ({
 	}
 
 	if (acceptedUniversity?.trim() === "") errors.acceptedUniversity = "Accepted University cannot be empty";
+	else if (!proofOfAcceptance || proofOfAcceptance.trim() === "")
+		errors.acceptedUniversity = "Proof of acceptance cannot be empty";
 
-	if (testScores != null && testScores?.length === 0) {
+	if (testScores?.length === 0) {
 		errors.testScores = "Test Scores array is empty";
 	} else {
 		for (const testScore of testScores ?? []) {
 			if (testScore.exam.trim() === "") errors.testScores = "Exam cannot be empty";
 			else if (testScore.score.trim() === "") errors.testScores = "Score cannot be empty";
 			else if (!testScore.score.match(isNumber)) errors.testScores = "Score must be a number";
+			else if (testScore.proofOfResult.trim() === "") errors.testScores = "proof of Result cannot be empty";
 			else {
 				const existingTestScore: TestScore | null = await prisma.testScore.findUnique({
 					where: {
