@@ -6,7 +6,7 @@ import {
 	validateUpdateLORApplicationInput,
 } from "./utils";
 import { UserInputError } from "apollo-server";
-import { mailer } from "../../../nodemailer/mailer";
+// import { mailer } from "../../../nodemailer/mailer";
 import { userSelect } from "../user/userSelect";
 import checkAuth from "../../../checkAuth";
 
@@ -20,7 +20,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 			...createLORApplicationInput,
 		});
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const lorApp: LorApplication = await prisma.lORApplication.create({
@@ -95,32 +95,32 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 			},
 		});
 
-		if (lorApp) {
-			let htmlContent = `
-			<h3>Application ${lorApp.status.toUpperCase()}</h3>
-			<ul>
-			`;
+		// if (lorApp) {
+		// 	let htmlContent = `
+		// 	<h3>Application ${lorApp.status.toUpperCase()}</h3>
+		// 	<ul>
+		// 	`;
 
-			if (lorApp.status.toUpperCase() === "REJECTED") {
-				htmlContent += `
-					<li><b>Reason:</b> ${lorApp.rejectionReason}</li>
-				`;
-			}
+		// 	if (lorApp.status.toUpperCase() === "REJECTED") {
+		// 		htmlContent += `
+		// 			<li><b>Reason:</b> ${lorApp.rejectionReason}</li>
+		// 		`;
+		// 	}
 
-			htmlContent += `
-				<li><b>Faculty:</b> ${lorApp.faculty?.user.firstName} ${lorApp.faculty?.user.lastName}</li>
-				<li><b>Faculty Email:</b> ${lorApp.faculty?.user.email}</li>
-			</ul>
-			`;
+		// 	htmlContent += `
+		// 		<li><b>Faculty:</b> ${lorApp.faculty?.user.firstName} ${lorApp.faculty?.user.lastName}</li>
+		// 		<li><b>Faculty Email:</b> ${lorApp.faculty?.user.email}</li>
+		// 	</ul>
+		// 	`;
 
-			const mailOptions = {
-				to: lorApp.student?.user.email,
-				subject: "Application Status updated",
-				html: htmlContent,
-			};
+		// 	const mailOptions = {
+		// 		to: lorApp.student?.user.email,
+		// 		subject: "Application Status updated",
+		// 		html: htmlContent,
+		// 	};
 
-			await mailer(mailOptions);
-		}
+		// 	await mailer(mailOptions);
+		// }
 
 		return lorApp;
 	},
@@ -129,7 +129,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 		checkAuth(req);
 		const { errors, isValid } = await validateDeleteLORApplication(args.id);
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const lorApp: LorApplication = await prisma.lORApplication.delete({

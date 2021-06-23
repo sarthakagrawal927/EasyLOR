@@ -15,7 +15,7 @@ export const mutations: MutationResolvers<ApolloContext, Student> = {
 			...updateStudentInput,
 		});
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const student: Student | null = await prisma.student.update({

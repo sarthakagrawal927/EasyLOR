@@ -1,10 +1,8 @@
 import { ApolloContext } from "../../../context";
-import { Reminder, MutationResolvers } from "@/types";
+import { Reminder, MutationResolvers, Student, Faculty } from "@/types";
 import { validateCreateReminderInput, validateUpdateReminderInput, validateDeleteReminder } from "./utils";
 import { UserInputError } from "apollo-server";
-import { mailer } from "../../../nodemailer/mailer";
-import { StudentSelect } from "../student/types";
-import { FacultySelect } from "../faculty/types";
+// import { mailer } from "../../../nodemailer/mailer";
 import { userSelect } from "../user/userSelect";
 import checkAuth from "../../../checkAuth";
 
@@ -15,10 +13,10 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 			...createReminderInput,
 		});
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
-		const reminder: Reminder & { student: StudentSelect; faculty: FacultySelect } = await prisma.reminder.create({
+		const reminder: Reminder & { student: Student; faculty: Faculty } = await prisma.reminder.create({
 			data: {
 				message: createReminderInput.message,
 				studentID: createReminderInput.studentID,
@@ -30,23 +28,23 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 			},
 		});
 
-		if (reminder) {
-			const htmlContent = `
-			<h3>Reminder set by Faculty: ${reminder.faculty?.user.firstName} ${reminder.faculty?.user.lastName} </h3>
-			<ul>
-				<li><b>Reminder: </b> ${reminder.message}</li>
-				<li><b>Faculty Email: </b> ${reminder.faculty?.user.email}</li>
-			</ul>
-			`;
+		// if (reminder) {
+		// 	const htmlContent = `
+		// 	<h3>Reminder set by Faculty: ${reminder.faculty?.user.firstName} ${reminder.faculty?.user.lastName} </h3>
+		// 	<ul>
+		// 		<li><b>Reminder: </b> ${reminder.message}</li>
+		// 		<li><b>Faculty Email: </b> ${reminder.faculty?.user.email}</li>
+		// 	</ul>
+		// 	`;
 
-			const mailOptions = {
-				to: reminder.student?.user.email,
-				subject: "Reminder for your Application",
-				html: htmlContent,
-			};
+		// 	const mailOptions = {
+		// 		to: reminder.student?.user.email,
+		// 		subject: "Reminder for your Application",
+		// 		html: htmlContent,
+		// 	};
 
-			await mailer(mailOptions);
-		}
+		// 	await mailer(mailOptions);
+		// }
 
 		return reminder;
 	},
@@ -57,7 +55,7 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 			...updateReminderInput,
 		});
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const reminder: Reminder = await prisma.reminder.update({
@@ -81,7 +79,7 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 		checkAuth(req);
 		const { errors, isValid } = await validateDeleteReminder(args.id);
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const reminder: Reminder = await prisma.reminder.delete({
