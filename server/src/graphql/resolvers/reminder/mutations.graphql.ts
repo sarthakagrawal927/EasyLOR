@@ -1,5 +1,5 @@
 import { ApolloContext } from "../../../context";
-import { Reminder, MutationResolvers, Student, Faculty } from "@/types";
+import { Reminder, MutationResolvers } from "@/types";
 import { validateCreateReminderInput, validateUpdateReminderInput, validateDeleteReminder } from "./utils";
 import { UserInputError } from "apollo-server";
 // import { mailer } from "../../../nodemailer/mailer";
@@ -16,7 +16,7 @@ export const mutations: MutationResolvers<ApolloContext, Reminder> = {
 			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
-		const reminder: Reminder & { student: Student; faculty: Faculty } = await prisma.reminder.create({
+		const reminder: Reminder = await prisma.reminder.create({
 			data: {
 				message: createReminderInput.message,
 				studentID: createReminderInput.studentID,

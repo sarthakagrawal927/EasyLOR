@@ -2,22 +2,23 @@ import departmentResolvers from "./department";
 import lorAppResolvers from "./lorApplication";
 import studentResolvers from "./student";
 import userResolvers from "./user";
-import reminderResolvers from './reminder/index';
-import facultyResolvers from './faculty/index';
+import reminderResolvers from "./reminder/index";
+import facultyResolvers from "./faculty/index";
 
 const resolvers = {
-    Query: {
-        ...departmentResolvers.Query,
-        ...studentResolvers.Query,
-        ...userResolvers.Query,
-        ...facultyResolvers.Query,
-    },
-    Mutation: {
-        ...lorAppResolvers.Mutation,
-        ...userResolvers.Mutation,
+	Query: {
+		...departmentResolvers.Query,
+		...studentResolvers.Query,
+		...userResolvers.Query,
+		...facultyResolvers.Query,
+		...reminderResolvers.Query,
+	},
+	Mutation: {
+		...lorAppResolvers.Mutation,
+		...userResolvers.Mutation,
 		...reminderResolvers.Mutation,
-        ...studentResolvers.Mutation,
-    },
+		...studentResolvers.Mutation,
+	},
 };
 
 export default resolvers;

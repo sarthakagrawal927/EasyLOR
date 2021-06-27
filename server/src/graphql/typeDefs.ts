@@ -29,6 +29,8 @@ const typeDefs = gql`
 	type Reminder {
 		id: String!
 		message: String!
+		faculty: Faculty
+		student: Student
 		facultyID: String!
 		studentID: String!
 		viewed: Boolean!
@@ -83,6 +85,7 @@ const typeDefs = gql`
 		getStudentByUserID(id: String!): Student
 		getFacultyByUserID(id: String!): Faculty
 		getPastApplicationsByFacultyID(id: String!): [Student]!
+		getRemindersByStudentID(id: String!): [Reminder]!
 	}
 
 	input CreateUserInput {

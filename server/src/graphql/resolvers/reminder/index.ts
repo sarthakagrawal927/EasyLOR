@@ -1,10 +1,12 @@
 import { mutations } from "./mutations.graphql";
-const reminderResolvers={
-          Mutation:{
-              ...mutations,
-          },
-
+import { queries } from "./queries.graphql";
+const reminderResolvers = {
+	Query: {
+		...queries,
+	},
+	Mutation: {
+		...mutations,
+	},
 };
 
 export default reminderResolvers;
-
