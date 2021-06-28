@@ -1,0 +1,25 @@
+query GetRemindersByStudentID($id: String!) {
+	getRemindersByStudentID(id: $id) {
+		id
+		message
+		faculty {
+			user {
+				id
+				email
+				firstName
+				lastName
+				institution
+				contact
+				profilePhoto
+				department {
+					id
+					name
+				}
+				userType
+			}
+		}
+		facultyID
+		studentID
+		viewed
+	}
+}

@@ -1,0 +1,9 @@
+mutation DeleteReminder($id: String!) {
+	deleteReminder(id: $id) {
+		id
+		message
+		viewed
+		facultyID
+		studentID
+	}
+}

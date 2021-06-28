@@ -1,0 +1,9 @@
+mutation UpdateReminder($updateReminderInput: UpdateReminderInput!) {
+	updateReminder(updateReminderInput: $updateReminderInput) {
+		id
+		message
+		viewed
+		facultyID
+		studentID
+	}
+}

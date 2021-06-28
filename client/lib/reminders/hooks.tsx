@@ -1,0 +1,92 @@
+import { useContext, useEffect, useState } from "react";
+import { User, Reminder, useGetRemindersByStudentIdQuery, useDeleteReminderMutation } from "entities/types.graphql";
+import { createStandaloneToast } from "@chakra-ui/react";
+import { StudentContext } from "context/student";
+
+type RemindersReturn = {
+	user: User;
+	reminders: Reminder[] | null;
+	loading: boolean;
+	onDelete: ({}: Reminder) => void;
+};
+
+export const useReminders = (): RemindersReturn => {
+	const toast = createStandaloneToast();
+	const [reminders, setReminders] = useState<Reminder[] | null>([]);
+
+	const { student } = useContext(StudentContext);
+
+	const { data, loading } = useGetRemindersByStudentIdQuery({
+		variables: {
+			id: student?.user.id,
+		},
+		onError: error => {
+			console.log(error);
+			toast({
+				title: "FAILED",
+				description: error.message,
+				status: "error",
+				duration: 3000,
+				position: "top",
+				isClosable: true,
+			});
+		},
+	});
+
+	useEffect(() => {
+		setReminders(data?.getRemindersByStudentID);
+	}, [data]);
+
+	const [deleteReminderMutation] = useDeleteReminderMutation({
+		onError: error => {
+			toast({
+				title: "FAILED",
+				description: error.message,
+				status: "error",
+				duration: 3000,
+				position: "top",
+				isClosable: true,
+			});
+		},
+		onCompleted: () => {
+			toast({
+				title: "SUCCESS",
+				description: "Reminder Deleted",
+				status: "success",
+				duration: 3000,
+				position: "top",
+				isClosable: true,
+			});
+		},
+	});
+
+	const onDelete = async (reminder: Reminder) => {
+		try {
+			setReminders(reminders.filter(rem => rem.id !== reminder.id));
+			const { data } = await deleteReminderMutation({
+				variables: {
+					id: reminder.id,
+				},
+				optimisticResponse: {
+					deleteReminder: {
+						id: reminder.id,
+						message: reminder.message,
+						viewed: reminder.viewed,
+						facultyID: reminder.facultyID,
+						studentID: reminder.studentID,
+					},
+				},
+			});
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	return {
+		user: student?.user,
+		reminders,
+		loading,
+		onDelete,
+	};
+};
