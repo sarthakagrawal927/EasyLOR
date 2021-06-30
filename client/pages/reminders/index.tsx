@@ -12,11 +12,11 @@ import {
 	CloseButtonContainer,
 } from "lib/reminders/reminders.styled";
 import { Heading } from "@chakra-ui/react";
-import ReminderModal from "components/ReminderModal/ReminderModal";
-import ReminderAlert from "components/ReminderAlertDialog/ReminderAlert";
+import ReminderModal from "lib/reminders/ReminderModal/ReminderModal";
+import ReminderAlert from "lib/reminders/ReminderAlertDialog/ReminderAlert";
 
 const Reminders: FC = () => {
-	const { user, reminders, loading, onDelete } = useReminders();
+	const { user, reminders, loading, onDelete, onUpdate } = useReminders();
 
 	return (
 		<>
@@ -40,7 +40,7 @@ const Reminders: FC = () => {
 							</NameContainer>
 						</MessageContainer>
 						<ButtonsContainer>
-							<ReminderModal reminder={reminder} />
+							<ReminderModal reminder={reminder} onUpdate={() => !reminder.viewed && onUpdate(reminder)} />
 						</ButtonsContainer>
 						<CloseButtonContainer>
 							<ReminderAlert onDelete={() => onDelete(reminder)} />

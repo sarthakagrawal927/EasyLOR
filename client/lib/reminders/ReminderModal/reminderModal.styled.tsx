@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, ModalHeader } from "@chakra-ui/react";
+import { Button, ModalHeader, ModalBody } from "@chakra-ui/react";
 import { colors } from "utils/styles";
 
 export const ViewButton = styled(Button)`
@@ -12,7 +12,7 @@ export const CustomModalHeader = styled(ModalHeader)`
 	border-radius: 0.5rem 0.5rem 0 0;
 `;
 
-export const CloseButton = styled(Button)`
-	height: 5vh !important;
-	font-size: 14px !important;
+export const CustomModalBody = styled(ModalBody)`
+	padding: 20px !important;
+	font-size: 18px !important;
 `;

@@ -1,5 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { User, Reminder, useGetRemindersByStudentIdQuery, useDeleteReminderMutation } from "entities/types.graphql";
+import {
+	User,
+	Reminder,
+	useGetRemindersByStudentIdQuery,
+	useUpdateReminderMutation,
+	useDeleteReminderMutation,
+} from "entities/types.graphql";
 import { createStandaloneToast } from "@chakra-ui/react";
 import { StudentContext } from "context/student";
 
@@ -8,6 +14,7 @@ type RemindersReturn = {
 	reminders: Reminder[] | null;
 	loading: boolean;
 	onDelete: ({}: Reminder) => void;
+	onUpdate: ({}: Reminder) => void;
 };
 
 export const useReminders = (): RemindersReturn => {
@@ -37,26 +44,37 @@ export const useReminders = (): RemindersReturn => {
 		setReminders(data?.getRemindersByStudentID);
 	}, [data]);
 
-	const [deleteReminderMutation] = useDeleteReminderMutation({
+	const [updateReminderMutation] = useUpdateReminderMutation({
 		onError: error => {
-			toast({
-				title: "FAILED",
-				description: error.message,
-				status: "error",
-				duration: 3000,
-				position: "top",
-				isClosable: true,
-			});
+			console.log(error);
 		},
 		onCompleted: () => {
-			toast({
-				title: "SUCCESS",
-				description: "Reminder Deleted",
-				status: "success",
-				duration: 3000,
-				position: "top",
-				isClosable: true,
+			console.log("updated");
+		},
+	});
+
+	const onUpdate = async (reminder: Reminder) => {
+		try {
+			const { data } = await updateReminderMutation({
+				variables: {
+					updateReminderInput: {
+						id: reminder.id,
+						viewed: true,
+					},
+				},
 			});
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const [deleteReminderMutation] = useDeleteReminderMutation({
+		onError: error => {
+			console.log(error);
+		},
+		onCompleted: () => {
+			console.log("deleted");
 		},
 	});
 
@@ -88,5 +106,6 @@ export const useReminders = (): RemindersReturn => {
 		reminders,
 		loading,
 		onDelete,
+		onUpdate,
 	};
 };

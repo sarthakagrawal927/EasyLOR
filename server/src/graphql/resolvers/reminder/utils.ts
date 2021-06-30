@@ -90,7 +90,7 @@ export const validateUpdateReminderInput = async ({ id, message, viewed }: Updat
 			},
 		});
 		if (!reminder) errors.id = "Reminder with this ID does not exist";
-		else if (reminder.viewed === true) errors.reminder = "Reminder cannot be updated";
+		else if (!viewed && reminder.viewed === true) errors.reminder = "Reminder cannot be updated";
 	}
 
 	if (message?.trim() === "") errors.message = "Message cannot be empty";

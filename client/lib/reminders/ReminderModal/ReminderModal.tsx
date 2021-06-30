@@ -8,18 +8,26 @@ import {
 	ModalBody,
 	ModalFooter,
 } from "@chakra-ui/react";
-import { ViewButton, CustomModalHeader, CloseButton } from "./reminderModal.styled";
+import { ViewButton, CustomModalHeader, CustomModalBody } from "./reminderModal.styled";
 import { Reminder } from "entities/types.graphql";
 
 type ReminderProps = {
 	reminder: Reminder;
+	onUpdate: () => void;
 };
 
-const ReminderModal: FC<ReminderProps> = ({ reminder }) => {
+const ReminderModal: FC<ReminderProps> = ({ reminder, onUpdate }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<>
-			<ViewButton onClick={onOpen} alignSelf="flex-start" variant="solid">
+			<ViewButton
+				onClick={() => {
+					onOpen();
+					onUpdate();
+				}}
+				alignSelf="flex-start"
+				variant="solid"
+			>
 				VIEW
 			</ViewButton>
 			<Modal onClose={onClose} isOpen={isOpen} size="md" scrollBehavior="inside" isCentered>
@@ -29,12 +37,7 @@ const ReminderModal: FC<ReminderProps> = ({ reminder }) => {
 						Reminder by: {reminder.faculty.user.firstName + " " + reminder.faculty.user.lastName}
 					</CustomModalHeader>
 					<ModalCloseButton />
-					<ModalBody>{reminder.message}</ModalBody>
-					<ModalFooter>
-						<CloseButton onClick={onClose} variant="solid">
-							Close
-						</CloseButton>
-					</ModalFooter>
+					<CustomModalBody>{reminder.message}</CustomModalBody>
 				</ModalContent>
 			</Modal>
 		</>
