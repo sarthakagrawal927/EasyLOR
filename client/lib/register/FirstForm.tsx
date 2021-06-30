@@ -1,9 +1,9 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { FormControl, FormErrorMessage, FormLabel, IconButton, Input, Slide, Center } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, IconButton, Input, Center } from "@chakra-ui/react";
 import FileUpload from "components/FileUpload/FileUpload";
 import AvatarPlaceholder from "components/icons/AvatarPlaceholder";
 import React, { FC } from "react";
-import { RegisterFieldContainer } from "./register.styled";
+import { RegisterFieldContainer, Slide } from "./register.styled";
 import { useRegister } from "./hooks";
 
 type FirstFormProps = {

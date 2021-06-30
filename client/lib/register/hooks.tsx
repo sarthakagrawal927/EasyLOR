@@ -72,7 +72,7 @@ export const useRegister = (): UseRegisterReturn => {
 	const { departments, departmentsError } = useDepartments();
 	const router = useRouter();
 
-	const defaultRegisterValues = {
+	const defaultRegisterValues: RegisterFormInputs = {
 		email: "",
 		password: "",
 		confirmPassword: "",
@@ -82,7 +82,7 @@ export const useRegister = (): UseRegisterReturn => {
 		contact: "",
 		regNo: "",
 		department: "",
-		profilePhoto: "",
+		profilePhoto: null,
 	};
 
 	const {

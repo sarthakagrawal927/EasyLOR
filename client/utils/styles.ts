@@ -14,4 +14,10 @@ export const shadow = {
 
 export const font = {
 	body: '"Nunito", sans-serif !important',
+	size: {
+		heading: "2.8rem",
+		subHeading: "1.8rem",
+		paragraph: "1.4rem",
+		caption: "1.2rem",
+	},
 };

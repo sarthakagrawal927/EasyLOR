@@ -1,0 +1,17 @@
+mutation UpdateStudent($input: UpdateStudentInput!) {
+	updateStudent(updateStudentInput: $input) {
+		user {
+			id
+			firstName
+			lastName
+		}
+		regNo
+		appliedUniversities
+		acceptedUniversity
+		testScores {
+			id
+			exam
+			score
+		}
+	}
+}

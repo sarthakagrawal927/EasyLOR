@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { Box, Center, Button } from "@chakra-ui/react";
+import { Box, Center, Button, Slide as ChakraSlide } from "@chakra-ui/react";
 import { shadow, colors, font } from "../../utils/styles";
-import { Container } from "lib/dashboard/dashboard.styled";
 
 export const RegisterContainer = styled(Center)`
 	width: 100vw;
@@ -19,7 +18,7 @@ export const RegisterFormContainer = styled(Box)`
 	height: 80%;
 	background-color: white;
 	& h2 {
-		padding-inline: 2em;
+		padding-inline: 1.6em;
 		font-family: ${font.body};
 		font-size: 2.5rem;
 	}
@@ -34,9 +33,10 @@ export const RegisterFormContainer = styled(Box)`
 `;
 
 export const RegisterForm = styled.form`
-	width: 30vw;
+	width: 80%;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	height: 45vh;
 	& label {
 		font-size: 1.2rem;
@@ -67,18 +67,19 @@ export const RegisterForm = styled.form`
 	}
 `;
 
-export const RegisterFieldContainer = styled(Container)`
+export const RegisterFieldContainer = styled(Box)`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
 	height: max-content;
 	margin-top: 1em;
+
 	& div {
 		width: 45%;
 	}
 `;
-export const RegisterFieldSubContainer = styled(Container)`
+export const RegisterFieldSubContainer = styled(Box)`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -92,4 +93,12 @@ export const RegisterFieldSubContainer = styled(Container)`
 export const RegisterButton = styled(Button)`
 	height: 60px !important;
 	margin-top: 3em;
+`;
+
+export const Slide = styled(ChakraSlide)`
+	width: 30vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* position: relative; */
 `;

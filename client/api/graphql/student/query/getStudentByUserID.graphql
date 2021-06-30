@@ -41,9 +41,11 @@ query GetStudentByUserID($id: String!) {
 			id
 			viewed
 		}
+		proofOfAcceptance
 		testScores {
 			exam
 			id
+			proofOfResult
 			score
 		}
 	}

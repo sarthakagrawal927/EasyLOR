@@ -1,7 +1,7 @@
-import { Slide, FormControl, FormLabel, Input, Button, Flex, FormErrorMessage, Select } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Button, Flex, FormErrorMessage, Select } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { useRegister } from "../../lib/register/hooks";
-import { RegisterButton, RegisterFieldSubContainer } from "../../lib/register/register.styled";
+import { RegisterButton, RegisterFieldSubContainer, Slide } from "./register.styled";
 
 type SecondFormProps = {
 	contactRegister: ReturnType<typeof useRegister>["contactRegister"];
@@ -32,17 +32,10 @@ const SecondForm: FC<SecondFormProps> = ({
 	onToggle,
 	isOpen,
 }) => {
-	let zIdxValue = isOpen ? 10 : -10;
-
 	return (
-		<Slide
-			in={isOpen}
-			unmountOnExit={true}
-			direction="right"
-			style={{ zIndex: zIdxValue, width: "30vw", position: "relative" }}
-		>
+		<Slide in={isOpen} unmountOnExit={true} direction="right" style={{ width: "30vw", position: "relative" }}>
 			<RegisterFieldSubContainer>
-				<FormControl id="contact" isInvalid={!!errors.contact}>
+				<FormControl id="contact" isInvalid={!!errors?.contact}>
 					<FormLabel>Contact</FormLabel>
 					<Input
 						name={contactRegister?.name}
@@ -50,16 +43,21 @@ const SecondForm: FC<SecondFormProps> = ({
 						ref={contactRegister?.ref}
 						onChange={contactRegister?.onChange}
 					/>
-					<FormErrorMessage>{errors.contact?.message}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors?.contact?.message}</FormErrorMessage>
 				</FormControl>
-				<FormControl id="regNo">
+				<FormControl id="regNo" isInvalid={!!errors?.regNo}>
 					<FormLabel>Registration Number</FormLabel>
-					<Input name={regNoRegister?.name} type="text" ref={regNoRegister?.ref} onChange={regNoRegister?.onChange} />
-					{errors.regNo && <FormErrorMessage>{errors.regNo}</FormErrorMessage>}
+					<Input
+						name={regNoRegister?.name}
+						type="text"
+						ref={regNoRegister?.ref}
+						onChange={regNoRegister?.onChange}
+					/>
+					<FormErrorMessage color={"red"}>{errors?.regNo}</FormErrorMessage>
 				</FormControl>
 			</RegisterFieldSubContainer>
 			<RegisterFieldSubContainer>
-				<FormControl id="password" isInvalid={!!errors.password}>
+				<FormControl id="password" isInvalid={!!errors?.password}>
 					<FormLabel>Password</FormLabel>
 					<Input
 						name={passwordRegister?.name}
@@ -67,9 +65,9 @@ const SecondForm: FC<SecondFormProps> = ({
 						ref={passwordRegister?.ref}
 						onChange={passwordRegister?.onChange}
 					/>
-					<FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors?.password?.message}</FormErrorMessage>
 				</FormControl>
-				<FormControl id="confirmPassword" isInvalid={!!errors.confirmPassword}>
+				<FormControl id="confirmPassword" isInvalid={!!errors?.confirmPassword}>
 					<FormLabel>Confirm Password</FormLabel>
 					<Input
 						name={confirmPasswordRegister?.name}
@@ -77,11 +75,11 @@ const SecondForm: FC<SecondFormProps> = ({
 						ref={confirmPasswordRegister?.ref}
 						onChange={confirmPasswordRegister?.onChange}
 					/>
-					<FormErrorMessage>{errors.confirmPassword?.message}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors?.confirmPassword?.message}</FormErrorMessage>
 				</FormControl>
 			</RegisterFieldSubContainer>
 			<RegisterFieldSubContainer>
-				<FormControl id="institution" isInvalid={!!errors.institution}>
+				<FormControl id="institution" isInvalid={!!errors?.institution}>
 					<FormLabel>Institution</FormLabel>
 					<Input
 						name={institutionRegister?.name}
@@ -89,9 +87,9 @@ const SecondForm: FC<SecondFormProps> = ({
 						ref={institutionRegister?.ref}
 						onChange={institutionRegister?.onChange}
 					/>
-					<FormErrorMessage>{errors.institution?.message}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors?.institution?.message}</FormErrorMessage>
 				</FormControl>
-				<FormControl id="department" isInvalid={!!errors.department}>
+				<FormControl id="department" isInvalid={!!errors?.department}>
 					<FormLabel>Department</FormLabel>
 					<Select
 						name={departmentRegister?.name}
@@ -99,14 +97,16 @@ const SecondForm: FC<SecondFormProps> = ({
 						ref={departmentRegister?.ref}
 						onChange={departmentRegister?.onChange}
 					>
-						{departmentsError && <FormErrorMessage>{departmentsError.message}</FormErrorMessage>}
+						{departmentsError && (
+							<FormErrorMessage color={"red"}>{departmentsError.message}</FormErrorMessage>
+						)}
 						{departments?.map(department => (
 							<option key={department.id} value={department.id}>
 								{department.name}
 							</option>
 						))}
 					</Select>
-					<FormErrorMessage>{errors.department?.message}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors?.department?.message}</FormErrorMessage>
 				</FormControl>
 			</RegisterFieldSubContainer>
 			<Flex flexDirection="row" alignItems="baseline" width="100%" justifyContent="space-between">
