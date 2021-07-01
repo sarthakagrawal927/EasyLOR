@@ -17,9 +17,13 @@ query GetStudentByUserID($id: String!) {
 		acceptedUniversity
 		appliedUniversities
 		lorApplications {
+			id
 			course
 			draftURL
 			dueDate
+			university
+			status
+			statementOfPurpose
 			faculty {
 				user {
 					email

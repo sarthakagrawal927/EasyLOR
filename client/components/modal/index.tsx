@@ -13,7 +13,6 @@ import { AttachmentIcon } from "@chakra-ui/icons";
 
 function PreviewModal({ isOpen, onOpen, onClose, handleSubmit, modalData }) {
 	let date = new Date(modalData.dueDate);
-	console.log(date.toLocaleDateString());
 	let dateField = date.toLocaleDateString() === "1/1/1970" ? "No date selected" : date.toLocaleDateString();
 	return (
 		<>

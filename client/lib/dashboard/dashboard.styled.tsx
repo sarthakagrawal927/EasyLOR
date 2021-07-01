@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Table, Box, Center } from "@chakra-ui/react";
+import { Table, Box, Center, Button } from "@chakra-ui/react";
 import { colors, font } from "../../utils/styles";
 
 export const DashboardContainer = styled(Center)`
@@ -8,7 +8,7 @@ export const DashboardContainer = styled(Center)`
 `;
 
 export const Container = styled(Box)`
-	margin-top: 20vh;
+	margin-top: 5vh;
 	width: 75vw;
 	height: 100%;
 	& h2 {
@@ -30,6 +30,7 @@ export const DashboardTable = styled(Table)`
 		border-width: 1px;
 		border-color: ${colors.gray};
 		background: ${colors.lightGray};
+		text-transform: none;
 	}
 
 	& td {
@@ -41,10 +42,9 @@ export const DashboardTable = styled(Table)`
 		border-color: ${colors.gray};
 
 		& span {
-			font-size: 0.8rem;
-			color: white;
-			padding: 0.65rem 2.5rem;
-			border-radius: 1rem;
+			font-size: 0.7rem;
+			padding: 0.45rem 1.8rem;
+			border-radius: 0.2rem;
 			font-weight: 800;
 		}
 	}
@@ -61,15 +61,60 @@ export const DashboardTable = styled(Table)`
 	}
 
 	.red {
-		background: #e34f3bbf;
+		color: #b81600;
+		background: rgba(234, 123, 108, 0.62);
 	}
+
 	.green {
-		background: #01df86bf;
+		color: #008024;
+		background: rgba(1, 223, 134, 0.5);
 	}
+
 	.blue {
-		background: #1ccff6bf;
+		color: #0084a1;
+		background: rgba(85, 219, 249, 0.53);
 	}
+
 	.blue:hover {
 		cursor: pointer;
+	}
+`;
+
+export const AvatarContainer = styled(Center)`
+	margin-bottom: 3rem;
+`;
+
+export const SOPContainer = styled.div`
+	height: 27vh !important;
+	word-wrap: break-word;
+	overflow-y: auto;
+	white-space: pre-wrap;
+`;
+
+export const StyledButton = styled(Button)`
+	&:hover {
+		filter: brightness(0.9);
+	}
+`;
+
+export const StyledStatus = styled.span`
+	margin-left: 30vw !important;
+	font-size: 1rem;
+	padding: 0.45rem 1.8rem;
+	border-radius: 0.2rem;
+	font-weight: 800;
+	.red {
+		color: #b81600;
+		background: rgba(234, 123, 108, 0.62);
+	}
+
+	.green {
+		color: #008024;
+		background: rgba(1, 223, 134, 0.5);
+	}
+
+	.blue {
+		color: #0084a1;
+		background: rgba(85, 219, 249, 0.53);
 	}
 `;

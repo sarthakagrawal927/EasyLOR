@@ -1,0 +1,10 @@
+mutation updateLORApplication($updateLORInput: UpdateLORApplicationInput!) {
+	updateLORApplication(updateLORApplicationInput: $updateLORInput) {
+		dueDate
+		statementOfPurpose
+		university
+		id
+		course
+		draftURL
+	}
+}

@@ -8,6 +8,7 @@ export const AvatarContainer = styled(Center)`
 export const SOPContainer = styled.div`
 	height: 27vh !important;
 	word-wrap: break-word;
+	white-space: pre-wrap;
 	overflow-y: auto;
 `;
 
