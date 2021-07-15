@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Center, Button, Slide as ChakraSlide } from "@chakra-ui/react";
+import { Box, Center, Button, Slide as ChakraSlide, Select } from "@chakra-ui/react";
 import { shadow, colors, font } from "../../utils/styles";
 
 export const RegisterContainer = styled(Center)`
@@ -100,5 +100,10 @@ export const Slide = styled(ChakraSlide)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/* position: relative; */
+`;
+
+export const DepartmentSelect = styled(Select)`
+	& .css-zj2dqk {
+		right: -1.5rem !important;
+	}
 `;

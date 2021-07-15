@@ -1,7 +1,7 @@
 import { FormControl, FormLabel, Input, Button, Flex, FormErrorMessage, Select } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { useRegister } from "../../lib/register/hooks";
-import { RegisterButton, RegisterFieldSubContainer, Slide } from "./register.styled";
+import { DepartmentSelect, RegisterButton, RegisterFieldSubContainer, Slide } from "./register.styled";
 
 type SecondFormProps = {
 	contactRegister: ReturnType<typeof useRegister>["contactRegister"];
@@ -53,7 +53,7 @@ const SecondForm: FC<SecondFormProps> = ({
 						ref={regNoRegister?.ref}
 						onChange={regNoRegister?.onChange}
 					/>
-					<FormErrorMessage color={"red"}>{errors?.regNo}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors?.regNo?.message}</FormErrorMessage>
 				</FormControl>
 			</RegisterFieldSubContainer>
 			<RegisterFieldSubContainer>
@@ -91,7 +91,7 @@ const SecondForm: FC<SecondFormProps> = ({
 				</FormControl>
 				<FormControl id="department" isInvalid={!!errors?.department}>
 					<FormLabel>Department</FormLabel>
-					<Select
+					<DepartmentSelect
 						name={departmentRegister?.name}
 						type="text"
 						ref={departmentRegister?.ref}
@@ -105,7 +105,7 @@ const SecondForm: FC<SecondFormProps> = ({
 								{department.name}
 							</option>
 						))}
-					</Select>
+					</DepartmentSelect>
 					<FormErrorMessage color={"red"}>{errors?.department?.message}</FormErrorMessage>
 				</FormControl>
 			</RegisterFieldSubContainer>
