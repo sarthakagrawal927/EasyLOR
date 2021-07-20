@@ -73,7 +73,7 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 			...updateLORApplicationInput,
 		});
 		if (!isValid) {
-			throw new UserInputError("Errors", { errors });
+			throw new UserInputError(Object.values(errors).find(error => error !== null) ?? "", { errors });
 		}
 
 		const lorApp: LorApplication = await prisma.lORApplication.update({

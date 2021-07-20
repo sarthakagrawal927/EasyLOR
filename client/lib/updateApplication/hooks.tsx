@@ -112,7 +112,7 @@ export const useApplicationForm = (id: string) => {
 			});
 			const { data: response } = await updateLorMutation({
 				variables: {
-					updateLORInput: lorApplicationData,
+					updateLORApplicationInput: lorApplicationData,
 				},
 			});
 			toast({

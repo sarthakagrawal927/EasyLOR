@@ -54,7 +54,7 @@ export const columns = [
 		Header: "VIEW",
 		accessor: "link",
 		Cell: (e: any) => (
-			<Link href={e.value}>
+			<Link href={"/viewApplication/" + e.value}>
 				<button>View</button>
 			</Link>
 		),

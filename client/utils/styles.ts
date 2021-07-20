@@ -6,6 +6,8 @@ export const colors = {
 	gray: "#B7B7B7",
 	lightGray: "#E4E4E4",
 	darkGrey: "#515151",
+	peach: "#E34F3B",
+	aqua: "#55DBF9",
 };
 export const shadow = {
 	buttonShadow: "0px 4px 8px rgba(69, 68, 68, 0.25);",

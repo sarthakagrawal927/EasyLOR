@@ -33,10 +33,19 @@ query GetFacultyByUserID($id: String!) {
 					lastName
 					email
 					profilePhoto
+					contact
+					institution
 					department {
 						id
 						name
 					}
+					userType
+				}
+				testScores {
+					id
+					exam
+					score
+					proofOfResult
 				}
 			}
 		}
