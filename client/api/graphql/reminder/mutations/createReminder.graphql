@@ -1,0 +1,8 @@
+mutation CreateReminder($createReminderInput: CreateReminderInput!) {
+	createReminder(createReminderInput: $createReminderInput) {
+		id
+		message
+		studentID
+		facultyID
+	}
+}
