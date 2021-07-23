@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { Heading, Image, Box } from "@chakra-ui/react";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 import {
 	PastApplicationsContainer,
 	ImageNameContainer,
 	ProfileContainer,
 	AcceptedUniversity,
 	TestScoreContainer,
+	ReminderSentTextContainer,
 } from "lib/pastapplications/pastapplication/pastApplication.styled";
 import { usePastApplications } from "lib/pastapplications/hooks";
 import ReminderInput from "lib/pastapplications/reminder/ReminderInput";
@@ -64,10 +66,20 @@ const PastApplication: FC<PastApplicationProps> = ({ student, facultyUser }) => 
 				</Box>
 			</ProfileContainer>
 			{student.acceptedUniversity === null || student.testScores.length === 0 ? (
-				<ReminderInput
-					student={student}
-					getReminder={message => getReminder({ student, facultyUser, message })}
-				/>
+				student.reminders.find(reminder => reminder.facultyID === facultyUser.id) ? (
+					<ReminderSentTextContainer>
+						{student.reminders.find(reminder => reminder.facultyID === facultyUser.id).viewed
+							? "Reminder seen by student"
+							: "Reminder has been sent"}
+						&nbsp;
+						<CheckCircleIcon color="green" />
+					</ReminderSentTextContainer>
+				) : (
+					<ReminderInput
+						student={student}
+						getReminder={message => getReminder({ student, facultyUser, message })}
+					/>
+				)
 			) : (
 				<>
 					<AcceptedUniversity>

@@ -22,7 +22,7 @@ export const ApplicationContainer = styled(Center)`
 
 export const PastApplicationsContainer = styled(Box)`
 	min-height: ${pastAppHeight};
-	max-width: 75vw;
+	width: 75vw;
 
 	display: flex;
 	flex-direction: row;
@@ -163,4 +163,9 @@ export const TestScoreContainer = styled(Box)`
 		font-weight: 600;
 		text-align: center;
 	}
+`;
+
+export const ReminderSentTextContainer = styled(Center)`
+	width: 45%;
+	font-size: 18px !important;
 `;
