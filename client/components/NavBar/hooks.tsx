@@ -7,9 +7,9 @@ type NavBarArgs = {
 };
 
 type NavBarReturn = {
-	profileOnClick: () => void;
-	remindersOnClick: () => void;
-	logoutOnClick: () => void;
+	handleProfile: () => void;
+	handleReminder: () => void;
+	handleLogout: () => void;
 	selected: Boolean;
 };
 
@@ -17,29 +17,30 @@ export const useNavBar = ({ pastapp }: NavBarArgs): NavBarReturn => {
 	const [selected, setSelected] = useState(pastapp);
 
 	const router = useRouter();
-	const { logout } = useContext(AuthContext);
+	const { user, logout } = useContext(AuthContext);
 
 	useEffect(() => {
 		setSelected(pastapp);
 	}, [pastapp]);
 
-	const profileOnClick = () => {
-		router.push("/profile");
+	const handleProfile = () => {
+		const route = user.userType === "FACULTY" ? "/faculty/profile" : "/profile";
+		router.push(route);
 	};
 
-	const remindersOnClick = () => {
+	const handleReminder = () => {
 		router.push("/reminders");
 	};
 
-	const logoutOnClick = () => {
+	const handleLogout = () => {
 		logout();
 		router.replace("/login");
 	};
 
 	return {
-		profileOnClick,
-		remindersOnClick,
-		logoutOnClick,
+		handleProfile,
+		handleReminder,
+		handleLogout,
 		selected,
 	};
 };

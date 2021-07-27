@@ -21,7 +21,7 @@ type NavBarProps = {
 };
 
 const NavBar: FC<NavBarProps> = ({ user, pastapp }) => {
-	const { selected, profileOnClick, remindersOnClick, logoutOnClick } = useNavBar({ pastapp });
+	const { selected, handleProfile, handleReminder, handleLogout } = useNavBar({ pastapp });
 
 	return (
 		<NavBarContainer>
@@ -51,9 +51,11 @@ const NavBar: FC<NavBarProps> = ({ user, pastapp }) => {
 							<Image src={user?.profilePhoto} alt={user?.firstName} boxSize="7vh" borderRadius="full" />
 						</MenuButton>
 						<ProfileMenuList>
-							<MenuItem onClick={profileOnClick}>Profile</MenuItem>
-							{user?.userType === "STUDENT" ? <MenuItem onClick={remindersOnClick}>Reminders</MenuItem> : null}
-							<MenuItem onClick={logoutOnClick}>Logout</MenuItem>
+							<MenuItem onClick={handleProfile}>Profile</MenuItem>
+							{user?.userType === "STUDENT" ? (
+								<MenuItem onClick={handleReminder}>Reminders</MenuItem>
+							) : null}
+							<MenuItem onClick={handleLogout}>Logout</MenuItem>
 						</ProfileMenuList>
 					</Menu>
 				</ImageContainer>
