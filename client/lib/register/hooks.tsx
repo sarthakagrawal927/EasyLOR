@@ -1,7 +1,15 @@
 import { AuthContext } from "context/auth";
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { DeepMap, FieldError, useForm, UseFormGetValues, UseFormRegisterReturn, UseFormWatch } from "react-hook-form";
+import {
+	DeepMap,
+	FieldError,
+	useForm,
+	UseFormGetValues,
+	UseFormRegisterReturn,
+	UseFormWatch,
+	useWatch,
+} from "react-hook-form";
 import {
 	CreateUserInput,
 	useCreateUserMutation,
@@ -9,10 +17,10 @@ import {
 	useGetDepartmentsQuery,
 	Department,
 } from "entities/types.graphql";
-import { uploadPhoto } from "api/serverless/index";
 import { validateFiles } from "components/FileUpload/FileUpload";
 import { createStandaloneToast, useDisclosure } from "@chakra-ui/react";
 import { ApolloError } from "@apollo/client";
+import uploadFile from "aws/uploadFile";
 
 type UseDepartmentsReturn = {
 	departments: Department[];
@@ -49,6 +57,7 @@ type UseRegisterReturn = {
 	profilePhotoRegister: UseFormRegisterReturn;
 	errors: DeepMap<RegisterFormInputs, FieldError>;
 	isOpen: boolean;
+	profilePhotoUrl: string;
 	onToggle: () => void;
 	handleSubmit: (e?: React.BaseSyntheticEvent<object, any, any>) => Promise<void>;
 } & UseDepartmentsReturn;
@@ -63,13 +72,14 @@ type RegisterFormInputs = {
 	institution: string;
 	regNo: string;
 	department: string;
-	profilePhoto: File;
+	profilePhoto: FileList;
 };
 
 export const useRegister = (): UseRegisterReturn => {
 	const { login, user } = useContext(AuthContext);
 	const { isOpen, onToggle } = useDisclosure();
 	const { departments, departmentsError } = useDepartments();
+	const [profilePhotoUrl, setProfilePhotoUrl] = useState("");
 	const router = useRouter();
 
 	const defaultRegisterValues: RegisterFormInputs = {
@@ -89,6 +99,7 @@ export const useRegister = (): UseRegisterReturn => {
 		register,
 		handleSubmit,
 		watch,
+		control,
 		getValues,
 		formState: { errors: formErrors },
 	} = useForm<RegisterFormInputs>({
@@ -96,6 +107,16 @@ export const useRegister = (): UseRegisterReturn => {
 		shouldFocusError: true,
 		shouldUnregister: false,
 	});
+
+	const profilePhoto = useWatch({ control, name: "profilePhoto" });
+
+	useEffect(() => {
+		async function uploadProfilePhoto() {
+			const url = await uploadFile(profilePhoto[0], "profilePhoto", "/api/upload");
+			setProfilePhotoUrl(url);
+		}
+		if (profilePhoto && profilePhoto.length > 0) uploadProfilePhoto();
+	}, [profilePhoto]);
 
 	console.log("fields: ", watch());
 	const emailRegister = register("email", {
@@ -170,13 +191,12 @@ export const useRegister = (): UseRegisterReturn => {
 	});
 
 	const onSubmit = handleSubmit(async (data: RegisterFormInputs) => {
-		const uri = uploadPhoto(data.profilePhoto);
 		delete data.confirmPassword;
 		const departmentID = data.department;
 		delete data.department;
 		const userData: CreateUserInput = {
 			...data,
-			profilePhoto: uri,
+			profilePhoto: profilePhotoUrl,
 			departmentID,
 			userType: UserType.Student,
 		};
@@ -225,6 +245,7 @@ export const useRegister = (): UseRegisterReturn => {
 		onToggle,
 		loading,
 		watch,
+		profilePhotoUrl,
 		errors: formErrors,
 		handleSubmit: onSubmit,
 	};

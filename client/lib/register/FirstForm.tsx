@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { FormControl, FormErrorMessage, FormLabel, IconButton, Input, Center } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, IconButton, Input, Center, Avatar } from "@chakra-ui/react";
 import FileUpload from "components/FileUpload/FileUpload";
 import AvatarPlaceholder from "components/icons/AvatarPlaceholder";
 import React, { FC } from "react";
@@ -15,6 +15,7 @@ type FirstFormProps = {
 	errors: ReturnType<typeof useRegister>["errors"];
 	onToggle: ReturnType<typeof useRegister>["onToggle"];
 	getValues: ReturnType<typeof useRegister>["getValues"];
+	profilePhotoUrl: string;
 };
 
 const FirstForm: FC<FirstFormProps> = ({
@@ -24,6 +25,7 @@ const FirstForm: FC<FirstFormProps> = ({
 	profilePhotoRegister,
 	isOpen,
 	getValues,
+	profilePhotoUrl,
 	errors,
 	onToggle,
 }) => {
@@ -34,21 +36,33 @@ const FirstForm: FC<FirstFormProps> = ({
 			style={{ zIndex: 5, width: "30vw", position: "relative" }}
 			unmountOnExit={true}
 		>
-			<FormControl isInvalid={!!errors.profilePhoto?.name}>
-				<FileUpload accept={"image/*"} multiple={false} register={profilePhotoRegister}>
-					<IconButton
-						aria-label="Profile Photo"
-						icon={<AvatarPlaceholder boxSize={120} />}
-						isRound
-						boxSize={100}
-						style={{ margin: "0 auto" }}
-					/>
-				</FileUpload>
-				<FormErrorMessage>{errors.profilePhoto?.name?.message}</FormErrorMessage>
+			<FormControl isInvalid={!!errors.profilePhoto}>
+				{profilePhotoUrl ? (
+					<Center>
+						<Avatar src={profilePhotoUrl} boxSize={120} />
+					</Center>
+				) : (
+					<FileUpload accept={"image/*"} multiple={false} register={profilePhotoRegister}>
+						<IconButton
+							aria-label="Profile Photo"
+							icon={<AvatarPlaceholder boxSize={120} />}
+							isRound
+							boxSize={100}
+							style={{ margin: "0 auto" }}
+						/>
+					</FileUpload>
+				)}
+
+				<FormErrorMessage>{errors.profilePhoto?.message}</FormErrorMessage>
 			</FormControl>
 			<FormControl id="email" isInvalid={!!errors.email}>
 				<FormLabel>Email</FormLabel>
-				<Input name={emailRegister?.name} type="email" ref={emailRegister?.ref} onChange={emailRegister?.onChange} />
+				<Input
+					name={emailRegister?.name}
+					type="email"
+					ref={emailRegister?.ref}
+					onChange={emailRegister?.onChange}
+				/>
 				<FormErrorMessage>{errors.email?.message}</FormErrorMessage>
 			</FormControl>
 			<RegisterFieldContainer>

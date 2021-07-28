@@ -26,6 +26,7 @@ const Register: FC = () => {
 		loading,
 		departments,
 		departmentsError,
+		profilePhotoUrl,
 	} = useRegister();
 	return (
 		<RegisterContainer>
@@ -33,6 +34,7 @@ const Register: FC = () => {
 				<Heading>Register</Heading>
 				<RegisterForm onSubmit={handleSubmit}>
 					<FirstForm
+						profilePhotoUrl={profilePhotoUrl}
 						emailRegister={emailRegister}
 						firstNameRegister={firstNameRegister}
 						lastNameRegister={lastNameRegister}
