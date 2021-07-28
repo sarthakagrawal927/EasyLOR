@@ -6,6 +6,7 @@ export const Container = styled(Center)`
 	width: 100%;
 	height: 100vh;
 	max-width: 100vw;
+	padding-bottom: 4em;
 `;
 
 export const ProfileContainer = styled(Flex)`

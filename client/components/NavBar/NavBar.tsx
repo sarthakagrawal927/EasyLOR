@@ -14,6 +14,7 @@ import { Menu, MenuButton, MenuItem, Image } from "@chakra-ui/react";
 import Link from "next/link";
 import { User } from "entities/types.graphql";
 import { useNavBar } from "./hooks";
+import { useRouter } from "next/router";
 
 type NavBarProps = {
 	user: User;
@@ -22,10 +23,10 @@ type NavBarProps = {
 
 const NavBar: FC<NavBarProps> = ({ user, pastapp }) => {
 	const { selected, handleProfile, handleReminder, handleLogout } = useNavBar({ pastapp });
-
+	const router = useRouter();
 	return (
 		<NavBarContainer>
-			<NameContainer>{user && "Hi, " + user.firstName}</NameContainer>
+			<NameContainer onClick={() => router.push("/dashboard")}>{user && "Hi, " + user.firstName}</NameContainer>
 			<RightContainer>
 				<OptionsContainer>
 					{user?.userType === "FACULTY" ? (
