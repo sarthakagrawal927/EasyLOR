@@ -13,7 +13,7 @@ const StudentDashboard = () => {
 			accessor: "applicationNo",
 		},
 		{
-			Header: "Faculty Name",
+			Header: "Faculty",
 			accessor: "name",
 		},
 		{

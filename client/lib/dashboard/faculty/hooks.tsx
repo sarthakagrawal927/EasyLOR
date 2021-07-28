@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import { FacultyContext, Faculty } from "context/faculty";
-import Link from "next/link";
 
 type UseFacultyDashboardReturn = {
 	faculty: Faculty;
@@ -18,7 +17,7 @@ export const useFacultyDashboard = (): UseFacultyDashboardReturn => {
 		loading,
 	};
 };
-
+let serialToApplicationMap = new Map();
 export const makeData = (faculty: Faculty) => {
 	let data = [];
 	let lorApplications = faculty?.lorApplications;
@@ -26,37 +25,14 @@ export const makeData = (faculty: Faculty) => {
 		if (lorApplications[i].status === "PENDING") {
 			//change to pending once ready
 			let lorApplication = {
-				applicationID: lorApplications[i].id,
+				applicationNo: i + 1,
 				department: lorApplications[i].student.user.department.name,
 				name: lorApplications[i].student.user.firstName + " " + lorApplications[i].student.user.lastName,
 				link: lorApplications[i].id,
 			};
 			data.push(lorApplication);
+			serialToApplicationMap[i + 1] = lorApplications[i];
 		}
 	}
 	return data;
 };
-
-export const columns = [
-	{
-		Header: "Application ID",
-		accessor: "applicationID",
-	},
-	{
-		Header: "Student",
-		accessor: "name",
-	},
-	{
-		Header: "Branch",
-		accessor: "department",
-	},
-	{
-		Header: "VIEW",
-		accessor: "link",
-		Cell: (e: any) => (
-			<Link href={"/viewApplication/" + e.value}>
-				<button>View</button>
-			</Link>
-		),
-	},
-];

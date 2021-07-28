@@ -4,14 +4,33 @@ import { Student, StudentContext } from "context/student";
 import { createStandaloneToast } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 type LorApplication = {
 	id: string;
 	course: string;
 	university: string;
-	draftURL: FileList | string;
+	draftURL: FileList;
 	statementOfPurpose: string;
 	dueDate: string;
+};
+
+const fileUpload = async (file: File) => {
+	const url = "/api/upload";
+	const formData = new FormData();
+	formData.append("file", file, `studentCreateApplication/${Date.now()}-${file.name}`);
+	const config = {
+		headers: {
+			"content-type": file.type,
+		},
+	};
+	const res = await axios.post(url, formData, config);
+	console.log("FILE UPLOAD SUCCESSFUL: ", res.data);
+	return res.data;
+};
+
+const getNameFromURL = (fileURL: string) => {
+	return fileURL ? fileURL.split("/")[4].split("-")[1].replaceAll("%20", " ") : null;
 };
 
 const getLORApplication = (student: Student, id: string) => {
@@ -19,7 +38,7 @@ const getLORApplication = (student: Student, id: string) => {
 		id: id,
 		course: "",
 		university: "",
-		draftURL: "",
+		draftURL: null,
 		statementOfPurpose: "",
 		dueDate: "",
 	};
@@ -29,7 +48,6 @@ const getLORApplication = (student: Student, id: string) => {
 			prevApplicationData.course = application.course;
 			prevApplicationData.university = application.university;
 			prevApplicationData.statementOfPurpose = application.statementOfPurpose;
-			prevApplicationData.draftURL = application.draftURL;
 			prevApplicationData.dueDate = application.dueDate;
 		}
 	}
@@ -43,6 +61,7 @@ const getModalData = (student: Student, id: string) => {
 			name: "",
 			profilePhoto: "",
 		},
+		draftURL: "",
 	};
 	for (let i = 0; i < student?.lorApplications.length; i++) {
 		let application = student?.lorApplications[i];
@@ -50,6 +69,7 @@ const getModalData = (student: Student, id: string) => {
 			modalData.department = application.faculty.user.department.name;
 			modalData.facultyData.name = application.faculty.user.firstName + " " + application.faculty.user.lastName;
 			modalData.facultyData.profilePhoto = application.faculty.user.profilePhoto;
+			modalData.draftURL = application.draftURL;
 		}
 	}
 	return modalData;
@@ -63,6 +83,9 @@ export const useApplicationForm = (id: string) => {
 
 	let prevApplicationData = getLORApplication(student, id);
 	let remainingModalData = getModalData(student, id);
+
+	let draftName = getNameFromURL(remainingModalData?.draftURL);
+
 	const {
 		register,
 		handleSubmit,
@@ -75,8 +98,7 @@ export const useApplicationForm = (id: string) => {
 	const makeModalData = () => {
 		let facultyInfo = remainingModalData.facultyData;
 		let draftURLObject = getValues("draftURL");
-		const draftURL = draftURLObject as FileList;
-		console.log(draftURLObject);
+		let draftURL = draftURLObject ? draftURLObject[0]?.name : null;
 		let modalData = {
 			statementOfPurpose: getValues("statementOfPurpose"),
 			facultyName: facultyInfo.name,
@@ -84,7 +106,7 @@ export const useApplicationForm = (id: string) => {
 			department: remainingModalData.department,
 			course: getValues("course"),
 			profilePic: facultyInfo.profilePhoto,
-			draftURL: "",
+			draftURL: draftURL || remainingModalData.draftURL,
 			dueDate: dateString,
 		};
 		return modalData;
@@ -95,12 +117,18 @@ export const useApplicationForm = (id: string) => {
 	const router = useRouter();
 
 	const onSubmit = handleSubmit(async data => {
+		let fileURL: string = null;
+		if (data.draftURL[0]) {
+			console.log(data.draftURL[0]);
+			fileURL = await fileUpload(data.draftURL[0]);
+		}
+
 		const lorApplicationData: UpdateLorApplicationInput = {
 			statementOfPurpose: data.statementOfPurpose,
 			course: data.course,
 			university: data.university,
 			dueDate: dateString,
-			draftURL: null,
+			draftURL: fileURL || remainingModalData.draftURL,
 			id: id,
 		};
 		try {
@@ -141,5 +169,6 @@ export const useApplicationForm = (id: string) => {
 		register,
 		makeModalData,
 		setDateString,
+		draftName,
 	};
 };

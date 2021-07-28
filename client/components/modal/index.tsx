@@ -11,8 +11,14 @@ import {
 import { AvatarContainer, SOPContainer, StyledButton } from "./modal.styled";
 import { AttachmentIcon } from "@chakra-ui/icons";
 
+const getNameFromURL = (fileURL: string) => {
+	if (fileURL.includes("http")) return fileURL.split("/")[4].split("-")[1].replaceAll("%20", " ");
+	return fileURL;
+};
+
 function PreviewModal({ isOpen, onOpen, onClose, handleSubmit, modalData }) {
 	let date = new Date(modalData.dueDate);
+
 	let dateField = date.toLocaleDateString() === "1/1/1970" ? "No date selected" : date.toLocaleDateString();
 	return (
 		<>
@@ -47,7 +53,7 @@ function PreviewModal({ isOpen, onOpen, onClose, handleSubmit, modalData }) {
 								<a href={modalData.draftURL}>
 									<AttachmentIcon w={6} h={6} color="blue" style={{ marginRight: "4px" }} />
 								</a>
-								{modalData.draftURL}
+								{getNameFromURL(modalData.draftURL)}
 							</>
 						)}
 					</ModalBody>

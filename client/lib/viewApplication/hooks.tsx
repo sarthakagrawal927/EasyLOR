@@ -22,6 +22,7 @@ export const useViewApplication = (id: string): ViewApplicationReturn => {
 	const toast = createStandaloneToast();
 
 	const student: Student = faculty?.lorApplications.find(application => application.id == id)?.student;
+	const lorApplication = faculty?.lorApplications.find(application => application.id == id);
 	useEffect(() => {
 		fetchFaculty();
 	}, []);
@@ -68,7 +69,7 @@ export const useViewApplication = (id: string): ViewApplicationReturn => {
 	return {
 		user: faculty?.user,
 		student,
-		application: faculty?.lorApplications[0],
+		application: lorApplication,
 		getRejectionReason,
 	};
 };

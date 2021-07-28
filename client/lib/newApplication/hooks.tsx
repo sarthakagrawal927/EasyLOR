@@ -10,7 +10,23 @@ import { useRouter } from "next/router";
 import { createStandaloneToast } from "@chakra-ui/react";
 import { AuthContext } from "context/auth";
 import { useForm } from "react-hook-form";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
+
+const fileUpload = async (file: File) => {
+	const url = "/api/upload";
+	const formData = new FormData();
+	formData.append("file", file, `studentCreateApplication/${Date.now()}-${file.name}`);
+	const config = {
+		headers: {
+			"content-type": file.type,
+		},
+	};
+
+	const res = await axios.post(url, formData, config);
+	console.log("FILE UPLOAD SUCCESSFUL: ", res.data);
+	return res.data;
+};
 
 export const useApplicationForm = () => {
 	const {
@@ -79,6 +95,12 @@ export const useApplicationForm = () => {
 	const router = useRouter();
 
 	const onSubmit = handleSubmit(async data => {
+		let fileURL: string = null;
+		if (data.draftURL[0]) {
+			console.log(data.draftURL[0]);
+			fileURL = await fileUpload(data.draftURL[0]);
+		}
+
 		const lorApplicationData: CreateLorApplicationInput = {
 			statementOfPurpose: data.statementOfPurpose,
 			course: data.course,
@@ -86,7 +108,7 @@ export const useApplicationForm = () => {
 			facultyID: data.facultyID,
 			studentID: user.id,
 			dueDate: dateString,
-			draftURL: data.draftURL[0]?.name,
+			draftURL: fileURL,
 		};
 		try {
 			toast({

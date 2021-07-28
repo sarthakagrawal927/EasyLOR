@@ -38,7 +38,9 @@ const FillApplication: FC = () => {
 									{departments && (
 										<Select
 											placeholder=" "
-											{...register("department", { required: { value: true, message: errorMessage } })}
+											{...register("department", {
+												required: { value: true, message: errorMessage },
+											})}
 										>
 											{departments.map((item, index) => {
 												return <option key={index}>{item.name}</option>;
@@ -47,7 +49,13 @@ const FillApplication: FC = () => {
 									)}
 								</GridItem>
 								<GridItem colSpan={1}>
-									<ConfirmButton colorScheme="blue" variant="solid" size="md" onClick={updateFaculty} type="button">
+									<ConfirmButton
+										colorScheme="blue"
+										variant="solid"
+										size="md"
+										onClick={updateFaculty}
+										type="button"
+									>
 										Confirm
 									</ConfirmButton>
 								</GridItem>
@@ -57,7 +65,10 @@ const FillApplication: FC = () => {
 					</FormControl>
 					<FormControl id="faculty" isInvalid={!!errors.facultyID}>
 						<ApplicationFormLabel>Faculty</ApplicationFormLabel>
-						<Select placeholder=" " {...register("facultyID", { required: { value: true, message: errorMessage } })}>
+						<Select
+							placeholder=" "
+							{...register("facultyID", { required: { value: true, message: errorMessage } })}
+						>
 							{faculties.map((item, index) => {
 								return (
 									<option key={index} value={item.user.id}>

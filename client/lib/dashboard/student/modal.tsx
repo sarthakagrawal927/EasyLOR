@@ -12,6 +12,10 @@ import { AvatarContainer, SOPContainer, StyledButton, StyledStatus } from "../da
 import { AttachmentIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 
+const getNameFromURL = (fileURL: string) => {
+	return fileURL.split("/")[4].split("-")[1].replaceAll("%20", " ");
+};
+
 function PreviewModal({ isOpen, onClose, modalData }) {
 	let date = new Date(modalData?.dueDate);
 	let statusClass = modalData?.status === "PENDING" ? "blue" : modalData?.status === "REJECTED" ? "red" : "green";
@@ -28,7 +32,8 @@ function PreviewModal({ isOpen, onClose, modalData }) {
 						<SimpleGrid columns={2}>
 							<SimpleGrid columns={2} spacingY={4}>
 								{" "}
-								<strong>Department :</strong> {modalData?.faculty.user.department.name || "Add department"}
+								<strong>Department :</strong>{" "}
+								{modalData?.faculty.user.department.name || "Add department"}
 								<strong>Faculty : </strong> {modalData?.faculty.user.firstName || "Add Faculty Name"}
 								<strong>University :</strong> {modalData?.university || "Add University Name"}
 								<strong>Course : </strong> {modalData?.course || "Add Course"}
@@ -49,7 +54,7 @@ function PreviewModal({ isOpen, onClose, modalData }) {
 								<a href={modalData?.draftURL}>
 									<AttachmentIcon w={6} h={6} color="blue" style={{ marginRight: "4px" }} />
 								</a>
-								{modalData?.draftURL}
+								{getNameFromURL(modalData?.draftURL)}
 							</>
 						)}
 					</ModalBody>
@@ -65,7 +70,13 @@ function PreviewModal({ isOpen, onClose, modalData }) {
 									query: { applicationID: modalData.id },
 								}}
 							>
-								<StyledButton size="md" type="submit" colorScheme="blue" variant="solid" onClick={onClose}>
+								<StyledButton
+									size="md"
+									type="submit"
+									colorScheme="blue"
+									variant="solid"
+									onClick={onClose}
+								>
 									Edit
 								</StyledButton>
 							</Link>

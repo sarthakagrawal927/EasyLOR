@@ -13,7 +13,7 @@ import { useApplicationForm } from "./hooks";
 import { DueDatePicker } from "../../components/DatePicker";
 import PreviewModal from "../../components/modal";
 import { useDisclosure } from "@chakra-ui/react";
-import { CalendarIcon, AttachmentIcon } from "@chakra-ui/icons";
+import { CalendarIcon, AttachmentIcon, DeleteIcon } from "@chakra-ui/icons";
 import FileUpload from "components/FileUpload/FileUpload";
 import { colors } from "utils/styles";
 import { useRouter } from "next/router";
@@ -22,7 +22,7 @@ const FillApplication: FC = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const router = useRouter();
 	const { applicationID } = router.query;
-	const { handleSubmit, register, makeModalData, setDateString, errors } = useApplicationForm(
+	const { handleSubmit, register, makeModalData, setDateString, errors, draftName } = useApplicationForm(
 		applicationID?.toString()
 	);
 	let modalData = makeModalData();
@@ -72,7 +72,7 @@ const FillApplication: FC = () => {
 							</FileUpload>
 						</IconSpan>
 					</GridItem>
-					<GridItem colSpan={3}>
+					<GridItem colSpan={2}>
 						Due Date
 						<label>
 							<IconSpan>
@@ -80,6 +80,13 @@ const FillApplication: FC = () => {
 							</IconSpan>
 							<DueDatePicker setDateString={setDateString} />
 						</label>
+					</GridItem>
+					<GridItem colSpan={2}>
+						<label>{draftName}</label>
+
+						<IconSpan>
+							<DeleteIcon w={6} h={6} color="red" />
+						</IconSpan>
 					</GridItem>
 				</SimpleGrid>
 				<br />
