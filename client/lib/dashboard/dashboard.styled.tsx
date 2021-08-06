@@ -81,7 +81,7 @@ export const DashboardTable = styled(Table)`
 `;
 
 export const AvatarContainer = styled(Center)`
-	margin-bottom: 3rem;
+	margin-top: -8rem;
 `;
 
 export const SOPContainer = styled.div`

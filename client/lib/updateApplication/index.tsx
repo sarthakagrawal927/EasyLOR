@@ -73,6 +73,10 @@ const FillApplication: FC = () => {
 						</IconSpan>
 					</GridItem>
 					<GridItem colSpan={2}>
+						<label>{draftName}</label>
+						<IconSpan>{draftName && <DeleteIcon w={6} h={6} color="red" />}</IconSpan>
+					</GridItem>
+					<GridItem colSpan={2}>
 						Due Date
 						<label>
 							<IconSpan>
@@ -80,13 +84,6 @@ const FillApplication: FC = () => {
 							</IconSpan>
 							<DueDatePicker setDateString={setDateString} />
 						</label>
-					</GridItem>
-					<GridItem colSpan={2}>
-						<label>{draftName}</label>
-
-						<IconSpan>
-							<DeleteIcon w={6} h={6} color="red" />
-						</IconSpan>
 					</GridItem>
 				</SimpleGrid>
 				<br />

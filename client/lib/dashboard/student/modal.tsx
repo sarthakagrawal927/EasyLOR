@@ -19,7 +19,7 @@ const getNameFromURL = (fileURL: string) => {
 function PreviewModal({ isOpen, onClose, modalData }) {
 	let date = new Date(modalData?.dueDate);
 	let statusClass = modalData?.status === "PENDING" ? "blue" : modalData?.status === "REJECTED" ? "red" : "green";
-	let dateField = date.toLocaleDateString() === "1/1/1970" ? "No date selected" : date.toLocaleDateString();
+	let dateField = date.toLocaleDateString().split("/")[2] === "1970" ? "No date selected" : date.toLocaleDateString();
 	return (
 		<>
 			<Modal isOpen={isOpen} onClose={onClose} size="lg">

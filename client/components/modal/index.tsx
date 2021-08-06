@@ -18,8 +18,7 @@ const getNameFromURL = (fileURL: string) => {
 
 function PreviewModal({ isOpen, onOpen, onClose, handleSubmit, modalData }) {
 	let date = new Date(modalData.dueDate);
-
-	let dateField = date.toLocaleDateString() === "1/1/1970" ? "No date selected" : date.toLocaleDateString();
+	let dateField = date.toLocaleDateString().split("/")[2] === "1970" ? "No date selected" : date.toLocaleDateString();
 	return (
 		<>
 			<StyledButton type="button" onClick={onOpen} colorScheme="blue" variant="solid" size="md">

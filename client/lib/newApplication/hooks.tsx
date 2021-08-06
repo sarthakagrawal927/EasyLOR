@@ -9,9 +9,10 @@ import { useRouter } from "next/router";
 
 import { createStandaloneToast } from "@chakra-ui/react";
 import { AuthContext } from "context/auth";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import { Student, StudentContext } from "context/student";
 
 const fileUpload = async (file: File) => {
 	const url = "/api/upload";
@@ -29,11 +30,18 @@ const fileUpload = async (file: File) => {
 };
 
 export const useApplicationForm = () => {
+	const { student, loading, fetchStudent } = useContext(StudentContext);
+	useEffect(() => {
+		fetchStudent();
+	}, []);
+
 	const {
 		register,
 		handleSubmit,
 		getValues,
+		control,
 		formState: { errors: formErrors },
+		setValue,
 	} = useForm();
 
 	const { user } = useContext(AuthContext);
@@ -54,12 +62,15 @@ export const useApplicationForm = () => {
 
 	const departments = getDepartmentData();
 
-	const updateFaculty = () => {
+	const updateFaculty = (e: { preventDefault: () => void }) => {
+		e.preventDefault();
 		const branchFaculties = facultiesData.getFaculties.filter(
 			(faculty: Faculty) => faculty.user.department.name === getValues("department")
 		);
 		setFaculties(branchFaculties);
 	};
+
+	let files = useWatch({ control, name: "draftURL" });
 
 	const getFacultyInfo = (id: string) => {
 		let selectedFaculty = facultiesData.getFaculties.filter(faculty => {
@@ -90,21 +101,24 @@ export const useApplicationForm = () => {
 		return modalData;
 	};
 
+	const deleteFile = () => {
+		setValue("draftURL", null);
+	};
+
 	const [createLorMutation] = useCreateLorApplicationMutation();
 	const toast = createStandaloneToast();
 	const router = useRouter();
 
 	const onSubmit = handleSubmit(async data => {
 		let fileURL: string = null;
-		if (data.draftURL[0]) {
-			console.log(data.draftURL[0]);
+		if (data.draftURL && data.draftURL[0]) {
 			fileURL = await fileUpload(data.draftURL[0]);
 		}
 
 		const lorApplicationData: CreateLorApplicationInput = {
 			statementOfPurpose: data.statementOfPurpose,
 			course: data.course,
-			university: data.statementOfPurpose,
+			university: data.university,
 			facultyID: data.facultyID,
 			studentID: user.id,
 			dueDate: dateString,
@@ -152,5 +166,8 @@ export const useApplicationForm = () => {
 		getFacultyInfo,
 		makeModalData,
 		setDateString,
+		files,
+		deleteFile,
+		student,
 	};
 };

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Center, Button } from "@chakra-ui/react";
 
 export const AvatarContainer = styled(Center)`
-	margin-bottom: 3rem;
+	margin-top: -8rem;
 `;
 
 export const SOPContainer = styled.div`
