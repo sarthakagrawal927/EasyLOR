@@ -29,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	});
 
 	const fileContent = fs.readFileSync(data?.files?.file?.path);
-	const uploadParams = {
+	const uploadParams: AWS.S3.PutObjectRequest = {
 		Bucket: process.env.AWS_BUCKET_NAME,
 		Key: `${data?.files?.file?.name}`,
 		Body: fileContent,
@@ -37,7 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	};
 	try {
 		S3.upload(uploadParams, (error, responseData) => {
-			if (error) throw Error(error);
+			if (error) throw Error(error.message);
 			res.status(200).json(responseData.Location);
 		});
 	} catch (error) {
