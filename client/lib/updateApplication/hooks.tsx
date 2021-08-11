@@ -2,7 +2,7 @@ import { UpdateLorApplicationInput, useUpdateLorApplicationMutation } from "../.
 import { useRouter } from "next/router";
 import { Student, StudentContext } from "context/student";
 import { createStandaloneToast } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 
@@ -84,21 +84,30 @@ export const useApplicationForm = (id: string) => {
 	let prevApplicationData = getLORApplication(student, id);
 	let remainingModalData = getModalData(student, id);
 
-	let draftName = getNameFromURL(remainingModalData?.draftURL);
-
 	const {
 		register,
 		handleSubmit,
 		getValues,
 		formState: { errors: formErrors },
+		setValue,
+		control,
 	} = useForm<LorApplication>({ defaultValues: prevApplicationData });
 
-	const [dateString, setDateString] = useState(null);
+	const deleteFile = () => {
+		setValue("draftURL", null);
+		setDraftURL(null);
+		setDraftName(null);
+	};
+
+	const [draftURL, setDraftURL] = useState(remainingModalData?.draftURL);
+	const [draftName, setDraftName] = useState(getNameFromURL(draftURL));
+	let files = useWatch({ control, name: "draftURL" });
+
+	const [dateString, setDateString] = useState(prevApplicationData?.dueDate);
 
 	const makeModalData = () => {
 		let facultyInfo = remainingModalData.facultyData;
-		let draftURLObject = getValues("draftURL");
-		let draftURL = draftURLObject ? draftURLObject[0]?.name : null;
+		let draftURL = files ? files[0]?.name : null;
 		let modalData = {
 			statementOfPurpose: getValues("statementOfPurpose"),
 			facultyName: facultyInfo.name,
@@ -106,7 +115,7 @@ export const useApplicationForm = (id: string) => {
 			department: remainingModalData.department,
 			course: getValues("course"),
 			profilePic: facultyInfo.profilePhoto,
-			draftURL: draftURL || remainingModalData.draftURL,
+			draftURL: draftURL || draftName,
 			dueDate: dateString,
 		};
 		return modalData;
@@ -118,7 +127,7 @@ export const useApplicationForm = (id: string) => {
 
 	const onSubmit = handleSubmit(async data => {
 		let fileURL: string = null;
-		if (data.draftURL[0]) {
+		if (data.draftURL && data.draftURL[0]) {
 			console.log(data.draftURL[0]);
 			fileURL = await fileUpload(data.draftURL[0]);
 		}
@@ -128,9 +137,10 @@ export const useApplicationForm = (id: string) => {
 			course: data.course,
 			university: data.university,
 			dueDate: dateString,
-			draftURL: fileURL || remainingModalData.draftURL,
+			draftURL: fileURL || draftURL,
 			id: id,
 		};
+		console.log(lorApplicationData);
 		try {
 			toast({
 				description: "Submitting...",
@@ -169,6 +179,9 @@ export const useApplicationForm = (id: string) => {
 		register,
 		makeModalData,
 		setDateString,
+		student,
 		draftName,
+		deleteFile,
+		files,
 	};
 };

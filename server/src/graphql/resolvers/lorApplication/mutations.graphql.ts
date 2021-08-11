@@ -81,11 +81,11 @@ export const mutations: MutationResolvers<ApolloContext, LorApplication> = {
 				id: updateLORApplicationInput.id,
 			},
 			data: {
-				dueDate: updateLORApplicationInput.dueDate ?? undefined,
+				dueDate: updateLORApplicationInput.dueDate,
 				statementOfPurpose: updateLORApplicationInput.statementOfPurpose ?? undefined,
 				course: updateLORApplicationInput.course ?? undefined,
 				university: updateLORApplicationInput.university ?? undefined,
-				draftURL: updateLORApplicationInput.draftURL ?? undefined,
+				draftURL: updateLORApplicationInput.draftURL,
 				status: updateLORApplicationInput.status ?? undefined,
 				rejectionReason: updateLORApplicationInput.rejectionReason ?? undefined,
 			},

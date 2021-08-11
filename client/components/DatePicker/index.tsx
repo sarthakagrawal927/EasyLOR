@@ -4,8 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { IconSpan } from "lib/newApplication/newApplication.styled";
 
-export const DueDatePicker = ({ setDateString }) => {
-	const [startDate, setStartDate] = useState(null);
+export const DueDatePicker = ({ setDateString, initialState = null }) => {
+	const [startDate, setStartDate] = useState(initialState);
 	const clearDate = () => {
 		setStartDate(null);
 		setDateString(null);
