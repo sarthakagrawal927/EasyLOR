@@ -54,6 +54,7 @@ const typeDefs = gql`
 		faculty: Faculty!
 		status: Status!
 		rejectionReason: String
+		lorURL: String
 	}
 
 	type Student {
@@ -137,6 +138,7 @@ const typeDefs = gql`
 		draftURL: String
 		status: Status
 		rejectionReason: String
+		lorURL: String
 	}
 
 	input TestScoreInput {

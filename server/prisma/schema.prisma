@@ -30,6 +30,7 @@ model LORApplication {
   facultyID          String
   status             Status    @default(PENDING)
   rejectionReason    String?
+  lorURL             String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
