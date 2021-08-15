@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const uploadFile = async (file: File, directory: string, route: string) => {
+const uploadFile = async (file: File, directory: string) => {
 	const formData = new FormData();
 	formData.append("file", file, `${directory}/${Date.now()}-${file.name}`);
 	const config = {
@@ -10,7 +10,7 @@ const uploadFile = async (file: File, directory: string, route: string) => {
 	};
 
 	try {
-		const response = await axios.post(route, formData, config);
+		const response = await axios.post("/api/upload", formData, config);
 		return response.data as string;
 	} catch (error) {
 		console.error(error);

@@ -12,6 +12,7 @@ import {
 	TopContainer,
 	UploadDraftButton,
 } from "lib/facultyProfile/facultyProfile.styled";
+import withAuth from "components/withAuth";
 import NavBar from "components/NavBar/NavBar";
 import { useFacultyProfile } from "lib/facultyProfile/hooks";
 import FileUpload from "components/FileUpload/FileUpload";
@@ -63,4 +64,4 @@ const FacultyProfile = () => {
 	);
 };
 
-export default FacultyProfile;
+export default withAuth(FacultyProfile);

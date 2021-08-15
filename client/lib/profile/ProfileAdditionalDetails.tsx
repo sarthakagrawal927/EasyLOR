@@ -6,12 +6,13 @@ import {
 	AppliedUniversities,
 	AppliedUniversitiesList,
 	AcceptedUniversity,
-	ProofOfAcceptance,
 	TestScoresAdditionalContainer,
 	TestScoresAdditionalFieldContainer,
 } from "lib/profile/profile.styled";
 
-import { Link, Text } from "@chakra-ui/react";
+import { Link, Text, Stack, Icon } from "@chakra-ui/react";
+import Certificate from "../../components/icons/Certifcate";
+
 type ProfileAdditionalDetailsProps = {
 	student: Pick<Student, "acceptedUniversity" | "appliedUniversities" | "testScores" | "proofOfAcceptance">;
 };
@@ -32,7 +33,7 @@ const ProfileAdditionalDetails: React.FC<ProfileAdditionalDetailsProps> = ({ stu
 								<Text>{exam}</Text>
 								<Text>{score}</Text>
 								<Link href={proofOfResult} color="blue">
-									{proofOfResult}
+									RESULT
 								</Link>
 							</TestScore>
 						);
@@ -41,16 +42,17 @@ const ProfileAdditionalDetails: React.FC<ProfileAdditionalDetailsProps> = ({ stu
 			</TestScoresAdditionalContainer>
 			<AcceptedUniversity>
 				<Text>Accepted University</Text>
-				<Text color="blue" fontSize="large" marginTop="4">
-					{student.acceptedUniversity ?? "NOT MENTIONED"}
-				</Text>
+				<Stack direction="row" paddingTop="4">
+					<Text color="blue" fontSize="large">
+						{student.acceptedUniversity ?? "NOT MENTIONED"}
+					</Text>
+					{student.proofOfAcceptance && (
+						<Link href={student.proofOfAcceptance}>
+							<Certificate boxSize={8} />
+						</Link>
+					)}
+				</Stack>
 			</AcceptedUniversity>
-			<ProofOfAcceptance>
-				<Text>Proof Of Acceptance</Text>
-				<Link href={student.proofOfAcceptance} color="blue">
-					{student.proofOfAcceptance}
-				</Link>
-			</ProofOfAcceptance>
 		</ProfileAdditionalDetailsContainer>
 	);
 };

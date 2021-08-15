@@ -36,8 +36,6 @@ const useDepartments = (): UseDepartmentsReturn => {
 		setDepartments(data?.getDepartments);
 	}, [data?.getDepartments]);
 
-	console.log("departments data: ", data);
-
 	return { departments, departmentsError };
 };
 
@@ -112,13 +110,12 @@ export const useRegister = (): UseRegisterReturn => {
 
 	useEffect(() => {
 		async function uploadProfilePhoto() {
-			const url = await uploadFile(profilePhoto[0], "profilePhoto", "/api/upload");
+			const url = await uploadFile(profilePhoto[0], "profilePhoto");
 			setProfilePhotoUrl(url);
 		}
 		if (profilePhoto && profilePhoto.length > 0) uploadProfilePhoto();
 	}, [profilePhoto]);
 
-	console.log("fields: ", watch());
 	const emailRegister = register("email", {
 		required: true,
 		minLength: 5,
@@ -186,7 +183,6 @@ export const useRegister = (): UseRegisterReturn => {
 		onCompleted: data => {
 			login(data.createUser);
 			router.push("/dashboard");
-			console.log("Logged In: ", user.id);
 		},
 	});
 
@@ -200,7 +196,6 @@ export const useRegister = (): UseRegisterReturn => {
 			departmentID,
 			userType: UserType.Student,
 		};
-		console.log("SUBMIT DATA: ", userData);
 
 		try {
 			const { data: response } = await registerUserMutation({

@@ -16,7 +16,6 @@ const getDecodedUser = (): CurrentUser | null => {
 			window.localStorage.removeItem("jwtToken");
 			return null;
 		}
-		console.log("decoded token: ", decodedToken);
 		return decodedToken;
 	}
 };
@@ -73,7 +72,6 @@ function AuthProvider(props) {
 			window.localStorage.removeItem("jwtToken");
 		}
 	}
-	console.log("state: ", state);
 	return <AuthContext.Provider value={{ user: state?.user, login, logout }} {...props} />;
 }
 

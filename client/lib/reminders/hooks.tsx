@@ -63,7 +63,6 @@ export const useReminders = (): RemindersReturn => {
 					},
 				},
 			});
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -95,7 +94,6 @@ export const useReminders = (): RemindersReturn => {
 					},
 				},
 			});
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}

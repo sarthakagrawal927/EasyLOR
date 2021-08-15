@@ -25,7 +25,7 @@ export const useFacultyProfile = (): UseFacultyProfileReturn => {
 
 	useEffect(() => {
 		async function uploadDraft() {
-			const url = await uploadFile(draft[0], "facultyLORDraft", "/api/upload");
+			const url = await uploadFile(draft[0], "facultyLORDraft");
 			setDraftUrl(url);
 			if (url) {
 				toast({

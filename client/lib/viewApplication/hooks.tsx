@@ -37,7 +37,6 @@ export const useViewApplication = (id: string): ViewApplicationReturn => {
 				position: "top",
 				isClosable: true,
 			});
-			console.log(data?.updateLORApplication);
 		},
 		onError: error => {
 			toast({
@@ -63,7 +62,6 @@ export const useViewApplication = (id: string): ViewApplicationReturn => {
 				updateLORApplicationInput: updateLORApplicationData,
 			},
 		});
-		console.log(data);
 	};
 
 	return {

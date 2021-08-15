@@ -68,7 +68,6 @@ export const useLogin = (): UseLoginReturn => {
 	});
 
 	const onSubmit = handleSubmit(async (data: LoginFormInputs) => {
-		console.log("Logging In...: ", data);
 		try {
 			const { data: response } = await loginUserMutation({
 				variables: {

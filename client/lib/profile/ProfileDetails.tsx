@@ -36,12 +36,6 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ student }) => {
 				</InfoFieldContainer>
 				<InfoFieldContainer>
 					<InfoField>
-						<InfoFieldLabel>Institute</InfoFieldLabel>
-						<InfoFieldText width={"600px"}>{student?.user?.institution}</InfoFieldText>
-					</InfoField>
-				</InfoFieldContainer>
-				<InfoFieldContainer>
-					<InfoField>
 						<InfoFieldLabel>Contact</InfoFieldLabel>
 						<InfoFieldText>{student?.user?.contact}</InfoFieldText>
 					</InfoField>
@@ -49,6 +43,12 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ student }) => {
 					<InfoField>
 						<InfoFieldLabel>Email</InfoFieldLabel>
 						<InfoFieldText>{student?.user?.email}</InfoFieldText>
+					</InfoField>
+				</InfoFieldContainer>
+				<InfoFieldContainer>
+					<InfoField>
+						<InfoFieldLabel>Institute</InfoFieldLabel>
+						<InfoFieldText width={"600px"}>{student?.user?.institution}</InfoFieldText>
 					</InfoField>
 				</InfoFieldContainer>
 			</ProfileInfo>

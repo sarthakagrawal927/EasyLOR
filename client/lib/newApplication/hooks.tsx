@@ -25,7 +25,6 @@ const fileUpload = async (file: File) => {
 	};
 
 	const res = await axios.post(url, formData, config);
-	console.log("FILE UPLOAD SUCCESSFUL: ", res.data);
 	return res.data;
 };
 

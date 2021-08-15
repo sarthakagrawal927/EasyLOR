@@ -11,7 +11,6 @@ import NavBar from "components/NavBar/NavBar";
 
 const Profile: React.FC = () => {
 	const { student, loading, errors, handleSubmit, control, register, updating, watch, reset } = useProfile();
-	console.log("student", student);
 	return (
 		<>
 			<NavBar user={student?.user} />

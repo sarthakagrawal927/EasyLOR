@@ -95,7 +95,7 @@ export const InfoFieldLabel = styled.label`
 `;
 
 export const InfoFieldText = styled(Text)`
-	font-size: ${font.size.subHeading};
+	font-size: 1.5rem;
 	font-weight: 600;
 	color: ${colors.blue};
 	letter-spacing: 1px;

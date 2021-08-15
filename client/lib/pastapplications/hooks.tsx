@@ -59,7 +59,6 @@ export const usePastApplications = (): PastApplicationsReturn => {
 				position: "top",
 				isClosable: true,
 			});
-			console.log(data?.createReminder);
 		},
 		onError: error => {
 			toast({

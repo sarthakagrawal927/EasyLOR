@@ -27,7 +27,6 @@ const FileUpload: FC<FileUploadProps> = ({ register, accept, multiple, children,
 	const { name, onChange, ref, ...rest } = register;
 
 	const handleClick = () => {
-		console.log("inside file upload");
 		inputRef.current?.click();
 	};
 

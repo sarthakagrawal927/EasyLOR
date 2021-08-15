@@ -1,5 +1,5 @@
 import { StudentContext, Student } from "context/student";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TestScoreInput, useUpdateStudentMutation } from "entities/types.graphql";
 import { Option } from "components/SearchMultiSelect";
 import {
@@ -12,6 +12,7 @@ import {
 	UseFormReset,
 	UseFormWatch,
 } from "react-hook-form";
+import uploadFile from "aws/uploadFile";
 import { createStandaloneToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { UpdateStudentInput } from "entities/types.graphql";
@@ -47,12 +48,13 @@ type UseProfileReturn = {
 export const useProfile = (): UseProfileReturn => {
 	const { student, loading, fetchStudent } = useContext(StudentContext);
 	const { user } = useContext(AuthContext);
+	const [testScores, setTestScores] = useState<TestScoreInput[]>([]);
 
 	const router = useRouter();
 
 	useEffect(() => {
 		fetchStudent();
-	}, []);
+	}, [student]);
 
 	const defaultValues: UpdateStudentFormInput = {
 		acceptedUniversity: null,
@@ -74,8 +76,6 @@ export const useProfile = (): UseProfileReturn => {
 		defaultValues,
 	});
 
-	console.log(watch());
-
 	const [updateStudent, { loading: updating, error }] = useUpdateStudentMutation({
 		onError: error => {
 			toast({
@@ -92,36 +92,69 @@ export const useProfile = (): UseProfileReturn => {
 		},
 	});
 
-	const onSubmit = handleSubmit(async (data: UpdateStudentFormInput) => {
-		let testScores: TestScoreInput[] = [];
+	let documentUrls: string[] = [];
+	const uploadDocuments = async (resultOne: File, resultTwo: File, resultThree: File, proofOfAcceptance: File) => {
+		if (resultOne) documentUrls[0] = await uploadFile(resultOne, "proofOfResults");
+		if (resultTwo) documentUrls[1] = await uploadFile(resultTwo, "proofOfResults");
+		if (resultThree) documentUrls[2] = await uploadFile(resultThree, "proofOfResults");
+		if (proofOfAcceptance) documentUrls[3] = await uploadFile(proofOfAcceptance, "proofOfAcceptance");
+	};
 
-		if (data.examOne && data.scoreOne && data.resultOne)
-			testScores.push({
+	const onSubmit = handleSubmit(async (data, event) => {
+		event.preventDefault();
+		let newTestScore: TestScoreInput;
+		try {
+			await uploadDocuments(
+				data.resultOne?.[0],
+				data.resultTwo?.[0],
+				data.resultThree?.[0],
+				data.proofOfAcceptance?.[0]
+			);
+		} catch (error) {
+			console.error(error);
+		}
+
+		if (data.examOne && data.scoreOne && documentUrls?.[0]) {
+			newTestScore = {
 				exam: data.examOne,
 				score: data.scoreOne,
-				proofOfResult: data.resultOne?.[0]?.name,
-			});
-		if (data.examTwo && data.scoreTwo && data.resultTwo)
-			testScores.push({
+				proofOfResult: documentUrls?.[0],
+			};
+			const newScores: TestScoreInput[] = testScores;
+			newScores.push(newTestScore);
+			setTestScores(newScores);
+		}
+
+		if (data.examTwo && data.scoreTwo && documentUrls?.[1]) {
+			newTestScore = {
 				exam: data.examTwo,
 				score: data.scoreTwo,
-				proofOfResult: data.resultTwo?.[0]?.name,
-			});
-		if (data.examThree && data.scoreThree && data.resultThree)
-			testScores.push({
+				proofOfResult: documentUrls?.[1],
+			};
+			const newScores: TestScoreInput[] = testScores;
+			newScores.push(newTestScore);
+			setTestScores(newScores);
+		}
+
+		if (data.examThree && data.scoreThree && documentUrls?.[2]) {
+			newTestScore = {
 				exam: data.examThree,
 				score: data.scoreThree,
-				proofOfResult: data.resultThree?.[0]?.name,
-			});
+				proofOfResult: documentUrls?.[2],
+			};
+			const newScores: TestScoreInput[] = testScores;
+			newScores.push(newTestScore);
+			setTestScores(newScores);
+		}
+
 		const input: UpdateStudentInput = {
 			id: user.id,
 			acceptedUniversity: data.acceptedUniversity.value,
-			appliedUniversities: data.appliedUniversities.map(university => {
-				return university.value;
-			}),
+			appliedUniversities: data.appliedUniversities.map(university => university.value),
 			testScores,
-			proofOfAcceptance: data.proofOfAcceptance?.[0]?.name ?? null,
+			proofOfAcceptance: documentUrls?.[3] ?? null,
 		};
+
 		try {
 			const { data: response } = await updateStudent({
 				variables: {
