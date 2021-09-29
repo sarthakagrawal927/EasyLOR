@@ -6,20 +6,29 @@ import {
 	useUpdateLorApplicationMutation,
 	Status,
 } from "../../entities/types.graphql";
+
 import { useContext, useEffect } from "react";
 import { FacultyContext } from "context/faculty";
 import { createStandaloneToast } from "@chakra-ui/react";
+import { useForm, useWatch, Controller } from "react-hook-form";
+import uploadFile from "aws/uploadFile";
+import FileUpload from "components/FileUpload/FileUpload";
 
 type ViewApplicationReturn = {
 	user: User;
 	student: Student;
 	application: Omit<LorApplication, "faculty">;
+	files: any;
+	register: any;
 	getRejectionReason: (reason: string | null) => void;
+	handleSubmit: any;
 };
 
 export const useViewApplication = (id: string): ViewApplicationReturn => {
 	const { faculty, fetchFaculty } = useContext(FacultyContext);
 	const toast = createStandaloneToast();
+	const { register, handleSubmit, control } = useForm();
+	let files = useWatch({ control, name: "lorURL" });
 
 	const student: Student = faculty?.lorApplications.find(application => application.id == id)?.student;
 	const lorApplication = faculty?.lorApplications.find(application => application.id == id);
@@ -64,10 +73,52 @@ export const useViewApplication = (id: string): ViewApplicationReturn => {
 		});
 	};
 
+	const onSubmit = handleSubmit(async data => {
+		const lorURL = await uploadFile(files[0], "facultyReturnLOR");
+		console.log(lorURL);
+		const updateLORApplicationData: UpdateLorApplicationInput = {
+			id: id,
+			lorURL: lorURL,
+			status: Status.Granted,
+		};
+		try {
+			toast({
+				description: "Submitting...",
+				status: "info",
+				duration: 5000,
+				isClosable: true,
+			});
+			const { data: response } = await updateLorApplicationMutation({
+				variables: {
+					updateLORApplicationInput: updateLORApplicationData,
+				},
+			});
+			toast({
+				description: "Success, your LOR is submitted",
+				status: "success",
+				duration: 5000,
+				isClosable: true,
+			});
+
+			console.log(response);
+		} catch (err) {
+			toast({
+				title: "Failed to Submit",
+				description: err.message,
+				status: "error",
+				duration: 9000,
+				isClosable: true,
+			});
+		}
+	});
+
 	return {
 		user: faculty?.user,
 		student,
 		application: lorApplication,
+		register,
+		files,
 		getRejectionReason,
+		handleSubmit: onSubmit,
 	};
 };

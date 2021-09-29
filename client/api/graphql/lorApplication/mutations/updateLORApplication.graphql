@@ -6,5 +6,6 @@ mutation UpdateLORApplication($updateLORApplicationInput: UpdateLORApplicationIn
 		university
 		course
 		draftURL
+		lorURL
 	}
 }

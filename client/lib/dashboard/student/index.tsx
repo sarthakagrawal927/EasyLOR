@@ -28,7 +28,7 @@ const StudentDashboard = () => {
 					<span className="blue" onClick={() => handleClick(cell.row.cells[0].value)}>
 						{cell.value}
 					</span>
-				) : cell.value === "ACCEPTED" ? (
+				) : cell.value === "GRANTED" ? (
 					<span className="green">{cell.value}</span>
 				) : (
 					<span className="red">{cell.value}</span>

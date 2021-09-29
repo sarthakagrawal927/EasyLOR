@@ -12,7 +12,7 @@ import { AuthContext } from "context/auth";
 import { useForm, useWatch } from "react-hook-form";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { Student, StudentContext } from "context/student";
+import { StudentContext } from "context/student";
 
 const fileUpload = async (file: File) => {
 	const url = "/api/upload";

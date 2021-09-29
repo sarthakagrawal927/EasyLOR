@@ -106,15 +106,11 @@ export const useApplicationForm = (id: string) => {
 	const [dateString, setDateString] = useState(prevApplicationData?.dueDate);
 
 	const makeModalData = () => {
-		let facultyInfo = remainingModalData.facultyData;
 		let draftURL = files ? files[0]?.name : null;
 		let modalData = {
 			statementOfPurpose: getValues("statementOfPurpose"),
-			facultyName: facultyInfo.name,
 			university: getValues("university"),
-			department: remainingModalData.department,
 			course: getValues("course"),
-			profilePic: facultyInfo.profilePhoto,
 			draftURL: draftURL || draftName,
 			dueDate: dateString,
 		};

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const uploadFile = async (file: File, directory: string) => {
+const uploadFile = async (file: File, directory: string, route: string = "/api/upload") => {
 	const formData = new FormData();
 	formData.append("file", file, `${directory}/${Date.now()}-${file.name}`);
 	const config = {

@@ -65,7 +65,7 @@ export const DetailsRow1Container = styled(Box)`
 	justify-content: flex-start;
 `;
 
-export const Detailscolumn1Container = styled(Box)`
+export const DetailsColumn1Container = styled(Box)`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -74,7 +74,7 @@ export const Detailscolumn1Container = styled(Box)`
 		padding-bottom: ${elementPadding};
 	}
 `;
-export const Detailscolumn2Container = styled(Box)`
+export const DetailsColumn2Container = styled(Box)`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

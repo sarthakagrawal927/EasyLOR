@@ -13,8 +13,8 @@ import {
 	DetailsContainer,
 	DetailsRow1Container,
 	DetailsRow2Container,
-	Detailscolumn1Container,
-	Detailscolumn2Container,
+	DetailsColumn1Container,
+	DetailsColumn2Container,
 	ImageContainer,
 	DraftContainer,
 	DownloadText,
@@ -29,7 +29,7 @@ import UploadLORModal from "lib/viewApplication/UploadLORModal/UploadLORModal";
 const ViewApplication: FC = () => {
 	const router = useRouter();
 	const { id } = router.query;
-	const { user, student, application, getRejectionReason } = useViewApplication(id?.toString());
+	const { user, student, application, files, getRejectionReason } = useViewApplication(id?.toString());
 
 	return (
 		<>
@@ -43,7 +43,7 @@ const ViewApplication: FC = () => {
 						<ProfileContainer>
 							<DetailsContainer>
 								<DetailsRow1Container>
-									<Detailscolumn1Container>
+									<DetailsColumn1Container>
 										<Box>
 											<ViewAppHeading>{"Student: "}</ViewAppHeading>
 											<ViewAppDetail>
@@ -54,8 +54,8 @@ const ViewApplication: FC = () => {
 											<ViewAppHeading>{"Branch: "}</ViewAppHeading>
 											<ViewAppDetail>{student?.user.department.name}</ViewAppDetail>
 										</Box>
-									</Detailscolumn1Container>
-									<Detailscolumn2Container>
+									</DetailsColumn1Container>
+									<DetailsColumn2Container>
 										<Box>
 											<ViewAppHeading>{"Email ID: "}</ViewAppHeading>
 											<ViewAppDetail>{student?.user.email}</ViewAppDetail>
@@ -64,7 +64,7 @@ const ViewApplication: FC = () => {
 											<ViewAppHeading>{"Contact: "}</ViewAppHeading>
 											<ViewAppDetail> {student?.user.contact}</ViewAppDetail>
 										</Box>
-									</Detailscolumn2Container>
+									</DetailsColumn2Container>
 								</DetailsRow1Container>
 								<DetailsRow2Container>
 									<Box>
@@ -120,14 +120,16 @@ const ViewApplication: FC = () => {
 							</span>
 						</DraftContainer>
 						<StatementOfPurposeContainer>
-							<ViewAppHeading>{"Statment of Purpose: "}</ViewAppHeading>
+							<ViewAppHeading>{"Statement of Purpose: "}</ViewAppHeading>
 							<br />
 							<SOPDetail>
 								<ViewAppDetail>{application?.statementOfPurpose}</ViewAppDetail>
 							</SOPDetail>
 						</StatementOfPurposeContainer>
 						<ButtonsContainer>
+							{files && files[0] && files[0].name}
 							<RejectModal getRejectionReason={getRejectionReason} />
+
 							<UploadLORModal />
 						</ButtonsContainer>
 					</ViewApplicationContainer>
