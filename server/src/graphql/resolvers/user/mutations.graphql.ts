@@ -48,7 +48,7 @@ export const mutations: MutationResolvers<ApolloContext> = {
 				...newUser,
 				faculty: {
 					create: {
-						lorDraftTemplates: [],
+						lorDraftTemplate: "",
 					},
 				},
 			};

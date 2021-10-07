@@ -111,9 +111,9 @@ model Student {
 }
 
 model Faculty {
-  user              User             @relation(fields: [userID], references: [id])
-  userID            String           @id
-  lorApplications   LORApplication[]
-  lorDraftTemplates String[]
-  reminders         Reminder[]
+  user             User             @relation(fields: [userID], references: [id])
+  userID           String           @id
+  lorApplications  LORApplication[]
+  lorDraftTemplate String
+  reminders        Reminder[]
 }

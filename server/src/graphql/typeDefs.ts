@@ -71,7 +71,7 @@ const typeDefs = gql`
 	type Faculty {
 		user: User!
 		lorApplications: [LORApplication]
-		lorDraftTemplates: [String]
+		lorDraftTemplate: String
 		reminders: [Reminder]
 	}
 
@@ -155,6 +155,11 @@ const typeDefs = gql`
 		testScores: [TestScoreInput!]
 	}
 
+	input UpdateFacultyInput {
+		id: String!
+		lorDraftTemplate: String!
+	}
+
 	input CreateReminderInput {
 		message: String!
 		facultyID: String!
@@ -172,6 +177,8 @@ const typeDefs = gql`
 		createUser(createUserInput: CreateUserInput!): UserReturn!
 		createLORApplication(createLORApplicationInput: CreateLORApplicationInput!): LORApplication!
 		createReminder(createReminderInput: CreateReminderInput!): Reminder!
+
+		updateFaculty(updateFacultyInput: UpdateFacultyInput!): Faculty!
 
 		updateLORApplication(updateLORApplicationInput: UpdateLORApplicationInput!): LORApplication!
 		updateReminder(updateReminderInput: UpdateReminderInput!): Reminder!

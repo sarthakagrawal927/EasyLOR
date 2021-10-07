@@ -54,7 +54,7 @@ export async function seed() {
 				...newUser,
 				faculty: {
 					create: {
-						lorDraftTemplates: [],
+						lorDraftTemplate: "",
 					},
 				},
 			};

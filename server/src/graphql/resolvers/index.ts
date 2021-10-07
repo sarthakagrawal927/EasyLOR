@@ -18,6 +18,7 @@ const resolvers = {
 		...userResolvers.Mutation,
 		...reminderResolvers.Mutation,
 		...studentResolvers.Mutation,
+		...facultyResolvers.Mutation,
 	},
 };
 

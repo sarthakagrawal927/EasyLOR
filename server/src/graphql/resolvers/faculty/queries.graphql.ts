@@ -8,7 +8,7 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 		const faculties: Faculty[] | null = await prisma.faculty.findMany({
 			select: {
 				user: { select: userSelect },
-				lorDraftTemplates: true,
+				lorDraftTemplate: true,
 				reminders: true,
 				lorApplications: {
 					include: {
