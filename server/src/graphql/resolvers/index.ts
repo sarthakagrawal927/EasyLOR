@@ -12,6 +12,7 @@ const resolvers = {
 		...userResolvers.Query,
 		...facultyResolvers.Query,
 		...reminderResolvers.Query,
+		...lorAppResolvers.Query,
 	},
 	Mutation: {
 		...lorAppResolvers.Mutation,
