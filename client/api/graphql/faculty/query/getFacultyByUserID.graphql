@@ -1,6 +1,6 @@
 query GetFacultyByUserID($id: String!) {
 	getFacultyByUserID(id: $id) {
-		lorDraftTemplates
+		lorDraftTemplate
 		user {
 			contact
 			department {
