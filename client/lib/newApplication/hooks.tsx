@@ -142,7 +142,6 @@ export const useApplicationForm = () => {
 				isClosable: true,
 			});
 
-			console.log(response);
 			router.push("/dashboard");
 		} catch (err) {
 			toast({

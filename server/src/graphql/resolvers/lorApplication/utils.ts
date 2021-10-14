@@ -163,8 +163,6 @@ export const validateUpdateLORApplicationInput = async ({
 	else if (status !== "REJECTED" && rejectionReason?.trim() != null)
 		errors.rejectionReason = "invalid entry of rejection reason";
 
-	console.log(rejectionReason?.trim());
-
 	if (
 		dueDate == null &&
 		statementOfPurpose == null &&

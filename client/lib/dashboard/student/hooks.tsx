@@ -3,13 +3,16 @@ import { Student, StudentContext } from "context/student";
 import { useContext, useEffect, useState } from "react";
 
 type UseStudentDashboardReturn = {
+	modalData: any;
+	pendingIsOpen: boolean;
+	pendingOnOpen: () => void;
+	pendingOnClose: () => void;
+	grantedIsOpen: boolean;
+	grantedOnOpen: () => void;
+	grantedOnClose: () => void;
+	handleClick: (id: string, status: string) => void;
 	student: Student;
 	loading: boolean;
-	handleClick: (id: string) => void;
-	isOpen: boolean;
-	onOpen: () => void;
-	onClose: () => void;
-	modalData: any;
 };
 
 export const useStudentDashboard = (): UseStudentDashboardReturn => {
@@ -19,23 +22,32 @@ export const useStudentDashboard = (): UseStudentDashboardReturn => {
 		fetchStudent();
 	}, []);
 
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isOpen: pendingIsOpen, onOpen: pendingOnOpen, onClose: pendingOnClose } = useDisclosure();
+	const { isOpen: grantedIsOpen, onOpen: grantedOnOpen, onClose: grantedOnClose } = useDisclosure();
 
-	const handleClick = (id: string) => {
+	const handleClick = (id: string, status: string) => {
 		setModalData(serialToApplicationMap[id]);
-		onOpen();
+		if (status === "PENDING") {
+			pendingOnOpen();
+		} else if (status === "GRANTED") {
+			grantedOnOpen();
+		}
 	};
 
 	return {
 		modalData,
-		isOpen,
-		onOpen,
-		onClose,
+		pendingIsOpen,
+		pendingOnOpen,
+		pendingOnClose,
+		grantedIsOpen,
+		grantedOnOpen,
+		grantedOnClose,
 		handleClick,
 		student,
 		loading,
 	};
 };
+
 let serialToApplicationMap = new Map();
 export const makeData = (student: Student) => {
 	let data = [];

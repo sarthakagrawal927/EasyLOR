@@ -63,7 +63,6 @@ export const useLogin = (): UseLoginReturn => {
 		onCompleted: data => {
 			login(data.loginUser);
 			router.push("/dashboard");
-			console.log("Logged In: ", user.id);
 		},
 	});
 

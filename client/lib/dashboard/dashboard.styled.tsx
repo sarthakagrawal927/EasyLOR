@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Table, Box, Center, Button } from "@chakra-ui/react";
+import { Table, Box, Center, Button, ModalHeader, ModalBody } from "@chakra-ui/react";
 import { colors, font } from "../../utils/styles";
 
 export const DashboardContainer = styled(Center)`
@@ -78,6 +78,9 @@ export const DashboardTable = styled(Table)`
 	.blue:hover {
 		cursor: pointer;
 	}
+	.green:hover {
+		cursor: pointer;
+	}
 `;
 
 export const AvatarContainer = styled(Center)`
@@ -117,4 +120,35 @@ export const StyledStatus = styled.span`
 		color: #0084a1;
 		background: rgba(85, 219, 249, 0.53);
 	}
+`;
+
+export const GrayModalHeader = styled(ModalHeader)`
+	background-color: ${colors.lightGray};
+	border-radius: 0.4rem;
+`;
+
+export const HugeHeading = styled.h1`
+	font-size: 2.5rem;
+	text-align: center;
+`;
+
+export const SpacedButtonLink = styled.div`
+	text-align: center;
+	margin: 3.5rem;
+`;
+
+export const GreenTickBox = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding-top: 1rem;
+`;
+
+export const GrantedModalBody = styled(ModalBody)`
+	margin-top: 1.8rem;
+	height: 400em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	text-align: "center";
 `;

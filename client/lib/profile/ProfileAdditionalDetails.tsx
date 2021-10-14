@@ -11,7 +11,7 @@ import {
 } from "lib/profile/profile.styled";
 
 import { Link, Text, Stack, Icon } from "@chakra-ui/react";
-import Certificate from "../../components/icons/Certifcate";
+import Certificate from "../../components/icons/Certificate";
 
 type ProfileAdditionalDetailsProps = {
 	student: Pick<Student, "acceptedUniversity" | "appliedUniversities" | "testScores" | "proofOfAcceptance">;

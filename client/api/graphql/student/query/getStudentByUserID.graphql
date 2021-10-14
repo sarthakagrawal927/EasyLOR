@@ -20,6 +20,7 @@ query GetStudentByUserID($id: String!) {
 			id
 			course
 			draftURL
+			lorURL
 			dueDate
 			university
 			status

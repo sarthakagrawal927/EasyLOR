@@ -75,7 +75,6 @@ export const useViewApplication = (id: string): ViewApplicationReturn => {
 
 	const onSubmit = handleSubmit(async data => {
 		const lorURL = await uploadFile(files[0], "facultyReturnLOR");
-		console.log(lorURL);
 		const updateLORApplicationData: UpdateLorApplicationInput = {
 			id: id,
 			lorURL: lorURL,
@@ -99,8 +98,6 @@ export const useViewApplication = (id: string): ViewApplicationReturn => {
 				duration: 5000,
 				isClosable: true,
 			});
-
-			console.log(response);
 		} catch (err) {
 			toast({
 				title: "Failed to Submit",

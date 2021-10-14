@@ -49,6 +49,7 @@ export const useReminders = (): RemindersReturn => {
 			console.log(error);
 		},
 		onCompleted: () => {
+			// show on UI
 			console.log("updated");
 		},
 	});
@@ -73,6 +74,7 @@ export const useReminders = (): RemindersReturn => {
 			console.log(error);
 		},
 		onCompleted: () => {
+			// show on UI
 			console.log("deleted");
 		},
 	});

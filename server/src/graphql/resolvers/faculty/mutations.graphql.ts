@@ -20,7 +20,6 @@ export const mutations: MutationResolvers<ApolloContext, Faculty> = {
 			include: { user: { select: userSelect } },
 		});
 
-		console.log(faculty);
 		return faculty;
 	},
 };

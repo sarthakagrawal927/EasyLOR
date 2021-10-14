@@ -84,7 +84,6 @@ export const usePastApplications = (): PastApplicationsReturn => {
 				createReminderInput: createReminderData,
 			},
 		});
-		console.log(data);
 	};
 
 	return {

@@ -3,31 +3,29 @@ import {
 	Modal,
 	ModalOverlay,
 	ModalContent,
-	ModalHeader,
 	ModalFooter,
 	ModalBody,
 	Avatar,
+	ModalCloseButton,
 } from "@chakra-ui/react";
-import { AvatarContainer, SOPContainer, StyledButton, StyledStatus } from "../dashboard.styled";
+import { AvatarContainer, SOPContainer, StyledButton, StyledStatus, GrayModalHeader } from "../dashboard.styled";
 import { AttachmentIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 
 const getNameFromURL = (fileURL: string) => {
-	return fileURL.split("/")[4].split("-")[1].replaceAll("%20", " ");
+	return fileURL.split("/")[4]?.split("-")[1].replaceAll("%20", " ");
 };
 
-function PreviewModal({ isOpen, onClose, modalData }) {
+function PendingModal({ isOpen, onClose, modalData }) {
 	let date = new Date(modalData?.dueDate);
-	let statusClass = modalData?.status === "PENDING" ? "blue" : modalData?.status === "REJECTED" ? "red" : "green";
 	let dateField = date.toLocaleDateString().split("/")[2] === "1970" ? "No date selected" : date.toLocaleDateString();
 	return (
 		<>
 			<Modal isOpen={isOpen} onClose={onClose} size="lg">
 				<ModalOverlay />
 				<ModalContent maxW="60%">
-					<ModalHeader>
-						Application Details <StyledStatus className={statusClass}>{modalData?.status}</StyledStatus>{" "}
-					</ModalHeader>
+					<GrayModalHeader>Application Details</GrayModalHeader>
+					<ModalCloseButton />
 					<ModalBody>
 						<SimpleGrid columns={2}>
 							<SimpleGrid columns={2} spacingY={4}>
@@ -88,4 +86,4 @@ function PreviewModal({ isOpen, onClose, modalData }) {
 	);
 }
 
-export default PreviewModal;
+export default PendingModal;

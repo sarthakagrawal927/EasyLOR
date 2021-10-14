@@ -24,7 +24,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		S3.deleteObject(uploadParams, (error, data) => {
 			if (error) throw Error(error.message);
-			console.log(data);
 			res.status(200).json(data);
 		});
 	} catch (error) {

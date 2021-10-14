@@ -25,7 +25,6 @@ const fileUpload = async (file: File) => {
 		},
 	};
 	const res = await axios.post(url, formData, config);
-	console.log("FILE UPLOAD SUCCESSFUL: ", res.data);
 	return res.data;
 };
 
@@ -124,7 +123,6 @@ export const useApplicationForm = (id: string) => {
 	const onSubmit = handleSubmit(async data => {
 		let fileURL: string = null;
 		if (data.draftURL && data.draftURL[0]) {
-			console.log(data.draftURL[0]);
 			fileURL = await fileUpload(data.draftURL[0]);
 		}
 
@@ -136,7 +134,6 @@ export const useApplicationForm = (id: string) => {
 			draftURL: fileURL || draftURL,
 			id: id,
 		};
-		console.log(lorApplicationData);
 		try {
 			toast({
 				description: "Submitting...",
@@ -156,7 +153,6 @@ export const useApplicationForm = (id: string) => {
 				isClosable: true,
 			});
 
-			console.log(response);
 			router.push("/dashboard");
 		} catch (err) {
 			toast({

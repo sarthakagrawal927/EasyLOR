@@ -1,11 +1,13 @@
 import { Heading } from "@chakra-ui/react";
 import NavBar from "components/NavBar/NavBar";
-import PreviewModal from "./modal";
+import PendingModal from "./pendingModal";
+import GrantedModal from "./grantedModal";
 import { useStudentDashboard, makeData } from "./hooks";
 import { DashboardContainer, Container } from "../dashboard.styled";
 import Table from "../table";
 const StudentDashboard = () => {
-	const { student, loading, handleClick, isOpen, onClose, modalData } = useStudentDashboard();
+	const { student, loading, handleClick, pendingIsOpen, pendingOnClose, grantedIsOpen, grantedOnClose, modalData } =
+		useStudentDashboard();
 	const data = makeData(student);
 	const columns = [
 		{
@@ -25,11 +27,13 @@ const StudentDashboard = () => {
 			accessor: "status",
 			Cell: (cell: { value: {}; row: { cells: { value: any }[] } }) => {
 				return cell.value === "PENDING" ? (
-					<span className="blue" onClick={() => handleClick(cell.row.cells[0].value)}>
+					<span className="blue" onClick={() => handleClick(cell.row.cells[0].value, "PENDING")}>
 						{cell.value}
 					</span>
 				) : cell.value === "GRANTED" ? (
-					<span className="green">{cell.value}</span>
+					<span className="green" onClick={() => handleClick(cell.row.cells[0].value, "GRANTED")}>
+						{cell.value}
+					</span>
 				) : (
 					<span className="red">{cell.value}</span>
 				);
@@ -52,7 +56,8 @@ const StudentDashboard = () => {
 					)
 				)}
 			</DashboardContainer>
-			<PreviewModal isOpen={isOpen} onClose={onClose} modalData={modalData} />
+			<PendingModal isOpen={pendingIsOpen} onClose={pendingOnClose} modalData={modalData} />
+			<GrantedModal isOpen={grantedIsOpen} onClose={grantedOnClose} modalData={modalData} />
 		</>
 	);
 };
