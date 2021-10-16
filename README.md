@@ -21,7 +21,8 @@ Go to server:
 
 ```bash
 yarn # to install dependencies
-npx prisma generate # types for prisma models
+npx prisma generate # updating prisma types in client
+npx prisma migrate dev # updating prisma types in the database
 yarn dev # start the server
 ```
 

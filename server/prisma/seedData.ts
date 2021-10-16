@@ -136,6 +136,18 @@ export const users: (Omit<CreateUserInput, "departmentID"> & { departmentName: s
 		departmentName: "CSE",
 		userType: "FACULTY",
 	},
+	{
+		email: "admiewqeqwn@example.com",
+		password: "123456",
+		firstName: "Admin",
+		lastName: "Boi",
+		institution: "MIT",
+		contact: "9999999999",
+		profilePhoto:
+			"https://27jts3o00yy49vo2y30wem91-wpengine.netdna-ssl.com/wp-content/uploads/2018/05/ASSET-USER-ADMIN-300x300.png",
+		departmentName: "CSE",
+		userType: "ADMIN",
+	},
 ];
 
 export const lorAppliations: (Omit<LorApplication, "id" | "faculty" | "student"> & {
