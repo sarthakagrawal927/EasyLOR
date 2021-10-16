@@ -12,6 +12,7 @@ const typeDefs = gql`
 	enum UserType {
 		STUDENT
 		FACULTY
+		ADMIN
 	}
 
 	type User {

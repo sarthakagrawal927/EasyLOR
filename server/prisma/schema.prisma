@@ -17,6 +17,7 @@ enum Status {
 enum UserType {
   STUDENT
   FACULTY
+  ADMIN
 }
 
 model LORApplication {

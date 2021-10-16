@@ -25,7 +25,7 @@ type CreateUserError = {
 export type PayloadData = {
 	id: string;
 	email: string;
-	userType: "STUDENT" | "FACULTY";
+	userType: "STUDENT" | "FACULTY" | "ADMIN";
 };
 
 export const validateCreateUserInput = async ({
