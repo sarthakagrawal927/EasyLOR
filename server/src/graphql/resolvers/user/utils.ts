@@ -80,7 +80,7 @@ export const validateCreateUserInput = async ({
 
 	if (profilePhoto.trim() === "") errors.profilePhoto === "Profile photo cannot be empty";
 
-	if (userType !== "STUDENT" && userType !== "FACULTY") {
+	if (userType !== "STUDENT" && userType !== "FACULTY" && userType !== "ADMIN") {
 		errors.userType = "userType is not among accepted types";
 	}
 

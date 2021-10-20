@@ -87,6 +87,7 @@ const typeDefs = gql`
 		getLORApplications: [LORApplication]!
 		getStudentByUserID(id: String!): Student
 		getFacultyByUserID(id: String!): Faculty
+		getAdminByUserID(id: String!): User
 		getPastApplicationsByFacultyID(id: String!): [Student]!
 		getRemindersByStudentID(id: String!): [Reminder]!
 	}
