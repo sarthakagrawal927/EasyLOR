@@ -13,6 +13,14 @@ export const queries: QueryResolvers<ApolloContext, User> = {
 			where: {
 				id: args.id,
 			},
+			include: {
+				department: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+			},
 		});
 		return admin;
 	},
