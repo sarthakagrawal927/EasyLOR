@@ -9,7 +9,21 @@ export const queries: QueryResolvers<ApolloContext, LorApplication> = {
 				status: "GRANTED",
 			},
 			include: {
-				student: { include: { user: { select: userSelect } } },
+				student: {
+					include: {
+						user: {
+							select: userSelect,
+						},
+						testScores: {
+							select: {
+								id: true,
+								exam: true,
+								proofOfResult: true,
+								score: true,
+							},
+						},
+					},
+				},
 				faculty: { include: { user: { select: userSelect } } },
 			},
 		});
