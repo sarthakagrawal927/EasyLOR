@@ -12,8 +12,8 @@ const Dashboard = () => {
 		<>
 			{(() => {
 				switch (user?.userType) {
-					// case "ADMIN":
-					// 	return <AdminDashboard />;
+					case "ADMIN":
+						return <AdminDashboard />;
 					case "FACULTY":
 						return <FacultyDashboard />;
 					case "STUDENT":

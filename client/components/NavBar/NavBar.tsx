@@ -15,6 +15,7 @@ import Link from "next/link";
 import { User } from "entities/types.graphql";
 import { useNavBar } from "./hooks";
 import { useRouter } from "next/router";
+import AvatarPlaceholder from "../icons/AvatarPlaceholder";
 
 type NavBarProps = {
 	user: User;
@@ -26,7 +27,9 @@ const NavBar: FC<NavBarProps> = ({ user, pastapp }) => {
 	const router = useRouter();
 	return (
 		<NavBarContainer>
-			<NameContainer onClick={() => router.push("/dashboard")}>{user && "Hi, " + user.firstName}</NameContainer>
+			<NameContainer onClick={() => router.push("/dashboard")}>
+				{user && (user?.userType === "ADMIN" ? "Admin Dashboard" : "Hi, " + user.firstName)}
+			</NameContainer>
 			<RightContainer>
 				<OptionsContainer>
 					{user?.userType === "FACULTY" ? (
@@ -49,10 +52,19 @@ const NavBar: FC<NavBarProps> = ({ user, pastapp }) => {
 				<ImageContainer>
 					<Menu gutter={25} placement="bottom-end">
 						<MenuButton>
-							<Image src={user?.profilePhoto} alt={user?.firstName} boxSize="7vh" borderRadius="full" />
+							{user?.profilePhoto ? (
+								<Image
+									src={user?.profilePhoto}
+									alt={user?.firstName}
+									boxSize="7vh"
+									borderRadius="full"
+								/>
+							) : (
+								<AvatarPlaceholder />
+							)}
 						</MenuButton>
 						<ProfileMenuList>
-							<MenuItem onClick={handleProfile}>Profile</MenuItem>
+							{user?.userType !== "ADMIN" && <MenuItem onClick={handleProfile}>Profile</MenuItem>}
 							{user?.userType === "STUDENT" ? (
 								<MenuItem onClick={handleReminder}>Reminders</MenuItem>
 							) : null}

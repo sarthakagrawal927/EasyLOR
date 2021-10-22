@@ -5,7 +5,7 @@ import { UserReturn } from "../entities/types.graphql";
 type CurrentUser = {
 	id: string;
 	email: string;
-	userType: "STUDENT" | "FACULTY";
+	userType: "STUDENT" | "FACULTY" | "ADMIN";
 };
 type PayloadData = CurrentUser & JwtPayload;
 

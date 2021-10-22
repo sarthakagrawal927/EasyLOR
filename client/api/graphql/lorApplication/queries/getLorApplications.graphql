@@ -1,0 +1,38 @@
+query GetLORApplications {
+	getLORApplications {
+		id
+		course
+		lorURL
+		university
+		faculty {
+			user {
+				firstName
+				lastName
+				profilePhoto
+				department {
+					id
+					name
+				}
+			}
+		}
+		student {
+			testScores {
+				id
+				exam
+				score
+				proofOfResult
+			}
+			user {
+				firstName
+				lastName
+				email
+				contact
+				profilePhoto
+				department {
+					id
+					name
+				}
+			}
+		}
+	}
+}

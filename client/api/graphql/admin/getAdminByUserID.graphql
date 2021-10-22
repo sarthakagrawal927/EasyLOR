@@ -1,0 +1,16 @@
+query GetAdminByUserID($id: String!) {
+	getAdminByUserID(id: $id) {
+		contact
+		department {
+			id
+			name
+		}
+		email
+		firstName
+		id
+		institution
+		lastName
+		profilePhoto
+		userType
+	}
+}
