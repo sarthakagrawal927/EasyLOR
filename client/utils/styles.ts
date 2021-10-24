@@ -7,6 +7,7 @@ export const colors = {
 	lightGray: "#E4E4E4",
 	darkGrey: "#515151",
 	peach: "#E34F3B",
+	darkGreen: "#107C41",
 	aqua: "#55DBF9",
 };
 export const shadow = {
