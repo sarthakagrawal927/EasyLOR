@@ -13,7 +13,6 @@ specifiers:
   '@types/formidable': ^1.2.3
   '@types/react': ^17.0.3
   '@types/react-select': ^4.0.15
-  '@types/react-table': ^7.7.0
   '@types/styled-components': ^5.1.9
   aws-sdk: ^2.953.0
   axios: ^0.21.1
@@ -30,7 +29,6 @@ specifiers:
   react-hook-form: ^7.2.3
   react-refresh: ^0.10.0
   react-select: ^4.3.1
-  react-table: ^7.7.0
   styled-components: ^5.2.3
   typescript: ^4.2.3
 
@@ -42,7 +40,6 @@ dependencies:
   '@emotion/styled': 11.3.0_98bf89e7b892f3abde8a7bea823c65cd
   '@types/formidable': 1.2.3
   '@types/react-select': 4.0.16
-  '@types/react-table': 7.7.0
   '@types/styled-components': 5.1.9
   aws-sdk: 2.954.0
   axios: 0.21.1
@@ -59,7 +56,6 @@ dependencies:
   react-hook-form: 7.3.6_react@17.0.2
   react-refresh: 0.10.0
   react-select: 4.3.1_66bdaeef25d361b247c0275abcb49c54
-  react-table: 7.7.0_react@17.0.2
   styled-components: 5.2.3_react-dom@17.0.2+react@17.0.2
 
 devDependencies:
@@ -2322,12 +2318,6 @@ packages:
       '@types/react-transition-group': 4.4.1
     dev: false
 
-  /@types/react-table/7.7.0:
-    resolution: {integrity: sha512-xx2PJO9a0FEY7s96KWmadrhWNGxkNZgMnoKbXKPepqzz4FHKVds1tPDqWOU7NpP+dAsRli/wn0ysZ4MxWZI4Nw==}
-    dependencies:
-      '@types/react': 17.0.5
-    dev: false
-
   /@types/react-transition-group/4.4.1:
     resolution: {integrity: sha512-vIo69qKKcYoJ8wKCJjwSgCTM+z3chw3g18dkrDfVX665tMH7tmbDxEAnPdey4gTlwZz5QuHGzd+hul0OVZDqqQ==}
     dependencies:
@@ -2348,14 +2338,6 @@ packages:
       '@types/prop-types': 15.7.3
       '@types/scheduler': 0.16.1
       csstype: 3.0.8
-
-  /@types/react/17.0.5:
-    resolution: {integrity: sha512-bj4biDB9ZJmGAYTWSKJly6bMr4BLUiBrx9ujiJEoP9XIDY9CTaPGxE5QWN/1WjpPLzYF7/jRNnV2nNxNe970sw==}
-    dependencies:
-      '@types/prop-types': 15.7.3
-      '@types/scheduler': 0.16.1
-      csstype: 3.0.8
-    dev: false
 
   /@types/scheduler/0.16.1:
     resolution: {integrity: sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==}
@@ -5446,14 +5428,6 @@ packages:
       invariant: 2.2.4
       react: 17.0.2
       tslib: 1.14.1
-    dev: false
-
-  /react-table/7.7.0_react@17.0.2:
-    resolution: {integrity: sha512-jBlj70iBwOTvvImsU9t01LjFjy4sXEtclBovl3mTiqjz23Reu0DKnRza4zlLtOPACx6j2/7MrQIthIK1Wi+LIA==}
-    peerDependencies:
-      react: ^16.8.3 || ^17.0.0-0
-    dependencies:
-      react: 17.0.2
     dev: false
 
   /react-transition-group/4.4.2_react-dom@17.0.2+react@17.0.2:

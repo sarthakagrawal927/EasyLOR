@@ -8,7 +8,7 @@ import {
 	Avatar,
 	ModalCloseButton,
 } from "@chakra-ui/react";
-import { AvatarContainer, SOPContainer, StyledButton, StyledStatus, GrayModalHeader } from "../dashboard.styled";
+import { AvatarContainer, SOPContainer, StyledButton, GrayModalHeader } from "../dashboard.styled";
 import { AttachmentIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 
@@ -17,6 +17,7 @@ const getNameFromURL = (fileURL: string) => {
 };
 
 function PendingModal({ isOpen, onClose, modalData }) {
+	console.log(modalData);
 	let date = new Date(modalData?.dueDate);
 	let dateField = date.toLocaleDateString().split("/")[2] === "1970" ? "No date selected" : date.toLocaleDateString();
 	return (

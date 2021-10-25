@@ -17,21 +17,20 @@ export const useFacultyDashboard = (): UseFacultyDashboardReturn => {
 		loading,
 	};
 };
-let serialToApplicationMap = new Map();
 export const makeData = (faculty: Faculty) => {
 	let data = [];
 	let lorApplications = faculty?.lorApplications;
 	for (let i = 0; i < lorApplications?.length; i++) {
 		if (lorApplications[i].status === "PENDING") {
-			//change to pending once ready
 			let lorApplication = {
-				applicationNo: i + 1,
-				department: lorApplications[i].student.user.department.name,
-				name: lorApplications[i].student.user.firstName + " " + lorApplications[i].student.user.lastName,
-				link: lorApplications[i].id,
+				id: lorApplications[i].id,
+				studentDepartment: lorApplications[i].student.user.department.name,
+				studentProfilePicture: lorApplications[i].student.user.profilePhoto,
+				university: lorApplications[i].university,
+				course: lorApplications[i].course,
+				studentName: lorApplications[i].student.user.firstName + " " + lorApplications[i].student.user.lastName,
 			};
 			data.push(lorApplication);
-			serialToApplicationMap[i + 1] = lorApplications[i];
 		}
 	}
 	return data;

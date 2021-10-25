@@ -47,20 +47,23 @@ export const useStudentDashboard = (): UseStudentDashboardReturn => {
 		loading,
 	};
 };
-
 let serialToApplicationMap = new Map();
+
 export const makeData = (student: Student) => {
 	let data = [];
 	let lorApplications = student?.lorApplications;
 	for (let i = 0; i < lorApplications?.length; i++) {
 		let lorApplication = {
-			applicationNo: i + 1,
-			department: lorApplications[i].faculty.user.department.name,
-			name: lorApplications[i].faculty.user.firstName + " " + lorApplications[i].faculty.user.lastName,
+			id: lorApplications[i].id,
+			facultyDepartment: lorApplications[i].faculty.user.department.name,
+			facultyName: lorApplications[i].faculty.user.firstName + " " + lorApplications[i].faculty.user.lastName,
+			facultyProfilePicture: lorApplications[i].faculty.user.profilePhoto,
 			status: lorApplications[i].status,
+			university: lorApplications[i].university,
+			course: lorApplications[i].course,
 		};
 		data.push(lorApplication);
-		serialToApplicationMap[i + 1] = lorApplications[i];
+		serialToApplicationMap[lorApplications[i].id] = lorApplications[i];
 	}
 	return data;
 };

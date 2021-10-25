@@ -1,27 +1,30 @@
 import { Thead, Tbody, Tr, Th, Text } from "@chakra-ui/react";
-import AdminTableRow from "./tableRow";
+import StudentTableRow from "./tableRow";
 import { DashboardTable } from "../dashboard.styled";
 
-const AdminTable = ({ lorApplications, makeTableData }) => {
-	const lorApplicationsData = makeTableData(lorApplications);
+const StudentTable = ({ lorApplications, handleStatusClick }) => {
 	return (
 		<>
-			{lorApplicationsData && lorApplicationsData.length !== 0 ? (
+			{lorApplications && lorApplications.length !== 0 ? (
 				<DashboardTable>
 					<Thead>
 						<Tr>
-							<Th>Students</Th>
 							<Th>Faculty</Th>
 							<Th>University</Th>
 							<Th>Course</Th>
-							<Th>Scores</Th>
-							<Th>Contact</Th>
-							<Th>LOR</Th>
+							<Th>Status</Th>
 						</Tr>
 					</Thead>
 					<Tbody>
-						{lorApplicationsData.map((lor, index: number) => {
-							return <AdminTableRow lor={lor} key={lor.id} index={index} />;
+						{lorApplications.map((lor, index: number) => {
+							return (
+								<StudentTableRow
+									lor={lor}
+									key={lor.id}
+									index={index}
+									handleStatusClick={handleStatusClick}
+								/>
+							);
 						})}
 					</Tbody>
 				</DashboardTable>
@@ -34,4 +37,4 @@ const AdminTable = ({ lorApplications, makeTableData }) => {
 	);
 };
 
-export default AdminTable;
+export default StudentTable;

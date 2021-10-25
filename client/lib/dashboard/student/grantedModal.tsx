@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Button } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalCloseButton, Button } from "@chakra-ui/react";
 import { HugeHeading, SpacedButtonLink, GrayModalHeader, GreenTickBox, GrantedModalBody } from "../dashboard.styled";
 import GreenTick from "components/icons/GreenTick";
 function GrantedModal({ isOpen, onClose, modalData }) {

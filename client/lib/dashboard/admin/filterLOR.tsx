@@ -5,7 +5,6 @@ import {
 	IconButton,
 	PopoverBody,
 	Popover,
-	PopoverContent,
 	PopoverCloseButton,
 	Select,
 	Spacer,
@@ -13,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import FilterIcon from "components/icons/FilterIcon";
-import { FilterPopoverHeader, FilterFormLabel, FilterPopoverContent } from "./adminDashboard.styled";
+import { FilterPopoverHeader, FilterFormLabel, FilterPopoverContent } from "../dashboard.styled";
 const FilterLOR = ({ options, handleFilterClear, handleFilterSubmit, filters, setFilters }) => {
 	return (
 		<>

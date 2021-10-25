@@ -2,7 +2,7 @@ import NavBar from "components/NavBar/NavBar";
 import { useAdminDashboard } from "./hooks";
 import AdminTable from "./table";
 import { Flex, Spacer } from "@chakra-ui/react";
-import { Container, CountText } from "./adminDashboard.styled";
+import { BigTableContainer, CountText } from "../dashboard.styled";
 import FilterLOR from "./filterLOR";
 import ExportToCSV from "./exportToCSV";
 const AdminDashboard = () => {
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
 	return (
 		<>
 			{!adminLoading && <NavBar user={admin} />}
-			<Container>
+			<BigTableContainer>
 				<Flex>
 					<ExportToCSV lorApplications={filteredLorApplications} makeTableData={makeTableData} />
 					<Spacer />
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
 				{!lorApplicationsLoading && (
 					<AdminTable lorApplications={filteredLorApplications} makeTableData={makeTableData} />
 				)}
-			</Container>
+			</BigTableContainer>
 		</>
 	);
 };

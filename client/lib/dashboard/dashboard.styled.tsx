@@ -1,63 +1,72 @@
 import styled from "styled-components";
-import { Table, Box, Center, Button, ModalHeader, ModalBody } from "@chakra-ui/react";
 import { colors, font } from "../../utils/styles";
+import {
+	Table,
+	Box,
+	Td,
+	Button,
+	Center,
+	ModalHeader,
+	ModalBody,
+	PopoverHeader,
+	FormLabel,
+	PopoverContent,
+} from "@chakra-ui/react";
 
-export const DashboardContainer = styled(Center)`
-	width: 100vw;
-	max-width: 100%;
-`;
-
-export const Container = styled(Box)`
-	margin-top: 5vh;
-	width: 75vw;
-	height: 100%;
+// Containers
+export const SmallTableContainer = styled(Box)`
+	margin: 10vh auto 0 auto;
+	width: 60vw;
 	& h2 {
 		font-family: ${font.body};
-		font-size: 2.5rem;
+		font-size: 1.5rem;
 		margin-bottom: 1rem;
 	}
+`;
+
+// Main table styling
+export const BigTableContainer = styled(Box)`
+	margin: 10vh auto 0 auto;
+	width: 90vw;
 `;
 
 export const DashboardTable = styled(Table)`
 	text-align: center;
 	flex-direction: column;
+	& tr {
+		box-shadow: 0px 4px 4px rgba(171, 171, 171, 0.25);
+		border-radius: 5px;
+		border-style: hidden;
+	}
 
 	& th {
-		padding: 1rem 3rem;
+		padding: 2.5rem 2rem;
 		text-align: center;
 		font-size: 1.2rem;
-		border-style: groove;
-		border-width: 1px;
-		border-color: ${colors.gray};
-		background: ${colors.lightGray};
-		text-transform: none;
+		line-height: 1.2rem;
+		background-color: rgba(244, 244, 244, 0.356);
+		text-transform: uppercase;
 	}
 
 	& td {
-		padding: 1rem 3rem;
+		padding: inherit 2rem;
 		text-align: center;
-		font-size: 1.35rem;
-		border-style: groove;
-		border-width: 1px;
-		border-color: ${colors.gray};
-
+		font-size: 1rem;
+		& p {
+			font-size: 1.2rem;
+		}
+		/* status badge */
 		& span {
 			font-size: 0.7rem;
 			padding: 0.45rem 1.8rem;
-			border-radius: 0.2rem;
+			border-radius: 1.2rem;
 			font-weight: 800;
 		}
 	}
 
-	& button {
-		font-size: 0.9rem;
-		font-weight: 800;
-		padding: 0.4rem 2.3rem;
-		border-radius: 0.5rem;
-		color: ${colors.blue};
-		border-style: groove;
-		border-width: 1px;
-		border-color: ${colors.blue};
+	& a {
+		text-transform: uppercase;
+		color: blue;
 	}
 
 	.red {
@@ -83,6 +92,16 @@ export const DashboardTable = styled(Table)`
 	}
 `;
 
+export const UserTableCell = styled(Td)`
+	max-width: 15vw;
+	text-align: left !important;
+`;
+
+export const BranchText = styled.p`
+	color: ${colors.darkGrey};
+`;
+
+// Pending  Modal Styling
 export const AvatarContainer = styled(Center)`
 	margin-top: -8rem;
 `;
@@ -100,33 +119,12 @@ export const StyledButton = styled(Button)`
 	}
 `;
 
-export const StyledStatus = styled.span`
-	margin-left: 30vw !important;
-	font-size: 1rem;
-	padding: 0.45rem 1.8rem;
-	border-radius: 0.2rem;
-	font-weight: 800;
-	.red {
-		color: #b81600;
-		background: rgba(234, 123, 108, 0.62);
-	}
-
-	.green {
-		color: #008024;
-		background: rgba(1, 223, 134, 0.5);
-	}
-
-	.blue {
-		color: #0084a1;
-		background: rgba(85, 219, 249, 0.53);
-	}
-`;
-
 export const GrayModalHeader = styled(ModalHeader)`
 	background-color: ${colors.lightGray};
 	border-radius: 0.4rem;
 `;
 
+// Granted Modal Styling
 export const HugeHeading = styled.h1`
 	font-size: 2.5rem;
 	text-align: center;
@@ -151,4 +149,43 @@ export const GrantedModalBody = styled(ModalBody)`
 	flex-direction: column;
 	justify-content: space-between;
 	text-align: "center";
+`;
+
+// Admin Features Styling
+export const ExportButton = styled(Button)`
+	color: ${colors.darkGreen} !important;
+	box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2) !important;
+	border-radius: 5px !important;
+	padding: 10px !important;
+	background-color: white;
+	width: max-content !important;
+	height: 3.5em !important;
+	font-size: 12px !important;
+	margin-bottom: 1rem;
+`;
+
+export const CountText = styled.span`
+	color: ${colors.darkGrey};
+	height: 1.2rem;
+	margin: 0.8rem;
+`;
+
+export const FilterPopoverHeader = styled(PopoverHeader)`
+	background-color: ${colors.lightGray};
+	border-radius: 0.4rem;
+	border: 0;
+	font-weight: 600;
+	padding: 0.8rem !important;
+`;
+
+export const FilterFormLabel = styled(FormLabel)`
+	width: 10vw;
+	white-space: "nowrap";
+	font-size: 0.6rem !important;
+	margin-top: 0.5rem;
+`;
+
+export const FilterPopoverContent = styled(PopoverContent)`
+	border: 0 !important;
+	box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.2);
 `;

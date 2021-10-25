@@ -1,6 +1,5 @@
 import { CSVLink } from "react-csv";
-import { Button, IconButton } from "@chakra-ui/react";
-import { ExportButton } from "./adminDashboard.styled";
+import { ExportButton } from "../dashboard.styled";
 import ExcelIcon from "components/icons/ExcelIcon";
 
 const ExportToCSV = ({ lorApplications, makeTableData }) => {

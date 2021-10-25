@@ -1,4 +1,4 @@
-import { UserTableCell, BranchText } from "./adminDashboard.styled";
+import { UserTableCell, BranchText } from "./dashboard.styled";
 import { Image, Grid, GridItem } from "@chakra-ui/react";
 
 const ProfileCell = ({ name, profilePicture, department }) => {
