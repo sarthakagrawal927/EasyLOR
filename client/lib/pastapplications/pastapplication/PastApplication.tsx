@@ -84,7 +84,15 @@ const PastApplication: FC<PastApplicationProps> = ({ student, facultyUser }) => 
 				<>
 					<AcceptedUniversity>
 						<Heading as="h6">{"ACCEPTED UNIVERSITY"}</Heading>
-						<Heading as="h3">{student.acceptedUniversity ? student.acceptedUniversity : "NA"}</Heading>
+						<Heading as="h3">
+							{student.acceptedUniversity ? (
+								<a title="Download: Proof of Acceptance" href={student?.proofOfAcceptance}>
+									{student.acceptedUniversity}
+								</a>
+							) : (
+								"NA"
+							)}
+						</Heading>
 					</AcceptedUniversity>
 					<TestScoreContainer>
 						<Heading as="h6">{"TEST SCORES"}</Heading>
@@ -93,7 +101,9 @@ const PastApplication: FC<PastApplicationProps> = ({ student, facultyUser }) => 
 								? "NO DATA AVAILABLE"
 								: student.testScores.map(testScore => (
 										<Box className="past-app-testscore" key={testScore.exam}>
-											<span>{testScore.exam}</span>: {testScore.score}
+											<a title="Download: Proof of Result" href={testScore.proofOfResult}>
+												<span>{testScore.exam}</span>: {testScore.score}
+											</a>
 										</Box>
 								  ))}
 						</Box>

@@ -17,6 +17,7 @@ query GetPastApplicationsByFacultyID($id: String!) {
 		regNo
 		appliedUniversities
 		acceptedUniversity
+		proofOfAcceptance
 		testScores {
 			id
 			exam
