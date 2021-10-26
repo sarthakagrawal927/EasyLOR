@@ -35,7 +35,21 @@ export const queries: QueryResolvers<ApolloContext, Faculty> = {
 				user: { select: userSelect },
 				lorApplications: {
 					include: {
-						student: { include: { user: { select: userSelect } } },
+						student: {
+							include: {
+								user: {
+									select: userSelect,
+								},
+								testScores: {
+									select: {
+										exam: true,
+										id: true,
+										score: true,
+										proofOfResult: true,
+									},
+								},
+							},
+						},
 						faculty: { include: { user: { select: userSelect } } },
 					},
 				},
