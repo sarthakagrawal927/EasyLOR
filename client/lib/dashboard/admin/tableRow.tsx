@@ -23,11 +23,7 @@ const AdminTableRow = ({ lor, index }) => {
 			<Td>
 				<p>{lor?.course}</p>
 			</Td>
-			<Td>
-				{lor?.studentTests.map((studentTest, index) => {
-					return <div key={index}>{`${studentTest.exam} ${studentTest.score}`}</div>;
-				})}
-			</Td>
+			<Td style={{ whiteSpace: "pre-wrap" }}>{lor?.studentTests}</Td>
 			<Td>
 				<div> {lor?.studentEmail}</div>
 				{lor?.studentContact}

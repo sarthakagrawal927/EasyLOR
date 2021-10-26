@@ -22,7 +22,7 @@ const FilterLOR = ({ options, handleFilterClear, handleFilterSubmit, filters, se
 						<IconButton icon={<FilterIcon />} aria-label="filter" border="none" boxShadow="none" />
 					</PopoverTrigger>
 					<FilterPopoverContent width="23vw">
-						<PopoverCloseButton />
+						<PopoverCloseButton p="0.8rem" fontSize="16px" mt={1} />
 						<FilterPopoverHeader>FILTER RESULTS</FilterPopoverHeader>
 						<PopoverBody>
 							<SimpleGrid columns={2} spacing={3} minChildWidth="7vw">

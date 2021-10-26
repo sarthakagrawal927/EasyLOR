@@ -10,8 +10,8 @@ const AdminTable = ({ lorApplications, makeTableData }) => {
 				<DashboardTable>
 					<Thead>
 						<Tr>
-							<Th>Students</Th>
-							<Th>Faculty</Th>
+							<Th style={{ width: "18vw" }}>Students</Th>
+							<Th style={{ width: "18vw" }}>Faculty</Th>
 							<Th>University</Th>
 							<Th>Course</Th>
 							<Th>Scores</Th>
@@ -19,7 +19,7 @@ const AdminTable = ({ lorApplications, makeTableData }) => {
 							<Th>LOR</Th>
 						</Tr>
 					</Thead>
-					<Tbody>
+					<Tbody style={{ display: "block", height: "60vh", overflow: "auto" }}>
 						{lorApplicationsData.map((lor, index: number) => {
 							return <AdminTableRow lor={lor} key={lor.id} index={index} />;
 						})}

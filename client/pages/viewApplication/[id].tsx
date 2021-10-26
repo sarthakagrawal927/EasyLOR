@@ -21,7 +21,7 @@ import {
 	DraftIcon,
 	ButtonsContainer,
 } from "lib/viewApplication/viewApplication.styled";
-import { Box, Heading, Image, Link } from "@chakra-ui/react";
+import { Box, Heading, Image, Link, Spacer } from "@chakra-ui/react";
 import RejectModal from "lib/viewApplication/RejectModal/RejectModal";
 import { useRouter } from "next/router";
 import UploadLORModal from "lib/viewApplication/UploadLORModal/UploadLORModal";
@@ -68,13 +68,15 @@ const ViewApplication: FC = () => {
 								</DetailsRow1Container>
 								<DetailsRow2Container>
 									<Box>
-										<ViewAppHeading>{"Competitive Exams: "}</ViewAppHeading>
+										<ViewAppHeading>{"Exam Scores: "}</ViewAppHeading>
 										<ViewAppDetail>
 											{!student?.testScores || student?.testScores.length === 0
-												? "NA"
+												? "NA1"
 												: student?.testScores?.map(
 														(testScore, index) =>
 															testScore.exam +
+															": " +
+															testScore.score +
 															(student.testScores.length === index + 1 ? "" : ", ")
 												  )}
 										</ViewAppDetail>
@@ -104,21 +106,7 @@ const ViewApplication: FC = () => {
 								/>
 							</ImageContainer>
 						</ProfileContainer>
-						<DraftContainer>
-							<ViewAppHeading>{"LOR Draft: "} </ViewAppHeading>
-							<span className="view-app detail">
-								{application?.draftURL ? (
-									<>
-										<DraftIcon />
-										<Link href={application.draftURL} download>
-											<DownloadText> {"DOWNLOAD"}</DownloadText>
-										</Link>
-									</>
-								) : (
-									"NA"
-								)}
-							</span>
-						</DraftContainer>
+
 						<StatementOfPurposeContainer>
 							<ViewAppHeading>{"Statement of Purpose: "}</ViewAppHeading>
 							<br />
@@ -128,6 +116,22 @@ const ViewApplication: FC = () => {
 						</StatementOfPurposeContainer>
 						<ButtonsContainer>
 							{files && files[0] && files[0].name}
+							<DraftContainer>
+								<ViewAppHeading>{"LOR Draft: "} </ViewAppHeading>
+								<span className="view-app detail">
+									{application?.draftURL ? (
+										<>
+											<DraftIcon />
+											<Link href={application.draftURL} download>
+												<DownloadText> {"DOWNLOAD"}</DownloadText>
+											</Link>
+										</>
+									) : (
+										"NA"
+									)}
+								</span>
+							</DraftContainer>
+							<Spacer />
 							<RejectModal getRejectionReason={getRejectionReason} />
 
 							<UploadLORModal />

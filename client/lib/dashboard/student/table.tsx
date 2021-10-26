@@ -9,7 +9,7 @@ const StudentTable = ({ lorApplications, handleStatusClick }) => {
 				<DashboardTable>
 					<Thead>
 						<Tr>
-							<Th>Faculty</Th>
+							<Th style={{ width: "18vw" }}>Faculty</Th>
 							<Th>University</Th>
 							<Th>Course</Th>
 							<Th>Status</Th>

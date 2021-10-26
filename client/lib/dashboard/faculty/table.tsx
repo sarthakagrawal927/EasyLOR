@@ -9,7 +9,7 @@ const FacultyTable = ({ lorApplications }) => {
 				<DashboardTable>
 					<Thead>
 						<Tr>
-							<Th>Student</Th>
+							<Th style={{ width: "18vw" }}>Student</Th>
 							<Th>University</Th>
 							<Th>Course</Th>
 							<Th />

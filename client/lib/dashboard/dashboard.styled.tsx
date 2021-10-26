@@ -37,19 +37,26 @@ export const DashboardTable = styled(Table)`
 		box-shadow: 0px 4px 4px rgba(171, 171, 171, 0.25);
 		border-radius: 5px;
 		border-style: hidden;
+		display: table;
+		width: 100%;
+		table-layout: fixed;
+	}
+	&tbody {
+		padding-left: 0.6rem;
 	}
 
 	& th {
-		padding: 2.5rem 2rem;
+		padding: 2rem;
 		text-align: center;
 		font-size: 1.2rem;
 		line-height: 1.2rem;
 		background-color: rgba(244, 244, 244, 0.356);
 		text-transform: uppercase;
+		font-family: "Nunito";
 	}
 
 	& td {
-		padding: inherit 2rem;
+		padding: 1.2rem 0;
 		text-align: center;
 		font-size: 1rem;
 		& p {
@@ -93,12 +100,19 @@ export const DashboardTable = styled(Table)`
 `;
 
 export const UserTableCell = styled(Td)`
-	max-width: 15vw;
+	padding-left: 1rem !important;
+	width: 18vw;
 	text-align: left !important;
 `;
 
 export const BranchText = styled.p`
 	color: ${colors.darkGrey};
+	font-size: 0.8rem !important;
+	margin-top: 0.4rem;
+`;
+
+export const NameText = styled.p`
+	font-size: 1.1rem;
 `;
 
 // Pending  Modal Styling
@@ -181,7 +195,7 @@ export const FilterPopoverHeader = styled(PopoverHeader)`
 export const FilterFormLabel = styled(FormLabel)`
 	width: 10vw;
 	white-space: "nowrap";
-	font-size: 0.6rem !important;
+	font-size: 0.9rem !important;
 	margin-top: 0.5rem;
 `;
 

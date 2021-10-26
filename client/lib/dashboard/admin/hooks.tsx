@@ -43,7 +43,7 @@ const makeTableData = (lorApplications: any) => {
 			studentProfilePicture: lorApplications[i]?.student?.user?.profilePhoto,
 			studentEmail: lorApplications[i]?.student?.user?.email,
 			studentContact: lorApplications[i]?.student?.user?.contact,
-			studentTests: lorApplications[i]?.student?.testScores,
+			studentTests: "",
 			facultyName:
 				lorApplications[i]?.faculty?.user?.firstName + " " + lorApplications[i]?.faculty?.user?.lastName,
 			facultyDepartment: lorApplications[i]?.faculty?.user?.department?.name,
@@ -52,6 +52,11 @@ const makeTableData = (lorApplications: any) => {
 			course: lorApplications[i]?.course,
 			lorURL: lorApplications[i]?.lorURL,
 		};
+		let studentTestScores = "";
+		for (let j = 0; j < lorApplications[i]?.student?.testScores?.length; j++) {
+			studentTestScores += `${lorApplications[i]?.student?.testScores[j]?.exam} ${lorApplications[i]?.student?.testScores[j]?.score} \n`;
+		}
+		lorApplication.studentTests = studentTestScores;
 		data.push(lorApplication);
 	}
 	return data;

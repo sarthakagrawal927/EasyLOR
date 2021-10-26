@@ -1,4 +1,4 @@
-import { UserTableCell, BranchText } from "./dashboard.styled";
+import { UserTableCell, BranchText, NameText } from "./dashboard.styled";
 import { Image, Grid, GridItem } from "@chakra-ui/react";
 
 const ProfileCell = ({ name, profilePicture, department }) => {
@@ -16,7 +16,7 @@ const ProfileCell = ({ name, profilePicture, department }) => {
 					/>
 				</GridItem>
 				<GridItem colSpan={3} marginLeft="1.4rem" marginTop="0.8rem">
-					{name}
+					<NameText> {name}</NameText>
 					<BranchText> {department} </BranchText>
 				</GridItem>
 			</Grid>
