@@ -33,6 +33,8 @@ query GetLORApplications {
 					name
 				}
 			}
+			proofOfAcceptance
+			acceptedUniversity
 		}
 	}
 }

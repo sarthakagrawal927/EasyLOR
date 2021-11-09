@@ -23,7 +23,14 @@ const AdminTableRow = ({ lor, index }) => {
 			<Td>
 				<p>{lor?.course}</p>
 			</Td>
-			<Td style={{ whiteSpace: "pre-wrap" }}>{lor?.studentTests}</Td>
+			<Td style={{ whiteSpace: "pre-wrap" }}>
+				{" "}
+				<a href={lor?.studentTest1Proof}>{lor?.studentTest1}</a>
+				{"  "}
+				<a href={lor?.studentTest2Proof}>{lor?.studentTest2}</a>
+				{"  "}
+				<a href={lor?.studentTest3Proof}>{lor?.studentTest3}</a>
+			</Td>
 			<Td>
 				<div> {lor?.studentEmail}</div>
 				{lor?.studentContact}

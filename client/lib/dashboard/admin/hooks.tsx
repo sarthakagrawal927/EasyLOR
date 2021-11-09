@@ -43,7 +43,6 @@ const makeTableData = (lorApplications: any) => {
 			studentProfilePicture: lorApplications[i]?.student?.user?.profilePhoto,
 			studentEmail: lorApplications[i]?.student?.user?.email,
 			studentContact: lorApplications[i]?.student?.user?.contact,
-			studentTests: "",
 			facultyName:
 				lorApplications[i]?.faculty?.user?.firstName + " " + lorApplications[i]?.faculty?.user?.lastName,
 			facultyDepartment: lorApplications[i]?.faculty?.user?.department?.name,
@@ -51,12 +50,28 @@ const makeTableData = (lorApplications: any) => {
 			university: lorApplications[i]?.university,
 			course: lorApplications[i]?.course,
 			lorURL: lorApplications[i]?.lorURL,
+			acceptedUniversity: lorApplications[i]?.student?.acceptedUniversity,
+			proofOfAcceptance: lorApplications[i]?.student?.proofOfAcceptance,
+			studentTest1: null,
+			studentTest1Proof: null,
+			studentTest2: null,
+			studentTest2Proof: null,
+			studentTest3: null,
+			studentTest3Proof: null,
 		};
-		let studentTestScores = "";
-		for (let j = 0; j < lorApplications[i]?.student?.testScores?.length; j++) {
-			studentTestScores += `${lorApplications[i]?.student?.testScores[j]?.exam} ${lorApplications[i]?.student?.testScores[j]?.score} \n`;
+		let numberOfTests = lorApplications[i]?.student?.testScores?.length;
+		if (numberOfTests >= 1) {
+			lorApplication.studentTest1 = `${lorApplications[i]?.student?.testScores[0]?.exam} ${lorApplications[i]?.student?.testScores[0]?.score}`;
+			lorApplication.studentTest1Proof = lorApplications[i]?.student?.testScores[0]?.proofOfResult;
 		}
-		lorApplication.studentTests = studentTestScores;
+		if (numberOfTests >= 2) {
+			lorApplication.studentTest2 = `${lorApplications[i]?.student?.testScores[1]?.exam} ${lorApplications[i]?.student?.testScores[1]?.score}`;
+			lorApplication.studentTest2Proof = lorApplications[i]?.student?.testScores[1]?.proofOfResult;
+		}
+		if (numberOfTests >= 3) {
+			lorApplication.studentTest3 = `${lorApplications[i]?.student?.testScores[2]?.exam} ${lorApplications[i]?.student?.testScores[2]?.score}`;
+			lorApplication.studentTest3Proof = lorApplications[i]?.student?.testScores[2]?.proofOfResult;
+		}
 		data.push(lorApplication);
 	}
 	return data;

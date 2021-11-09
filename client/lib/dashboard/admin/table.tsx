@@ -10,7 +10,7 @@ const AdminTable = ({ lorApplications, makeTableData }) => {
 				<DashboardTable>
 					<Thead>
 						<Tr>
-							<Th style={{ width: "18vw" }}>Students</Th>
+							<Th style={{ width: "18vw" }}>Student</Th>
 							<Th style={{ width: "18vw" }}>Faculty</Th>
 							<Th>University</Th>
 							<Th>Course</Th>

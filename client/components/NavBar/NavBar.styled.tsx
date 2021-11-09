@@ -24,7 +24,7 @@ export const NameContainer = styled(Box)`
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-	font-size: 2rem;
+	font-size: 1.5rem;
 `;
 
 export const RightContainer = styled(Box)`

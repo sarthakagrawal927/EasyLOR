@@ -46,9 +46,9 @@ export const DashboardTable = styled(Table)`
 	}
 
 	& th {
-		padding: 2rem;
+		padding: 1.4rem;
 		text-align: center;
-		font-size: 1.2rem;
+		font-size: 1rem;
 		line-height: 1.2rem;
 		background-color: rgba(244, 244, 244, 0.356);
 		text-transform: uppercase;

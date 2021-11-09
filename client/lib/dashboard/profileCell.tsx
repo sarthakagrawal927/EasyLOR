@@ -10,12 +10,12 @@ const ProfileCell = ({ name, profilePicture, department }) => {
 						borderRadius="100%"
 						src={profilePicture}
 						alt={name}
-						height="4rem"
-						width="4rem"
+						height="3rem"
+						width="3rem"
 						objectFit="cover"
 					/>
 				</GridItem>
-				<GridItem colSpan={3} marginLeft="1.4rem" marginTop="0.8rem">
+				<GridItem colSpan={3} marginTop="0.4rem">
 					<NameText> {name}</NameText>
 					<BranchText> {department} </BranchText>
 				</GridItem>
