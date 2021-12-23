@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { FormControl, FormErrorMessage, FormLabel, IconButton, Input, Center, Avatar } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, FormLabel, IconButton, Input, Center, Avatar, Stack } from "@chakra-ui/react";
 import FileUpload from "components/FileUpload/FileUpload";
 import AvatarPlaceholder from "components/icons/AvatarPlaceholder";
 import React, { FC } from "react";
@@ -43,17 +43,26 @@ const FirstForm: FC<FirstFormProps> = ({
 					</Center>
 				) : (
 					<FileUpload accept={"image/*"} multiple={false} register={profilePhotoRegister}>
-						<IconButton
-							aria-label="Profile Photo"
-							icon={<AvatarPlaceholder boxSize={120} />}
-							isRound
-							boxSize={100}
-							style={{ margin: "0 auto" }}
-						/>
+						<Stack direction={"column"} justifyContent={"center"} width={"100%"}>
+							<IconButton
+								aria-label="Profile Photo"
+								icon={<AvatarPlaceholder boxSize={120} />}
+								isRound
+								boxSize={100}
+								style={{ margin: "0 auto" }}
+							/>
+							<FormLabel
+								textAlign={"center"}
+								color="#bebebe"
+								style={{ fontSize: "0.8rem", marginTop: "1em" }}
+							>
+								CLICK AVATAR TO ADD A PHOTO
+							</FormLabel>
+						</Stack>
 					</FileUpload>
 				)}
 
-				<FormErrorMessage>{errors.profilePhoto?.message}</FormErrorMessage>
+				<FormErrorMessage color={"red"}>{errors.profilePhoto?.message}</FormErrorMessage>
 			</FormControl>
 			<FormControl id="email" isInvalid={!!errors.email}>
 				<FormLabel>Email</FormLabel>
@@ -63,7 +72,7 @@ const FirstForm: FC<FirstFormProps> = ({
 					ref={emailRegister?.ref}
 					onChange={emailRegister?.onChange}
 				/>
-				<FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+				<FormErrorMessage color={"red"}>{errors.email?.message}</FormErrorMessage>
 			</FormControl>
 			<RegisterFieldContainer>
 				<FormControl id="firstName" isInvalid={!!errors.firstName}>
@@ -75,7 +84,7 @@ const FirstForm: FC<FirstFormProps> = ({
 						onChange={firstNameRegister?.onChange}
 						defaultValue={getValues("firstName")}
 					/>
-					<FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors.firstName?.message}</FormErrorMessage>
 				</FormControl>
 				<FormControl id="lastName" isInvalid={!!errors.lastName}>
 					<FormLabel>Last Name</FormLabel>
@@ -86,7 +95,7 @@ const FirstForm: FC<FirstFormProps> = ({
 						onChange={lastNameRegister?.onChange}
 						defaultValue={getValues("lastName")}
 					/>
-					<FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
+					<FormErrorMessage color={"red"}>{errors.lastName?.message}</FormErrorMessage>
 				</FormControl>
 			</RegisterFieldContainer>
 			<Center>
@@ -96,7 +105,7 @@ const FirstForm: FC<FirstFormProps> = ({
 					icon={<ArrowForwardIcon boxSize={10} />}
 					isRound
 					boxSize={16}
-					marginTop={10}
+					marginTop={"40%"}
 					onClick={onToggle}
 				/>
 			</Center>
